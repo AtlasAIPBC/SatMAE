@@ -176,7 +176,18 @@ def get_args_parser():
 
 
 def main(args):
-    misc.init_distributed_mode(args)
+#    misc.init_distributed_mode(args)
+
+ #   print('job dir: {}'.format(os.path.dirname(os.path.realpath(__file__))))
+  #  print("{}".format(args).replace(', ', ',\n'))
+
+   # device = torch.device(args.device)
+
+
+    use_gpu = args.device == 'cuda'  # Check the device argument
+    misc.init_distributed_mode(args, use_gpu=use_gpu)
+
+
 
     print('job dir: {}'.format(os.path.dirname(os.path.realpath(__file__))))
     print("{}".format(args).replace(', ', ',\n'))

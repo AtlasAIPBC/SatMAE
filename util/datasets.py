@@ -116,8 +116,9 @@ class CustomDatasetFromImages(SatelliteDataset):
         # Get image name from the pandas df
         single_image_name = self.image_arr[index]
         # Open image
+       # img_as_img = Image.fromarray(single_image_name)
         img_as_img = Image.open(single_image_name)
-        # Transform the image
+       # Transform the image
         img_as_tensor = self.transforms(img_as_img)
         # Get label(class) of the image based on the cropped pandas column
         single_image_label = self.label_arr[index]

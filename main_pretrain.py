@@ -29,6 +29,7 @@ from util.misc import NativeScalerWithGradNormCount as NativeScaler
 import models_mae
 import models_mae_group_channels
 import models_mae_temporal
+#import models_vit_temporal
 
 from engine_pretrain import train_one_epoch, train_one_epoch_temporal
 
@@ -119,7 +120,11 @@ def get_args_parser():
 
 
 def main(args):
-    misc.init_distributed_mode(args)
+#    misc.init_distributed_mode(args)
+    use_gpu = args.device == 'cuda'  # Check the device argument
+    misc.init_distributed_mode(args, use_gpu=use_gpu)
+
+
 
     print('job dir: {}'.format(os.path.dirname(os.path.realpath(__file__))))
     print("{}".format(args).replace(', ', ',\n'))
