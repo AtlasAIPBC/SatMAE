@@ -235,7 +235,7 @@ class CustomDatasetFromImagesTemporal(SatelliteDataset):
         std = [0.28774282336235046, 0.27541765570640564, 0.2764017581939697]
         self.normalization = transforms.Normalize(mean, std)
         self.totensor = transforms.ToTensor()
-        self.scale = transforms.Scale(224)
+        self.scale = transforms.Resize(224)
 
     def __getitem__(self, index):
         # Get image name from the pandas df
