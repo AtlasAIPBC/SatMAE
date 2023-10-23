@@ -1,0 +1,12 @@
+python -m torch.distributed.launch --nproc_per_node=8 \
+    --nnodes=1 --master_port=1234 main_finetune.py \
+    --output_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/finetune \
+    --log_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/finetune \
+    --device cpu \
+    --batch_size 16 \
+    --model vit_large_patch16 \
+    --model_type temporal \
+    --resume https://zenodo.org/record/7369797/files/finetune_fmow_temporal.pth  \
+    --dist_eval --eval --num_workers 8 --dataset temporal \
+    --train_path /home/ada/satmae/temporal/data/train_62classes.csv \
+    --test_path /home/ada/satmae/temporal/data/val_62classes.csv \
