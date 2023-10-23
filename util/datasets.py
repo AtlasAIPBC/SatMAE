@@ -1,4 +1,5 @@
 import os
+import re
 import pandas as pd
 import numpy as np
 import warnings
@@ -241,14 +242,30 @@ class CustomDatasetFromImagesTemporal(SatelliteDataset):
         # Get image name from the pandas df
         single_image_name_1 = self.image_arr[index]
 
-        suffix = single_image_name_1[-15:]
-        prefix = single_image_name_1[:-15].rsplit('_', 1)
-        regexp = '{}_*{}'.format(prefix[0], suffix)
-        regexp = os.path.join(self.dataset_root_path, regexp)
-        single_image_name_1 = os.path.join(self.dataset_root_path, single_image_name_1)
+        splt = single_image_name_1.rsplit('/', 1)
+        base_path = splt[0]
+        fname = splt[1]
+        match = re.search(r'^(.*?_\d+)_.*_rgb.jpg$', fname)
+        if match:
+            prefix = match.group(1)
+        else:
+            prefix = ""
+        suffix = fname.split('_')
+        suffix = "_" + (suffix[-1])
+        regexp = '{}/{}_*{}'.format(base_path, prefix, suffix)
+
+        # suffix = single_image_name_1[-15:]
+        # prefix = single_image_name_1[:-15].rsplit('_', 1)
+        # regexp = '{}_*{}'.format(prefix[0], suffix)
+        # regexp = os.path.join(self.dataset_root_path, regexp)
+        # single_image_name_1 = os.path.join(self.dataset_root_path, single_image_name_1)
+
         temporal_files = glob(regexp)
+              
+        # temporal_files = [base_path + "/" + path for path in temporal_files]
 
         temporal_files.remove(single_image_name_1)
+
         if temporal_files == []:
             single_image_name_2 = single_image_name_1
             single_image_name_3 = single_image_name_1

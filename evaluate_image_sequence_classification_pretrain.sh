@@ -1,13 +1,12 @@
 python -m torch.distributed.launch --nproc_per_node=8 \
     --nnodes=1 --master_port=1234 main_finetune.py \
-    --output_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/finetune \
-    --log_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/finetune \
+    --output_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/pretrain \
+    --log_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/pretrain \
     --device cpu \
     --batch_size 16 \
     --model vit_large_patch16 \
     --model_type temporal \
-    --resume /home/ada/satmae/temporal/checkpoints/finetune_fmow_temporal.pth  \
+    --resume /home/ada/satmae/temporal/checkpoints/pretrain_fmow_temporal.pth  \
     --dist_eval --eval --num_workers 8 --dataset temporal \
     --train_path /home/ada/satmae/temporal/preprocessed/fmow/train/train_62classes.csv \
     --test_path /home/ada/satmae/temporal/preprocessed/fmow/train/val_62classes.csv \
-    --nb_classes 1000
