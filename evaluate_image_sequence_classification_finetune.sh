@@ -1,9 +1,9 @@
-python -m torch.distributed.launch --nproc_per_node=8 \
+python -m torch.distributed.launch --nproc_per_node=1 \
     --nnodes=1 --master_port=1234 main_finetune.py \
     --output_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/finetune \
     --log_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/finetune \
-    --device cpu \
-    --batch_size 16 \
+    --device cuda \
+    --batch_size 8 \
     --model vit_large_patch16 \
     --model_type temporal \
     --resume /home/ada/satmae/temporal/checkpoints/finetune_fmow_temporal.pth  \
