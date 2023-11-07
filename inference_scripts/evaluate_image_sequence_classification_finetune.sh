@@ -1,5 +1,5 @@
 python -m torch.distributed.launch --nproc_per_node=1 \
-    --nnodes=1 --master_port=1234 main_finetune.py \
+    --nnodes=1 --master_port=1234 /home/ada/satmae/SatMAE/main_finetune.py \
     --output_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/finetune \
     --log_dir /home/ada/satmae/temporal/evaluation/image_sequence_classification/finetune \
     --device cuda \

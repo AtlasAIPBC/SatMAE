@@ -1,5 +1,5 @@
 python -m torch.distributed.launch --nproc_per_node=8 \
-    --nnodes=1 --master_port=1235 main_finetune.py \
+    --nnodes=1 --master_port=1234 /home/ada/satmae/SatMAE/main_finetune.py \
     --batch_size 16 \
     --output_dir /home/ada/satmae/temporal/evaluation/single_image_classification/pretrain \
     --log_dir /home/ada/satmae/temporal/evaluation/single_image_classification/pretrain \
