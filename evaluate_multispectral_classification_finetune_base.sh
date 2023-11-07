@@ -1,0 +1,12 @@
+python -m torch.distributed.launch --nproc_per_node=1 \
+    --nnodes=1 --master_port=1234 main_finetune.py \
+    --output_dir /home/ada/satmae/multispectral/evaluation/finetune_vit_base \
+    --log_dir /home/ada/satmae/multispectral/evaluation/finetune_vit_base \
+    --device cuda \
+    --batch_size 8 \
+    --model vit_base_patch16 \
+    --model_type group_c \
+    --resume /home/ada/satmae/multispectral/checkpoints/finetune-vit-base-e7.pth  \
+    --dist_eval --eval --num_workers 8 --dataset sentinel \
+    --train_path /home/ada/satmae/multispectral/data/train.csv \
+    --test_path /home/ada/satmae/multispectral/data/val.csv \
