@@ -4,7 +4,6 @@ python -m torch.distributed.launch --nproc_per_node=1 \
     --log_dir /home/ada/satmae/multispectral/evaluation/finetune_vit_large \
     --device cuda \
     --batch_size 8 \
-    --epochs 200 \
     --patch_size 8 \
     --model vit_large_patch16 \
     --model_type group_c \
