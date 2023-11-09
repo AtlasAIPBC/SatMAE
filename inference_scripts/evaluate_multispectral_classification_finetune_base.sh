@@ -3,10 +3,12 @@ python -m torch.distributed.launch --nproc_per_node=1 \
     --output_dir /home/ada/satmae/multispectral/evaluation/finetune_vit_base \
     --log_dir /home/ada/satmae/multispectral/evaluation/finetune_vit_base \
     --device cuda \
+    --patch_size 8 \
+    --input_size 96 \
     --batch_size 8 \
     --model vit_base_patch16 \
     --model_type group_c \
     --resume /home/ada/satmae/multispectral/checkpoints/finetune-vit-base-e7.pth  \
     --dist_eval --eval --num_workers 8 --dataset sentinel \
-    --train_path /home/ada/satmae/multispectral/data/train.csv \
-    --test_path /home/ada/satmae/multispectral/data/val.csv \
+    --train_path /home/ada/satmae/multispectral/data/fmow-sentinel/train.csv \
+    --test_path /home/ada/satmae/multispectral/data/fmow-sentinel/val.csv \
