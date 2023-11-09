@@ -1,0 +1,1366 @@
+/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: libtorch_cuda_cu.so: cannot open shared object file: No such file or directory
+  warn(f"Failed to load image Python extension: {e}")
+Not using distributed mode
+[11:12:04.876843] job dir: /home/ada/satmae/SatMAE
+[11:12:04.876931] Namespace(aa='rand-m9-mstd0.5-inc1',
+accum_iter=1,
+batch_size=8,
+blr=0.001,
+clip_grad=None,
+color_jitter=None,
+cutmix=0,
+cutmix_minmax=None,
+dataset_type='sentinel',
+device='cuda',
+dist_eval=True,
+dist_on_itp=False,
+dist_url='env://',
+distributed=False,
+drop_path=0.1,
+dropped_bands=None,
+epochs=50,
+eval=True,
+finetune='',
+global_pool=True,
+grouped_bands=[],
+input_size=96,
+layer_decay=0.75,
+local_rank=0,
+log_dir='/home/ada/satmae/multispectral/evaluation/frozen_vit_base',
+lr=None,
+masked_bands=None,
+min_lr=1e-06,
+mixup=0,
+mixup_mode='batch',
+mixup_prob=1.0,
+mixup_switch_prob=0.5,
+model='vit_base_patch16',
+model_type='group_c',
+nb_classes=62,
+num_workers=8,
+output_dir='/home/ada/satmae/multispectral/evaluation/frozen_vit_base',
+patch_size=8,
+pin_mem=True,
+recount=1,
+remode='pixel',
+reprob=0.25,
+resplit=False,
+resume='/home/ada/satmae/multispectral/checkpoints/pretrain-vit-base-e199.pth',
+save_every=1,
+seed=0,
+smoothing=0.1,
+start_epoch=0,
+test_path='/home/ada/satmae/multispectral/data/fmow-sentinel/val.csv',
+train_path='/home/ada/satmae/multispectral/data/fmow-sentinel/train.csv',
+wandb=None,
+warmup_epochs=5,
+weight_decay=0.05,
+world_size=1)
+[11:12:08.413630] <util.datasets.SentinelIndividualImageDataset object at 0x7fdd78eb1dd0>
+[11:12:08.814698] <util.datasets.SentinelIndividualImageDataset object at 0x7fdd79044b50>
+[11:12:08.814791] Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x7fdd78eb1f50>
+[11:12:08.814938] Grouping bands [[0, 1, 2, 6], [3, 4, 5, 7], [8, 9]]
+[11:12:25.622703] Model = GroupChannelsVisionTransformer(
+  (patch_embed): ModuleList(
+    (0): PatchEmbed(
+      (proj): Conv2d(4, 768, kernel_size=(8, 8), stride=(8, 8))
+    )
+    (1): PatchEmbed(
+      (proj): Conv2d(4, 768, kernel_size=(8, 8), stride=(8, 8))
+    )
+    (2): PatchEmbed(
+      (proj): Conv2d(2, 768, kernel_size=(8, 8), stride=(8, 8))
+    )
+  )
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (blocks): ModuleList(
+    (0): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (1): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (2): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (3): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (4): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (5): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (6): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (7): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (8): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (9): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (10): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (11): Block(
+      (norm1): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=768, out_features=2304, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=768, out_features=768, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=768, out_features=3072, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=3072, out_features=768, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (head): Linear(in_features=768, out_features=62, bias=True)
+  (fc_norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+)
+[11:12:25.622768] number of params (M): 85.67
+[11:12:25.622790] base lr: 1.00e-03
+[11:12:25.622805] actual lr: 3.13e-05
+[11:12:25.622818] accumulate grad iterations: 1
+[11:12:25.622831] effective batch size: 8
+[11:12:25.624661] criterion = LabelSmoothingCrossEntropy()
+[11:12:28.670338] Resume checkpoint /home/ada/satmae/multispectral/checkpoints/pretrain-vit-base-e199.pth
+[11:12:29.740707] Test:  [    0/10618]  eta: 3:08:47  loss: 3.8196 (3.8196)  acc1: 12.5000 (12.5000)  acc5: 37.5000 (37.5000)  time: 1.0668  data: 0.6046  max mem: 1611
+[11:12:33.030571] Test:  [   10/10618]  eta: 1:10:00  loss: 4.2563 (4.2282)  acc1: 0.0000 (1.1364)  acc5: 0.0000 (6.8182)  time: 0.3960  data: 0.0551  max mem: 1611
+[11:12:36.312477] Test:  [   20/10618]  eta: 1:04:14  loss: 4.2627 (4.2611)  acc1: 0.0000 (0.5952)  acc5: 0.0000 (6.5476)  time: 0.3285  data: 0.0002  max mem: 1611
+[11:12:39.584413] Test:  [   30/10618]  eta: 1:02:05  loss: 4.1965 (4.2468)  acc1: 0.0000 (1.2097)  acc5: 0.0000 (8.0645)  time: 0.3276  data: 0.0002  max mem: 1611
+[11:12:42.853769] Test:  [   40/10618]  eta: 1:00:57  loss: 4.1719 (4.2293)  acc1: 0.0000 (0.9146)  acc5: 12.5000 (8.5366)  time: 0.3270  data: 0.0002  max mem: 1611
+[11:12:46.090233] Test:  [   50/10618]  eta: 1:00:08  loss: 4.1782 (4.2199)  acc1: 0.0000 (1.2255)  acc5: 12.5000 (9.0686)  time: 0.3252  data: 0.0002  max mem: 1611
+[11:12:49.333398] Test:  [   60/10618]  eta: 0:59:34  loss: 4.1335 (4.2041)  acc1: 0.0000 (1.8443)  acc5: 12.5000 (10.0410)  time: 0.3239  data: 0.0002  max mem: 1611
+[11:12:52.587874] Test:  [   70/10618]  eta: 0:59:11  loss: 4.1724 (4.2114)  acc1: 0.0000 (1.5845)  acc5: 12.5000 (9.6831)  time: 0.3248  data: 0.0002  max mem: 1611
+[11:12:55.832858] Test:  [   80/10618]  eta: 0:58:52  loss: 4.2168 (4.2108)  acc1: 0.0000 (2.1605)  acc5: 12.5000 (10.3395)  time: 0.3249  data: 0.0002  max mem: 1611
+[11:12:59.081644] Test:  [   90/10618]  eta: 0:58:37  loss: 4.2168 (4.2187)  acc1: 0.0000 (1.9231)  acc5: 12.5000 (9.7527)  time: 0.3246  data: 0.0002  max mem: 1611
+[11:13:02.312516] Test:  [  100/10618]  eta: 0:58:22  loss: 4.2146 (4.2201)  acc1: 0.0000 (1.8564)  acc5: 0.0000 (9.4059)  time: 0.3239  data: 0.0002  max mem: 1611
+[11:13:05.558165] Test:  [  110/10618]  eta: 0:58:10  loss: 4.2151 (4.2243)  acc1: 0.0000 (1.8018)  acc5: 12.5000 (9.7973)  time: 0.3237  data: 0.0002  max mem: 1611
+[11:13:08.792663] Test:  [  120/10618]  eta: 0:57:59  loss: 4.1506 (4.2129)  acc1: 0.0000 (1.7562)  acc5: 12.5000 (10.0207)  time: 0.3239  data: 0.0002  max mem: 1611
+[11:13:12.039343] Test:  [  130/10618]  eta: 0:57:50  loss: 4.0903 (4.2096)  acc1: 0.0000 (1.6221)  acc5: 12.5000 (10.1145)  time: 0.3240  data: 0.0002  max mem: 1611
+[11:13:15.308487] Test:  [  140/10618]  eta: 0:57:44  loss: 4.2488 (4.2144)  acc1: 0.0000 (1.5071)  acc5: 0.0000 (9.5745)  time: 0.3257  data: 0.0002  max mem: 1611
+[11:13:18.573642] Test:  [  150/10618]  eta: 0:57:38  loss: 4.2378 (4.2134)  acc1: 0.0000 (1.4073)  acc5: 0.0000 (9.7682)  time: 0.3266  data: 0.0002  max mem: 1611
+[11:13:21.838111] Test:  [  160/10618]  eta: 0:57:32  loss: 4.1614 (4.2105)  acc1: 0.0000 (1.3975)  acc5: 12.5000 (10.0155)  time: 0.3264  data: 0.0002  max mem: 1611
+[11:13:25.118351] Test:  [  170/10618]  eta: 0:57:27  loss: 4.1704 (4.2083)  acc1: 0.0000 (1.4620)  acc5: 12.5000 (10.0146)  time: 0.3272  data: 0.0002  max mem: 1611
+[11:13:28.393844] Test:  [  180/10618]  eta: 0:57:23  loss: 4.0669 (4.2020)  acc1: 0.0000 (1.6575)  acc5: 12.5000 (10.5663)  time: 0.3277  data: 0.0002  max mem: 1611
+[11:13:31.680809] Test:  [  190/10618]  eta: 0:57:19  loss: 4.1350 (4.2014)  acc1: 0.0000 (1.7016)  acc5: 12.5000 (10.6021)  time: 0.3280  data: 0.0002  max mem: 1611
+[11:13:34.968874] Test:  [  200/10618]  eta: 0:57:15  loss: 4.2017 (4.2005)  acc1: 0.0000 (1.6169)  acc5: 12.5000 (10.6343)  time: 0.3287  data: 0.0002  max mem: 1611
+[11:13:38.254647] Test:  [  210/10618]  eta: 0:57:11  loss: 4.1902 (4.2021)  acc1: 0.0000 (1.5995)  acc5: 0.0000 (10.4265)  time: 0.3286  data: 0.0002  max mem: 1611
+[11:13:41.541816] Test:  [  220/10618]  eta: 0:57:07  loss: 4.1755 (4.2014)  acc1: 0.0000 (1.5271)  acc5: 0.0000 (10.1810)  time: 0.3286  data: 0.0002  max mem: 1611
+[11:13:44.810886] Test:  [  230/10618]  eta: 0:57:02  loss: 4.1685 (4.1992)  acc1: 0.0000 (1.5152)  acc5: 0.0000 (10.3896)  time: 0.3277  data: 0.0002  max mem: 1611
+[11:13:48.113180] Test:  [  240/10618]  eta: 0:56:59  loss: 4.2168 (4.1991)  acc1: 0.0000 (1.5041)  acc5: 12.5000 (10.3734)  time: 0.3285  data: 0.0002  max mem: 1611
+[11:13:51.402315] Test:  [  250/10618]  eta: 0:56:56  loss: 4.1992 (4.1974)  acc1: 0.0000 (1.5438)  acc5: 12.5000 (10.4582)  time: 0.3295  data: 0.0002  max mem: 1611
+[11:13:54.670784] Test:  [  260/10618]  eta: 0:56:51  loss: 4.1489 (4.1972)  acc1: 0.0000 (1.5805)  acc5: 12.5000 (10.4406)  time: 0.3278  data: 0.0002  max mem: 1611
+[11:13:57.933569] Test:  [  270/10618]  eta: 0:56:47  loss: 4.1079 (4.1923)  acc1: 0.0000 (1.5683)  acc5: 12.5000 (10.6550)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:14:01.210483] Test:  [  280/10618]  eta: 0:56:43  loss: 4.0908 (4.1911)  acc1: 0.0000 (1.5569)  acc5: 12.5000 (10.6317)  time: 0.3269  data: 0.0002  max mem: 1611
+[11:14:04.491703] Test:  [  290/10618]  eta: 0:56:39  loss: 4.1338 (4.1908)  acc1: 0.0000 (1.5034)  acc5: 0.0000 (10.5241)  time: 0.3278  data: 0.0002  max mem: 1611
+[11:14:07.744670] Test:  [  300/10618]  eta: 0:56:35  loss: 4.1594 (4.1918)  acc1: 0.0000 (1.4535)  acc5: 0.0000 (10.4236)  time: 0.3266  data: 0.0002  max mem: 1611
+[11:14:11.007416] Test:  [  310/10618]  eta: 0:56:30  loss: 4.1746 (4.1903)  acc1: 0.0000 (1.4871)  acc5: 0.0000 (10.4502)  time: 0.3257  data: 0.0002  max mem: 1611
+[11:14:14.274108] Test:  [  320/10618]  eta: 0:56:26  loss: 4.1841 (4.1916)  acc1: 0.0000 (1.4798)  acc5: 12.5000 (10.3972)  time: 0.3264  data: 0.0002  max mem: 1611
+[11:14:17.545394] Test:  [  330/10618]  eta: 0:56:23  loss: 4.1941 (4.1897)  acc1: 0.0000 (1.5106)  acc5: 12.5000 (10.5363)  time: 0.3268  data: 0.0002  max mem: 1611
+[11:14:20.797974] Test:  [  340/10618]  eta: 0:56:18  loss: 4.1624 (4.1898)  acc1: 0.0000 (1.5029)  acc5: 12.5000 (10.4839)  time: 0.3261  data: 0.0002  max mem: 1611
+[11:14:24.075342] Test:  [  350/10618]  eta: 0:56:15  loss: 4.1436 (4.1878)  acc1: 0.0000 (1.4957)  acc5: 0.0000 (10.3989)  time: 0.3264  data: 0.0002  max mem: 1611
+[11:14:27.325015] Test:  [  360/10618]  eta: 0:56:10  loss: 4.1091 (4.1856)  acc1: 0.0000 (1.5235)  acc5: 12.5000 (10.4571)  time: 0.3263  data: 0.0002  max mem: 1611
+[11:14:30.570708] Test:  [  370/10618]  eta: 0:56:06  loss: 4.0940 (4.1827)  acc1: 0.0000 (1.5499)  acc5: 12.5000 (10.6132)  time: 0.3247  data: 0.0002  max mem: 1611
+[11:14:33.803979] Test:  [  380/10618]  eta: 0:56:01  loss: 4.0940 (4.1818)  acc1: 0.0000 (1.5092)  acc5: 12.5000 (10.5315)  time: 0.3239  data: 0.0002  max mem: 1611
+[11:14:37.061352] Test:  [  390/10618]  eta: 0:55:57  loss: 4.1919 (4.1837)  acc1: 0.0000 (1.4706)  acc5: 12.5000 (10.4540)  time: 0.3244  data: 0.0002  max mem: 1611
+[11:14:40.303499] Test:  [  400/10618]  eta: 0:55:53  loss: 4.2192 (4.1839)  acc1: 0.0000 (1.4651)  acc5: 12.5000 (10.3803)  time: 0.3249  data: 0.0002  max mem: 1611
+[11:14:43.559386] Test:  [  410/10618]  eta: 0:55:49  loss: 4.1899 (4.1836)  acc1: 0.0000 (1.4599)  acc5: 0.0000 (10.3102)  time: 0.3248  data: 0.0002  max mem: 1611
+[11:14:46.809680] Test:  [  420/10618]  eta: 0:55:45  loss: 4.1711 (4.1819)  acc1: 0.0000 (1.5143)  acc5: 0.0000 (10.3622)  time: 0.3252  data: 0.0002  max mem: 1611
+[11:14:50.039328] Test:  [  430/10618]  eta: 0:55:40  loss: 4.1353 (4.1817)  acc1: 0.0000 (1.4791)  acc5: 0.0000 (10.4698)  time: 0.3239  data: 0.0002  max mem: 1611
+[11:14:53.276095] Test:  [  440/10618]  eta: 0:55:36  loss: 4.1587 (4.1822)  acc1: 0.0000 (1.5023)  acc5: 12.5000 (10.4592)  time: 0.3232  data: 0.0002  max mem: 1611
+[11:14:56.496675] Test:  [  450/10618]  eta: 0:55:31  loss: 4.1587 (4.1825)  acc1: 0.0000 (1.4690)  acc5: 12.5000 (10.4490)  time: 0.3228  data: 0.0002  max mem: 1611
+[11:14:59.747853] Test:  [  460/10618]  eta: 0:55:27  loss: 4.2317 (4.1831)  acc1: 0.0000 (1.4913)  acc5: 0.0000 (10.4121)  time: 0.3235  data: 0.0002  max mem: 1611
+[11:15:03.010305] Test:  [  470/10618]  eta: 0:55:24  loss: 4.2078 (4.1817)  acc1: 0.0000 (1.5127)  acc5: 0.0000 (10.3769)  time: 0.3256  data: 0.0002  max mem: 1611
+[11:15:06.272913] Test:  [  480/10618]  eta: 0:55:20  loss: 4.1694 (4.1827)  acc1: 0.0000 (1.5593)  acc5: 12.5000 (10.4730)  time: 0.3262  data: 0.0002  max mem: 1611
+[11:15:09.543103] Test:  [  490/10618]  eta: 0:55:17  loss: 4.2158 (4.1845)  acc1: 0.0000 (1.5275)  acc5: 12.5000 (10.5143)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:15:12.807156] Test:  [  500/10618]  eta: 0:55:13  loss: 4.1709 (4.1824)  acc1: 0.0000 (1.5968)  acc5: 12.5000 (10.5539)  time: 0.3266  data: 0.0002  max mem: 1611
+[11:15:16.065580] Test:  [  510/10618]  eta: 0:55:10  loss: 4.1465 (4.1836)  acc1: 0.0000 (1.5900)  acc5: 12.5000 (10.4941)  time: 0.3260  data: 0.0002  max mem: 1611
+[11:15:19.332411] Test:  [  520/10618]  eta: 0:55:06  loss: 4.2070 (4.1842)  acc1: 0.0000 (1.5595)  acc5: 0.0000 (10.4607)  time: 0.3262  data: 0.0002  max mem: 1611
+[11:15:22.601925] Test:  [  530/10618]  eta: 0:55:03  loss: 4.1758 (4.1841)  acc1: 0.0000 (1.5537)  acc5: 0.0000 (10.4520)  time: 0.3267  data: 0.0002  max mem: 1611
+[11:15:25.875599] Test:  [  540/10618]  eta: 0:55:00  loss: 4.1504 (4.1842)  acc1: 0.0000 (1.5943)  acc5: 12.5000 (10.4667)  time: 0.3271  data: 0.0002  max mem: 1611
+[11:15:29.148830] Test:  [  550/10618]  eta: 0:54:56  loss: 4.1934 (4.1846)  acc1: 0.0000 (1.5880)  acc5: 12.5000 (10.4809)  time: 0.3273  data: 0.0002  max mem: 1611
+[11:15:32.446497] Test:  [  560/10618]  eta: 0:54:53  loss: 4.1780 (4.1826)  acc1: 0.0000 (1.5820)  acc5: 12.5000 (10.5615)  time: 0.3285  data: 0.0002  max mem: 1611
+[11:15:35.717844] Test:  [  570/10618]  eta: 0:54:50  loss: 4.1597 (4.1828)  acc1: 0.0000 (1.5543)  acc5: 12.5000 (10.5298)  time: 0.3284  data: 0.0002  max mem: 1611
+[11:15:38.979770] Test:  [  580/10618]  eta: 0:54:47  loss: 4.1875 (4.1833)  acc1: 0.0000 (1.5921)  acc5: 12.5000 (10.5637)  time: 0.3266  data: 0.0002  max mem: 1611
+[11:15:42.229757] Test:  [  590/10618]  eta: 0:54:43  loss: 4.1946 (4.1825)  acc1: 0.0000 (1.6286)  acc5: 12.5000 (10.6176)  time: 0.3255  data: 0.0002  max mem: 1611
+[11:15:45.527511] Test:  [  600/10618]  eta: 0:54:40  loss: 4.0916 (4.1822)  acc1: 0.0000 (1.6431)  acc5: 12.5000 (10.6697)  time: 0.3273  data: 0.0002  max mem: 1611
+[11:15:48.793297] Test:  [  610/10618]  eta: 0:54:37  loss: 4.1089 (4.1819)  acc1: 0.0000 (1.6367)  acc5: 12.5000 (10.7815)  time: 0.3281  data: 0.0002  max mem: 1611
+[11:15:52.079851] Test:  [  620/10618]  eta: 0:54:33  loss: 4.1753 (4.1814)  acc1: 0.0000 (1.7110)  acc5: 12.5000 (10.8293)  time: 0.3275  data: 0.0002  max mem: 1611
+[11:15:55.369860] Test:  [  630/10618]  eta: 0:54:30  loss: 4.1753 (4.1823)  acc1: 0.0000 (1.6838)  acc5: 12.5000 (10.7567)  time: 0.3287  data: 0.0002  max mem: 1611
+[11:15:58.648718] Test:  [  640/10618]  eta: 0:54:27  loss: 4.2146 (4.1828)  acc1: 0.0000 (1.6966)  acc5: 0.0000 (10.6864)  time: 0.3284  data: 0.0002  max mem: 1611
+[11:16:01.932433] Test:  [  650/10618]  eta: 0:54:24  loss: 4.1636 (4.1822)  acc1: 0.0000 (1.7089)  acc5: 0.0000 (10.7335)  time: 0.3280  data: 0.0002  max mem: 1611
+[11:16:05.209960] Test:  [  660/10618]  eta: 0:54:21  loss: 4.1907 (4.1837)  acc1: 0.0000 (1.6831)  acc5: 12.5000 (10.6657)  time: 0.3280  data: 0.0002  max mem: 1611
+[11:16:08.497335] Test:  [  670/10618]  eta: 0:54:18  loss: 4.2461 (4.1843)  acc1: 0.0000 (1.6580)  acc5: 12.5000 (10.6930)  time: 0.3282  data: 0.0002  max mem: 1611
+[11:16:11.778365] Test:  [  680/10618]  eta: 0:54:14  loss: 4.2446 (4.1852)  acc1: 0.0000 (1.6520)  acc5: 12.5000 (10.6461)  time: 0.3283  data: 0.0002  max mem: 1611
+[11:16:15.058889] Test:  [  690/10618]  eta: 0:54:11  loss: 4.1433 (4.1845)  acc1: 0.0000 (1.6462)  acc5: 12.5000 (10.6548)  time: 0.3280  data: 0.0002  max mem: 1611
+[11:16:18.349143] Test:  [  700/10618]  eta: 0:54:08  loss: 4.1541 (4.1842)  acc1: 0.0000 (1.6405)  acc5: 0.0000 (10.6812)  time: 0.3284  data: 0.0002  max mem: 1611
+[11:16:21.634166] Test:  [  710/10618]  eta: 0:54:05  loss: 4.1614 (4.1835)  acc1: 0.0000 (1.6174)  acc5: 12.5000 (10.7595)  time: 0.3287  data: 0.0002  max mem: 1611
+[11:16:24.920616] Test:  [  720/10618]  eta: 0:54:02  loss: 4.1926 (4.1854)  acc1: 0.0000 (1.5950)  acc5: 12.5000 (10.6796)  time: 0.3285  data: 0.0002  max mem: 1611
+[11:16:28.210853] Test:  [  730/10618]  eta: 0:53:59  loss: 4.2603 (4.1856)  acc1: 0.0000 (1.6074)  acc5: 0.0000 (10.6532)  time: 0.3287  data: 0.0002  max mem: 1611
+[11:16:31.478046] Test:  [  740/10618]  eta: 0:53:55  loss: 4.1536 (4.1852)  acc1: 0.0000 (1.6363)  acc5: 12.5000 (10.6950)  time: 0.3278  data: 0.0002  max mem: 1611
+[11:16:34.735523] Test:  [  750/10618]  eta: 0:53:52  loss: 4.1562 (4.1848)  acc1: 0.0000 (1.6644)  acc5: 12.5000 (10.7523)  time: 0.3261  data: 0.0002  max mem: 1611
+[11:16:38.003063] Test:  [  760/10618]  eta: 0:53:48  loss: 4.2161 (4.1851)  acc1: 0.0000 (1.6754)  acc5: 12.5000 (10.6932)  time: 0.3262  data: 0.0002  max mem: 1611
+[11:16:41.281907] Test:  [  770/10618]  eta: 0:53:45  loss: 4.1277 (4.1842)  acc1: 0.0000 (1.6699)  acc5: 0.0000 (10.7490)  time: 0.3272  data: 0.0002  max mem: 1611
+[11:16:44.533964] Test:  [  780/10618]  eta: 0:53:42  loss: 4.1055 (4.1844)  acc1: 0.0000 (1.6645)  acc5: 12.5000 (10.7234)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:16:47.812949] Test:  [  790/10618]  eta: 0:53:38  loss: 4.1614 (4.1850)  acc1: 0.0000 (1.6435)  acc5: 12.5000 (10.7143)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:16:51.088234] Test:  [  800/10618]  eta: 0:53:35  loss: 4.2185 (4.1853)  acc1: 0.0000 (1.6230)  acc5: 12.5000 (10.6586)  time: 0.3276  data: 0.0002  max mem: 1611
+[11:16:54.359327] Test:  [  810/10618]  eta: 0:53:32  loss: 4.2034 (4.1849)  acc1: 0.0000 (1.6184)  acc5: 0.0000 (10.6196)  time: 0.3272  data: 0.0002  max mem: 1611
+[11:16:57.629085] Test:  [  820/10618]  eta: 0:53:28  loss: 4.2002 (4.1853)  acc1: 0.0000 (1.5987)  acc5: 0.0000 (10.5816)  time: 0.3270  data: 0.0002  max mem: 1611
+[11:17:00.908199] Test:  [  830/10618]  eta: 0:53:25  loss: 4.2195 (4.1859)  acc1: 0.0000 (1.5794)  acc5: 0.0000 (10.5295)  time: 0.3274  data: 0.0002  max mem: 1611
+[11:17:04.201468] Test:  [  840/10618]  eta: 0:53:22  loss: 4.1748 (4.1852)  acc1: 0.0000 (1.6052)  acc5: 12.5000 (10.5826)  time: 0.3285  data: 0.0002  max mem: 1611
+[11:17:07.473199] Test:  [  850/10618]  eta: 0:53:19  loss: 4.1748 (4.1856)  acc1: 0.0000 (1.5864)  acc5: 12.5000 (10.5317)  time: 0.3282  data: 0.0002  max mem: 1611
+[11:17:10.732792] Test:  [  860/10618]  eta: 0:53:15  loss: 4.1987 (4.1863)  acc1: 0.0000 (1.5970)  acc5: 0.0000 (10.4965)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:17:13.986614] Test:  [  870/10618]  eta: 0:53:12  loss: 4.2578 (4.1878)  acc1: 0.0000 (1.5786)  acc5: 0.0000 (10.4334)  time: 0.3256  data: 0.0002  max mem: 1611
+[11:17:17.264892] Test:  [  880/10618]  eta: 0:53:09  loss: 4.2468 (4.1883)  acc1: 0.0000 (1.5891)  acc5: 0.0000 (10.4285)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:17:20.532863] Test:  [  890/10618]  eta: 0:53:05  loss: 4.2090 (4.1886)  acc1: 0.0000 (1.5713)  acc5: 0.0000 (10.4097)  time: 0.3272  data: 0.0002  max mem: 1611
+[11:17:23.795307] Test:  [  900/10618]  eta: 0:53:02  loss: 4.1750 (4.1888)  acc1: 0.0000 (1.5538)  acc5: 0.0000 (10.3774)  time: 0.3264  data: 0.0002  max mem: 1611
+[11:17:27.079375] Test:  [  910/10618]  eta: 0:52:59  loss: 4.1350 (4.1882)  acc1: 0.0000 (1.5505)  acc5: 12.5000 (10.4281)  time: 0.3272  data: 0.0002  max mem: 1611
+[11:17:30.340210] Test:  [  920/10618]  eta: 0:52:55  loss: 4.1187 (4.1878)  acc1: 0.0000 (1.5879)  acc5: 12.5000 (10.4777)  time: 0.3272  data: 0.0002  max mem: 1611
+[11:17:33.604680] Test:  [  930/10618]  eta: 0:52:52  loss: 4.1118 (4.1869)  acc1: 0.0000 (1.6112)  acc5: 12.5000 (10.5397)  time: 0.3262  data: 0.0002  max mem: 1611
+[11:17:36.866133] Test:  [  940/10618]  eta: 0:52:48  loss: 4.1162 (4.1870)  acc1: 0.0000 (1.6073)  acc5: 12.5000 (10.5473)  time: 0.3262  data: 0.0002  max mem: 1611
+[11:17:40.159551] Test:  [  950/10618]  eta: 0:52:45  loss: 4.1821 (4.1871)  acc1: 0.0000 (1.6036)  acc5: 0.0000 (10.5284)  time: 0.3276  data: 0.0002  max mem: 1611
+[11:17:43.440153] Test:  [  960/10618]  eta: 0:52:42  loss: 4.1746 (4.1871)  acc1: 0.0000 (1.5999)  acc5: 0.0000 (10.5359)  time: 0.3286  data: 0.0002  max mem: 1611
+[11:17:46.707025] Test:  [  970/10618]  eta: 0:52:39  loss: 4.1794 (4.1874)  acc1: 0.0000 (1.6092)  acc5: 12.5000 (10.5304)  time: 0.3273  data: 0.0002  max mem: 1611
+[11:17:49.983644] Test:  [  980/10618]  eta: 0:52:35  loss: 4.2329 (4.1877)  acc1: 0.0000 (1.6055)  acc5: 0.0000 (10.4995)  time: 0.3271  data: 0.0002  max mem: 1611
+[11:17:53.241345] Test:  [  990/10618]  eta: 0:52:32  loss: 4.2158 (4.1883)  acc1: 0.0000 (1.6145)  acc5: 0.0000 (10.4692)  time: 0.3266  data: 0.0002  max mem: 1611
+[11:17:56.499106] Test:  [ 1000/10618]  eta: 0:52:29  loss: 4.2158 (4.1886)  acc1: 0.0000 (1.5984)  acc5: 0.0000 (10.4021)  time: 0.3257  data: 0.0002  max mem: 1611
+[11:17:59.759708] Test:  [ 1010/10618]  eta: 0:52:25  loss: 4.1997 (4.1887)  acc1: 0.0000 (1.5950)  acc5: 0.0000 (10.3610)  time: 0.3258  data: 0.0002  max mem: 1611
+[11:18:03.023495] Test:  [ 1020/10618]  eta: 0:52:22  loss: 4.1895 (4.1895)  acc1: 0.0000 (1.5793)  acc5: 0.0000 (10.2963)  time: 0.3261  data: 0.0002  max mem: 1611
+[11:18:06.282558] Test:  [ 1030/10618]  eta: 0:52:18  loss: 4.1619 (4.1889)  acc1: 0.0000 (1.5761)  acc5: 0.0000 (10.3055)  time: 0.3261  data: 0.0002  max mem: 1611
+[11:18:09.532223] Test:  [ 1040/10618]  eta: 0:52:15  loss: 4.1619 (4.1897)  acc1: 0.0000 (1.5850)  acc5: 0.0000 (10.2546)  time: 0.3253  data: 0.0002  max mem: 1611
+[11:18:12.808400] Test:  [ 1050/10618]  eta: 0:52:12  loss: 4.1394 (4.1889)  acc1: 0.0000 (1.5818)  acc5: 0.0000 (10.2759)  time: 0.3262  data: 0.0002  max mem: 1611
+[11:18:16.082585] Test:  [ 1060/10618]  eta: 0:52:08  loss: 4.1211 (4.1886)  acc1: 0.0000 (1.5787)  acc5: 0.0000 (10.2262)  time: 0.3274  data: 0.0002  max mem: 1611
+[11:18:19.342379] Test:  [ 1070/10618]  eta: 0:52:05  loss: 4.1921 (4.1882)  acc1: 0.0000 (1.5640)  acc5: 0.0000 (10.2591)  time: 0.3266  data: 0.0002  max mem: 1611
+[11:18:22.615276] Test:  [ 1080/10618]  eta: 0:52:02  loss: 4.1987 (4.1882)  acc1: 0.0000 (1.5495)  acc5: 0.0000 (10.1873)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:18:25.874915] Test:  [ 1090/10618]  eta: 0:51:58  loss: 4.2034 (4.1883)  acc1: 0.0000 (1.5582)  acc5: 0.0000 (10.1856)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:18:29.130417] Test:  [ 1100/10618]  eta: 0:51:55  loss: 4.1365 (4.1881)  acc1: 0.0000 (1.5554)  acc5: 12.5000 (10.1953)  time: 0.3257  data: 0.0002  max mem: 1611
+[11:18:32.380628] Test:  [ 1110/10618]  eta: 0:51:51  loss: 4.1411 (4.1883)  acc1: 0.0000 (1.5414)  acc5: 0.0000 (10.1598)  time: 0.3252  data: 0.0002  max mem: 1611
+[11:18:35.625025] Test:  [ 1120/10618]  eta: 0:51:48  loss: 4.1892 (4.1878)  acc1: 0.0000 (1.5723)  acc5: 0.0000 (10.1806)  time: 0.3246  data: 0.0002  max mem: 1611
+[11:18:38.876374] Test:  [ 1130/10618]  eta: 0:51:44  loss: 4.2063 (4.1881)  acc1: 0.0000 (1.5694)  acc5: 12.5000 (10.1680)  time: 0.3247  data: 0.0002  max mem: 1611
+[11:18:42.120423] Test:  [ 1140/10618]  eta: 0:51:41  loss: 4.1316 (4.1872)  acc1: 0.0000 (1.5666)  acc5: 12.5000 (10.1884)  time: 0.3247  data: 0.0002  max mem: 1611
+[11:18:45.378201] Test:  [ 1150/10618]  eta: 0:51:37  loss: 4.1140 (4.1873)  acc1: 0.0000 (1.5639)  acc5: 12.5000 (10.2085)  time: 0.3250  data: 0.0002  max mem: 1611
+[11:18:48.635344] Test:  [ 1160/10618]  eta: 0:51:34  loss: 4.1372 (4.1865)  acc1: 0.0000 (1.5935)  acc5: 12.5000 (10.2175)  time: 0.3257  data: 0.0002  max mem: 1611
+[11:18:51.856618] Test:  [ 1170/10618]  eta: 0:51:30  loss: 4.1301 (4.1860)  acc1: 0.0000 (1.6225)  acc5: 12.5000 (10.2583)  time: 0.3238  data: 0.0002  max mem: 1611
+[11:18:55.134273] Test:  [ 1180/10618]  eta: 0:51:27  loss: 4.1301 (4.1860)  acc1: 0.0000 (1.6194)  acc5: 12.5000 (10.2456)  time: 0.3248  data: 0.0002  max mem: 1611
+[11:18:58.411286] Test:  [ 1190/10618]  eta: 0:51:24  loss: 4.2454 (4.1867)  acc1: 0.0000 (1.6058)  acc5: 12.5000 (10.2225)  time: 0.3276  data: 0.0002  max mem: 1611
+[11:19:01.665139] Test:  [ 1200/10618]  eta: 0:51:20  loss: 4.1968 (4.1867)  acc1: 0.0000 (1.6132)  acc5: 12.5000 (10.2206)  time: 0.3265  data: 0.0002  max mem: 1611
+[11:19:04.922815] Test:  [ 1210/10618]  eta: 0:51:17  loss: 4.1194 (4.1857)  acc1: 0.0000 (1.6206)  acc5: 12.5000 (10.2704)  time: 0.3255  data: 0.0002  max mem: 1611
+[11:19:08.178962] Test:  [ 1220/10618]  eta: 0:51:14  loss: 4.2065 (4.1864)  acc1: 0.0000 (1.6175)  acc5: 0.0000 (10.2273)  time: 0.3256  data: 0.0002  max mem: 1611
+[11:19:11.449534] Test:  [ 1230/10618]  eta: 0:51:10  loss: 4.2114 (4.1864)  acc1: 0.0000 (1.6450)  acc5: 0.0000 (10.2559)  time: 0.3262  data: 0.0002  max mem: 1611
+[11:19:14.712971] Test:  [ 1240/10618]  eta: 0:51:07  loss: 4.1836 (4.1868)  acc1: 0.0000 (1.6418)  acc5: 0.0000 (10.2135)  time: 0.3266  data: 0.0002  max mem: 1611
+[11:19:17.962900] Test:  [ 1250/10618]  eta: 0:51:04  loss: 4.2048 (4.1866)  acc1: 0.0000 (1.6387)  acc5: 0.0000 (10.2618)  time: 0.3256  data: 0.0002  max mem: 1611
+[11:19:21.232321] Test:  [ 1260/10618]  eta: 0:51:00  loss: 4.1987 (4.1867)  acc1: 0.0000 (1.6356)  acc5: 12.5000 (10.2895)  time: 0.3259  data: 0.0002  max mem: 1611
+[11:19:24.496675] Test:  [ 1270/10618]  eta: 0:50:57  loss: 4.2302 (4.1874)  acc1: 0.0000 (1.6326)  acc5: 12.5000 (10.2872)  time: 0.3266  data: 0.0002  max mem: 1611
+[11:19:27.750217] Test:  [ 1280/10618]  eta: 0:50:54  loss: 4.2356 (4.1878)  acc1: 0.0000 (1.6393)  acc5: 12.5000 (10.2947)  time: 0.3258  data: 0.0002  max mem: 1611
+[11:19:30.999717] Test:  [ 1290/10618]  eta: 0:50:50  loss: 4.2195 (4.1878)  acc1: 0.0000 (1.6266)  acc5: 0.0000 (10.2730)  time: 0.3251  data: 0.0002  max mem: 1611
+[11:19:34.270899] Test:  [ 1300/10618]  eta: 0:50:47  loss: 4.1816 (4.1874)  acc1: 0.0000 (1.6141)  acc5: 0.0000 (10.2709)  time: 0.3259  data: 0.0002  max mem: 1611
+[11:19:37.510928] Test:  [ 1310/10618]  eta: 0:50:43  loss: 4.1816 (4.1873)  acc1: 0.0000 (1.6114)  acc5: 12.5000 (10.2879)  time: 0.3255  data: 0.0002  max mem: 1611
+[11:19:40.752128] Test:  [ 1320/10618]  eta: 0:50:40  loss: 4.1819 (4.1877)  acc1: 0.0000 (1.5992)  acc5: 12.5000 (10.2574)  time: 0.3240  data: 0.0002  max mem: 1611
+[11:19:44.001448] Test:  [ 1330/10618]  eta: 0:50:36  loss: 4.1541 (4.1872)  acc1: 0.0000 (1.5965)  acc5: 12.5000 (10.2930)  time: 0.3244  data: 0.0002  max mem: 1611
+[11:19:47.264375] Test:  [ 1340/10618]  eta: 0:50:33  loss: 4.0989 (4.1863)  acc1: 0.0000 (1.6219)  acc5: 12.5000 (10.3095)  time: 0.3255  data: 0.0002  max mem: 1611
+[11:19:50.516848] Test:  [ 1350/10618]  eta: 0:50:30  loss: 4.1360 (4.1864)  acc1: 0.0000 (1.6192)  acc5: 12.5000 (10.2887)  time: 0.3257  data: 0.0002  max mem: 1611
+[11:19:53.774082] Test:  [ 1360/10618]  eta: 0:50:26  loss: 4.2158 (4.1869)  acc1: 0.0000 (1.6165)  acc5: 0.0000 (10.2406)  time: 0.3254  data: 0.0002  max mem: 1611
+[11:19:57.034918] Test:  [ 1370/10618]  eta: 0:50:23  loss: 4.2095 (4.1867)  acc1: 0.0000 (1.6047)  acc5: 0.0000 (10.2389)  time: 0.3258  data: 0.0002  max mem: 1611
+[11:20:00.281204] Test:  [ 1380/10618]  eta: 0:50:20  loss: 4.2095 (4.1867)  acc1: 0.0000 (1.6021)  acc5: 0.0000 (10.2281)  time: 0.3253  data: 0.0002  max mem: 1611
+[11:20:03.531671] Test:  [ 1390/10618]  eta: 0:50:16  loss: 4.2383 (4.1873)  acc1: 0.0000 (1.5906)  acc5: 0.0000 (10.1905)  time: 0.3247  data: 0.0002  max mem: 1611
+[11:20:06.769039] Test:  [ 1400/10618]  eta: 0:50:13  loss: 4.2275 (4.1872)  acc1: 0.0000 (1.5971)  acc5: 0.0000 (10.1802)  time: 0.3243  data: 0.0002  max mem: 1611
+[11:20:10.023176] Test:  [ 1410/10618]  eta: 0:50:09  loss: 4.1580 (4.1871)  acc1: 0.0000 (1.6123)  acc5: 0.0000 (10.1701)  time: 0.3245  data: 0.0002  max mem: 1611
+[11:20:13.260249] Test:  [ 1420/10618]  eta: 0:50:06  loss: 4.1968 (4.1871)  acc1: 0.0000 (1.6010)  acc5: 12.5000 (10.1865)  time: 0.3245  data: 0.0002  max mem: 1611
+[11:20:16.521966] Test:  [ 1430/10618]  eta: 0:50:03  loss: 4.2666 (4.1876)  acc1: 0.0000 (1.5985)  acc5: 0.0000 (10.1415)  time: 0.3248  data: 0.0002  max mem: 1611
+[11:20:19.785529] Test:  [ 1440/10618]  eta: 0:49:59  loss: 4.2722 (4.1878)  acc1: 0.0000 (1.5961)  acc5: 0.0000 (10.1319)  time: 0.3262  data: 0.0002  max mem: 1611
+[11:20:23.016295] Test:  [ 1450/10618]  eta: 0:49:56  loss: 4.0972 (4.1873)  acc1: 0.0000 (1.5937)  acc5: 12.5000 (10.1482)  time: 0.3246  data: 0.0002  max mem: 1611
+[11:20:26.258061] Test:  [ 1460/10618]  eta: 0:49:52  loss: 4.1562 (4.1876)  acc1: 0.0000 (1.5914)  acc5: 12.5000 (10.1386)  time: 0.3235  data: 0.0002  max mem: 1611
+[11:20:29.496287] Test:  [ 1470/10618]  eta: 0:49:49  loss: 4.2695 (4.1884)  acc1: 0.0000 (1.5976)  acc5: 12.5000 (10.1122)  time: 0.3239  data: 0.0002  max mem: 1611
+[11:20:32.739032] Test:  [ 1480/10618]  eta: 0:49:45  loss: 4.1655 (4.1877)  acc1: 0.0000 (1.6036)  acc5: 12.5000 (10.1536)  time: 0.3240  data: 0.0002  max mem: 1611
+[11:20:35.986388] Test:  [ 1490/10618]  eta: 0:49:42  loss: 4.1343 (4.1875)  acc1: 0.0000 (1.5929)  acc5: 12.5000 (10.1610)  time: 0.3244  data: 0.0002  max mem: 1611
+[11:20:39.231914] Test:  [ 1500/10618]  eta: 0:49:39  loss: 4.2058 (4.1880)  acc1: 0.0000 (1.5906)  acc5: 12.5000 (10.1432)  time: 0.3246  data: 0.0002  max mem: 1611
+[11:20:42.476110] Test:  [ 1510/10618]  eta: 0:49:35  loss: 4.2856 (4.1883)  acc1: 0.0000 (1.6049)  acc5: 0.0000 (10.1257)  time: 0.3244  data: 0.0002  max mem: 1611
+[11:20:45.723128] Test:  [ 1520/10618]  eta: 0:49:32  loss: 4.2175 (4.1883)  acc1: 0.0000 (1.5943)  acc5: 12.5000 (10.1249)  time: 0.3245  data: 0.0002  max mem: 1611
+[11:20:48.973418] Test:  [ 1530/10618]  eta: 0:49:28  loss: 4.1799 (4.1883)  acc1: 0.0000 (1.6003)  acc5: 12.5000 (10.1078)  time: 0.3248  data: 0.0002  max mem: 1611
+[11:20:52.209502] Test:  [ 1540/10618]  eta: 0:49:25  loss: 4.1665 (4.1881)  acc1: 0.0000 (1.6061)  acc5: 12.5000 (10.1071)  time: 0.3242  data: 0.0002  max mem: 1611
+[11:20:55.445471] Test:  [ 1550/10618]  eta: 0:49:22  loss: 4.1646 (4.1880)  acc1: 0.0000 (1.5957)  acc5: 12.5000 (10.1144)  time: 0.3235  data: 0.0002  max mem: 1611
+[11:20:58.678306] Test:  [ 1560/10618]  eta: 0:49:18  loss: 4.1577 (4.1879)  acc1: 0.0000 (1.5855)  acc5: 12.5000 (10.1057)  time: 0.3233  data: 0.0002  max mem: 1611
+[11:21:01.925521] Test:  [ 1570/10618]  eta: 0:49:15  loss: 4.1643 (4.1880)  acc1: 0.0000 (1.5754)  acc5: 12.5000 (10.0971)  time: 0.3239  data: 0.0002  max mem: 1611
+[11:21:05.181835] Test:  [ 1580/10618]  eta: 0:49:11  loss: 4.1956 (4.1882)  acc1: 0.0000 (1.5734)  acc5: 12.5000 (10.0965)  time: 0.3251  data: 0.0002  max mem: 1611
+[11:21:08.428139] Test:  [ 1590/10618]  eta: 0:49:08  loss: 4.2239 (4.1881)  acc1: 0.0000 (1.5713)  acc5: 12.5000 (10.0801)  time: 0.3250  data: 0.0002  max mem: 1611
+[11:21:11.671242] Test:  [ 1600/10618]  eta: 0:49:05  loss: 4.1772 (4.1881)  acc1: 0.0000 (1.5615)  acc5: 12.5000 (10.0796)  time: 0.3244  data: 0.0002  max mem: 1611
+[11:21:14.921491] Test:  [ 1610/10618]  eta: 0:49:01  loss: 4.1704 (4.1880)  acc1: 0.0000 (1.5751)  acc5: 12.5000 (10.0869)  time: 0.3246  data: 0.0002  max mem: 1611
+[11:21:18.157367] Test:  [ 1620/10618]  eta: 0:48:58  loss: 4.0725 (4.1873)  acc1: 0.0000 (1.5808)  acc5: 12.5000 (10.1095)  time: 0.3242  data: 0.0002  max mem: 1611
+[11:21:21.384646] Test:  [ 1630/10618]  eta: 0:48:54  loss: 4.1641 (4.1880)  acc1: 0.0000 (1.5711)  acc5: 0.0000 (10.0935)  time: 0.3230  data: 0.0002  max mem: 1611
+[11:21:24.625764] Test:  [ 1640/10618]  eta: 0:48:51  loss: 4.2671 (4.1881)  acc1: 0.0000 (1.5692)  acc5: 0.0000 (10.1005)  time: 0.3233  data: 0.0002  max mem: 1611
+[11:21:27.669574] Test:  [ 1650/10618]  eta: 0:48:46  loss: 4.1667 (4.1879)  acc1: 0.0000 (1.5672)  acc5: 0.0000 (10.0697)  time: 0.3142  data: 0.0002  max mem: 1611
+[11:21:29.853770] Test:  [ 1660/10618]  eta: 0:48:37  loss: 4.1667 (4.1883)  acc1: 0.0000 (1.5578)  acc5: 0.0000 (10.0542)  time: 0.2613  data: 0.0002  max mem: 1611
+[11:21:32.031280] Test:  [ 1670/10618]  eta: 0:48:28  loss: 4.1699 (4.1882)  acc1: 0.0000 (1.5485)  acc5: 0.0000 (10.0389)  time: 0.2180  data: 0.0002  max mem: 1611
+[11:21:34.207993] Test:  [ 1680/10618]  eta: 0:48:19  loss: 4.1416 (4.1880)  acc1: 0.0000 (1.5393)  acc5: 12.5000 (10.0461)  time: 0.2176  data: 0.0001  max mem: 1611
+[11:21:36.396342] Test:  [ 1690/10618]  eta: 0:48:11  loss: 4.1387 (4.1881)  acc1: 0.0000 (1.5376)  acc5: 12.5000 (10.0532)  time: 0.2182  data: 0.0001  max mem: 1611
+[11:21:38.566586] Test:  [ 1700/10618]  eta: 0:48:02  loss: 4.1860 (4.1885)  acc1: 0.0000 (1.5359)  acc5: 12.5000 (10.0309)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:21:40.744890] Test:  [ 1710/10618]  eta: 0:47:53  loss: 4.2483 (4.1889)  acc1: 0.0000 (1.5269)  acc5: 12.5000 (10.0234)  time: 0.2173  data: 0.0001  max mem: 1611
+[11:21:42.927410] Test:  [ 1720/10618]  eta: 0:47:44  loss: 4.1602 (4.1884)  acc1: 0.0000 (1.5325)  acc5: 0.0000 (10.0087)  time: 0.2180  data: 0.0001  max mem: 1611
+[11:21:45.095809] Test:  [ 1730/10618]  eta: 0:47:36  loss: 4.1602 (4.1885)  acc1: 0.0000 (1.5453)  acc5: 12.5000 (10.0231)  time: 0.2175  data: 0.0001  max mem: 1611
+[11:21:47.268080] Test:  [ 1740/10618]  eta: 0:47:27  loss: 4.1792 (4.1883)  acc1: 0.0000 (1.5508)  acc5: 12.5000 (10.0302)  time: 0.2170  data: 0.0001  max mem: 1611
+[11:21:49.450477] Test:  [ 1750/10618]  eta: 0:47:19  loss: 4.1260 (4.1877)  acc1: 0.0000 (1.5563)  acc5: 12.5000 (10.0657)  time: 0.2177  data: 0.0001  max mem: 1611
+[11:21:51.656083] Test:  [ 1760/10618]  eta: 0:47:11  loss: 4.2080 (4.1881)  acc1: 0.0000 (1.5474)  acc5: 12.5000 (10.0795)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:21:53.829958] Test:  [ 1770/10618]  eta: 0:47:02  loss: 4.2173 (4.1880)  acc1: 0.0000 (1.5528)  acc5: 12.5000 (10.0791)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:21:56.013154] Test:  [ 1780/10618]  eta: 0:46:54  loss: 4.1716 (4.1882)  acc1: 0.0000 (1.5441)  acc5: 12.5000 (10.0716)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:21:58.214710] Test:  [ 1790/10618]  eta: 0:46:46  loss: 4.2178 (4.1882)  acc1: 0.0000 (1.5494)  acc5: 12.5000 (10.0921)  time: 0.2192  data: 0.0002  max mem: 1611
+[11:22:00.416074] Test:  [ 1800/10618]  eta: 0:46:38  loss: 4.1289 (4.1879)  acc1: 0.0000 (1.5616)  acc5: 12.5000 (10.0847)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:22:02.594594] Test:  [ 1810/10618]  eta: 0:46:30  loss: 4.0984 (4.1874)  acc1: 0.0000 (1.5737)  acc5: 12.5000 (10.1463)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:22:04.776592] Test:  [ 1820/10618]  eta: 0:46:22  loss: 4.1860 (4.1879)  acc1: 0.0000 (1.5719)  acc5: 12.5000 (10.1387)  time: 0.2179  data: 0.0001  max mem: 1611
+[11:22:06.973505] Test:  [ 1830/10618]  eta: 0:46:14  loss: 4.1882 (4.1876)  acc1: 0.0000 (1.5770)  acc5: 12.5000 (10.1789)  time: 0.2189  data: 0.0002  max mem: 1611
+[11:22:09.168023] Test:  [ 1840/10618]  eta: 0:46:07  loss: 4.1331 (4.1876)  acc1: 0.0000 (1.5752)  acc5: 12.5000 (10.1643)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:22:11.365328] Test:  [ 1850/10618]  eta: 0:45:59  loss: 4.1821 (4.1880)  acc1: 0.0000 (1.5667)  acc5: 0.0000 (10.1567)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:22:13.570871] Test:  [ 1860/10618]  eta: 0:45:51  loss: 4.1323 (4.1876)  acc1: 0.0000 (1.5583)  acc5: 0.0000 (10.1760)  time: 0.2201  data: 0.0002  max mem: 1611
+[11:22:15.772018] Test:  [ 1870/10618]  eta: 0:45:44  loss: 4.1035 (4.1875)  acc1: 0.0000 (1.5633)  acc5: 0.0000 (10.1617)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:22:17.966676] Test:  [ 1880/10618]  eta: 0:45:36  loss: 4.1243 (4.1871)  acc1: 0.0000 (1.5617)  acc5: 0.0000 (10.1475)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:22:20.177611] Test:  [ 1890/10618]  eta: 0:45:29  loss: 4.1243 (4.1871)  acc1: 0.0000 (1.5600)  acc5: 12.5000 (10.1600)  time: 0.2202  data: 0.0002  max mem: 1611
+[11:22:22.372918] Test:  [ 1900/10618]  eta: 0:45:21  loss: 4.1860 (4.1874)  acc1: 0.0000 (1.5650)  acc5: 12.5000 (10.1526)  time: 0.2202  data: 0.0002  max mem: 1611
+[11:22:24.577557] Test:  [ 1910/10618]  eta: 0:45:14  loss: 4.1775 (4.1872)  acc1: 0.0000 (1.5764)  acc5: 12.5000 (10.1714)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:22:26.769493] Test:  [ 1920/10618]  eta: 0:45:07  loss: 4.1750 (4.1873)  acc1: 0.0000 (1.5682)  acc5: 12.5000 (10.1575)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:22:28.973122] Test:  [ 1930/10618]  eta: 0:45:00  loss: 4.2139 (4.1877)  acc1: 0.0000 (1.5665)  acc5: 12.5000 (10.1631)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:22:31.167252] Test:  [ 1940/10618]  eta: 0:44:52  loss: 4.2139 (4.1879)  acc1: 0.0000 (1.5649)  acc5: 0.0000 (10.1301)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:22:33.350694] Test:  [ 1950/10618]  eta: 0:44:45  loss: 4.1970 (4.1877)  acc1: 0.0000 (1.5633)  acc5: 0.0000 (10.1486)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:22:35.544247] Test:  [ 1960/10618]  eta: 0:44:38  loss: 4.2319 (4.1879)  acc1: 0.0000 (1.5553)  acc5: 12.5000 (10.1543)  time: 0.2188  data: 0.0002  max mem: 1611
+[11:22:37.735325] Test:  [ 1970/10618]  eta: 0:44:31  loss: 4.2063 (4.1879)  acc1: 0.0000 (1.5538)  acc5: 12.5000 (10.1662)  time: 0.2191  data: 0.0002  max mem: 1611
+[11:22:39.933582] Test:  [ 1980/10618]  eta: 0:44:24  loss: 4.1960 (4.1878)  acc1: 0.0000 (1.5586)  acc5: 12.5000 (10.1843)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:22:42.133425] Test:  [ 1990/10618]  eta: 0:44:17  loss: 4.2354 (4.1880)  acc1: 0.0000 (1.5507)  acc5: 12.5000 (10.1833)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:22:44.322306] Test:  [ 2000/10618]  eta: 0:44:10  loss: 4.2112 (4.1881)  acc1: 0.0000 (1.5430)  acc5: 12.5000 (10.1699)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:22:46.510060] Test:  [ 2010/10618]  eta: 0:44:03  loss: 4.2112 (4.1882)  acc1: 0.0000 (1.5415)  acc5: 0.0000 (10.1566)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:22:48.706599] Test:  [ 2020/10618]  eta: 0:43:57  loss: 4.2324 (4.1886)  acc1: 0.0000 (1.5401)  acc5: 0.0000 (10.1373)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:22:50.892586] Test:  [ 2030/10618]  eta: 0:43:50  loss: 4.2144 (4.1886)  acc1: 0.0000 (1.5325)  acc5: 12.5000 (10.1305)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:22:53.064860] Test:  [ 2040/10618]  eta: 0:43:43  loss: 4.2065 (4.1886)  acc1: 0.0000 (1.5250)  acc5: 12.5000 (10.1360)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:22:55.240980] Test:  [ 2050/10618]  eta: 0:43:36  loss: 4.1287 (4.1881)  acc1: 0.0000 (1.5176)  acc5: 12.5000 (10.1475)  time: 0.2173  data: 0.0001  max mem: 1611
+[11:22:57.421776] Test:  [ 2060/10618]  eta: 0:43:30  loss: 4.1191 (4.1878)  acc1: 0.0000 (1.5223)  acc5: 12.5000 (10.1771)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:22:59.601929] Test:  [ 2070/10618]  eta: 0:43:23  loss: 4.1106 (4.1878)  acc1: 0.0000 (1.5150)  acc5: 12.5000 (10.2245)  time: 0.2180  data: 0.0001  max mem: 1611
+[11:23:01.779306] Test:  [ 2080/10618]  eta: 0:43:16  loss: 4.0925 (4.1875)  acc1: 0.0000 (1.5197)  acc5: 12.5000 (10.2235)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:23:03.962405] Test:  [ 2090/10618]  eta: 0:43:10  loss: 4.1277 (4.1875)  acc1: 0.0000 (1.5184)  acc5: 12.5000 (10.2343)  time: 0.2179  data: 0.0001  max mem: 1611
+[11:23:06.148747] Test:  [ 2100/10618]  eta: 0:43:03  loss: 4.1946 (4.1876)  acc1: 0.0000 (1.5112)  acc5: 12.5000 (10.2332)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:23:08.328950] Test:  [ 2110/10618]  eta: 0:42:57  loss: 4.2083 (4.1877)  acc1: 0.0000 (1.5040)  acc5: 12.5000 (10.2262)  time: 0.2182  data: 0.0001  max mem: 1611
+[11:23:10.505106] Test:  [ 2120/10618]  eta: 0:42:50  loss: 4.1411 (4.1875)  acc1: 0.0000 (1.5028)  acc5: 12.5000 (10.2428)  time: 0.2177  data: 0.0001  max mem: 1611
+[11:23:12.678016] Test:  [ 2130/10618]  eta: 0:42:44  loss: 4.1331 (4.1877)  acc1: 0.0000 (1.5134)  acc5: 12.5000 (10.2475)  time: 0.2174  data: 0.0001  max mem: 1611
+[11:23:14.869597] Test:  [ 2140/10618]  eta: 0:42:38  loss: 4.2227 (4.1876)  acc1: 0.0000 (1.5121)  acc5: 12.5000 (10.2405)  time: 0.2181  data: 0.0001  max mem: 1611
+[11:23:17.054559] Test:  [ 2150/10618]  eta: 0:42:31  loss: 4.1704 (4.1876)  acc1: 0.0000 (1.5109)  acc5: 0.0000 (10.2336)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:23:19.243368] Test:  [ 2160/10618]  eta: 0:42:25  loss: 4.1543 (4.1874)  acc1: 0.0000 (1.5155)  acc5: 0.0000 (10.2210)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:23:21.440338] Test:  [ 2170/10618]  eta: 0:42:19  loss: 4.0952 (4.1870)  acc1: 0.0000 (1.5316)  acc5: 12.5000 (10.2718)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:23:23.623406] Test:  [ 2180/10618]  eta: 0:42:13  loss: 4.1365 (4.1867)  acc1: 0.0000 (1.5360)  acc5: 12.5000 (10.2877)  time: 0.2189  data: 0.0002  max mem: 1611
+[11:23:25.822390] Test:  [ 2190/10618]  eta: 0:42:07  loss: 4.2058 (4.1868)  acc1: 0.0000 (1.5404)  acc5: 0.0000 (10.2864)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:23:28.017923] Test:  [ 2200/10618]  eta: 0:42:01  loss: 4.2136 (4.1869)  acc1: 0.0000 (1.5391)  acc5: 0.0000 (10.2794)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:23:30.228038] Test:  [ 2210/10618]  eta: 0:41:55  loss: 4.2046 (4.1872)  acc1: 0.0000 (1.5434)  acc5: 12.5000 (10.2725)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:23:32.436578] Test:  [ 2220/10618]  eta: 0:41:49  loss: 4.1890 (4.1870)  acc1: 0.0000 (1.5477)  acc5: 12.5000 (10.2713)  time: 0.2209  data: 0.0002  max mem: 1611
+[11:23:34.636272] Test:  [ 2230/10618]  eta: 0:41:43  loss: 4.1597 (4.1868)  acc1: 0.0000 (1.5520)  acc5: 0.0000 (10.2645)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:23:36.851923] Test:  [ 2240/10618]  eta: 0:41:37  loss: 4.1638 (4.1870)  acc1: 0.0000 (1.5506)  acc5: 0.0000 (10.2577)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:23:39.055310] Test:  [ 2250/10618]  eta: 0:41:31  loss: 4.2498 (4.1873)  acc1: 0.0000 (1.5549)  acc5: 0.0000 (10.2399)  time: 0.2209  data: 0.0001  max mem: 1611
+[11:23:41.270222] Test:  [ 2260/10618]  eta: 0:41:25  loss: 4.1655 (4.1871)  acc1: 0.0000 (1.5701)  acc5: 12.5000 (10.2388)  time: 0.2208  data: 0.0001  max mem: 1611
+[11:23:43.453015] Test:  [ 2270/10618]  eta: 0:41:19  loss: 4.1604 (4.1873)  acc1: 0.0000 (1.5632)  acc5: 12.5000 (10.2378)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:23:45.666434] Test:  [ 2280/10618]  eta: 0:41:13  loss: 4.1558 (4.1871)  acc1: 0.0000 (1.5618)  acc5: 12.5000 (10.2422)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:23:47.871231] Test:  [ 2290/10618]  eta: 0:41:08  loss: 4.1968 (4.1875)  acc1: 0.0000 (1.5550)  acc5: 0.0000 (10.2193)  time: 0.2208  data: 0.0002  max mem: 1611
+[11:23:50.066277] Test:  [ 2300/10618]  eta: 0:41:02  loss: 4.2014 (4.1872)  acc1: 0.0000 (1.5537)  acc5: 12.5000 (10.2347)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:23:52.264952] Test:  [ 2310/10618]  eta: 0:40:56  loss: 4.1213 (4.1869)  acc1: 0.0000 (1.5686)  acc5: 12.5000 (10.2445)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:23:54.466601] Test:  [ 2320/10618]  eta: 0:40:51  loss: 4.1455 (4.1866)  acc1: 0.0000 (1.5672)  acc5: 12.5000 (10.2650)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:23:56.672374] Test:  [ 2330/10618]  eta: 0:40:45  loss: 4.1895 (4.1868)  acc1: 0.0000 (1.5712)  acc5: 12.5000 (10.2746)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:23:58.885828] Test:  [ 2340/10618]  eta: 0:40:39  loss: 4.1951 (4.1867)  acc1: 0.0000 (1.5698)  acc5: 0.0000 (10.2574)  time: 0.2209  data: 0.0001  max mem: 1611
+[11:24:01.088221] Test:  [ 2350/10618]  eta: 0:40:34  loss: 4.1951 (4.1869)  acc1: 0.0000 (1.5685)  acc5: 0.0000 (10.2403)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:24:03.290797] Test:  [ 2360/10618]  eta: 0:40:28  loss: 4.1851 (4.1867)  acc1: 0.0000 (1.5671)  acc5: 12.5000 (10.2446)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:24:05.490822] Test:  [ 2370/10618]  eta: 0:40:23  loss: 4.1616 (4.1868)  acc1: 0.0000 (1.5816)  acc5: 12.5000 (10.2278)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:24:07.710720] Test:  [ 2380/10618]  eta: 0:40:17  loss: 4.2070 (4.1871)  acc1: 0.0000 (1.5750)  acc5: 0.0000 (10.2110)  time: 0.2209  data: 0.0001  max mem: 1611
+[11:24:09.908809] Test:  [ 2390/10618]  eta: 0:40:12  loss: 4.2434 (4.1871)  acc1: 0.0000 (1.5736)  acc5: 0.0000 (10.2049)  time: 0.2208  data: 0.0001  max mem: 1611
+[11:24:12.106333] Test:  [ 2400/10618]  eta: 0:40:06  loss: 4.1919 (4.1871)  acc1: 0.0000 (1.5671)  acc5: 0.0000 (10.1989)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:24:14.306712] Test:  [ 2410/10618]  eta: 0:40:01  loss: 4.1689 (4.1873)  acc1: 0.0000 (1.5606)  acc5: 0.0000 (10.1669)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:24:16.505876] Test:  [ 2420/10618]  eta: 0:39:56  loss: 4.1689 (4.1870)  acc1: 0.0000 (1.5644)  acc5: 0.0000 (10.1714)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:24:18.695822] Test:  [ 2430/10618]  eta: 0:39:50  loss: 4.1521 (4.1871)  acc1: 0.0000 (1.5580)  acc5: 12.5000 (10.1604)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:24:20.901636] Test:  [ 2440/10618]  eta: 0:39:45  loss: 4.2810 (4.1875)  acc1: 0.0000 (1.5619)  acc5: 0.0000 (10.1649)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:24:23.100470] Test:  [ 2450/10618]  eta: 0:39:40  loss: 4.2654 (4.1875)  acc1: 0.0000 (1.5555)  acc5: 12.5000 (10.1591)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:24:25.295631] Test:  [ 2460/10618]  eta: 0:39:34  loss: 4.1958 (4.1877)  acc1: 0.0000 (1.5542)  acc5: 12.5000 (10.1483)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:24:27.492755] Test:  [ 2470/10618]  eta: 0:39:29  loss: 4.2283 (4.1880)  acc1: 0.0000 (1.5530)  acc5: 0.0000 (10.1325)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:24:29.699517] Test:  [ 2480/10618]  eta: 0:39:24  loss: 4.1968 (4.1879)  acc1: 0.0000 (1.5619)  acc5: 0.0000 (10.1320)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:24:31.910475] Test:  [ 2490/10618]  eta: 0:39:19  loss: 4.1709 (4.1881)  acc1: 0.0000 (1.5656)  acc5: 0.0000 (10.1265)  time: 0.2208  data: 0.0001  max mem: 1611
+[11:24:34.110342] Test:  [ 2500/10618]  eta: 0:39:13  loss: 4.1667 (4.1879)  acc1: 0.0000 (1.5694)  acc5: 12.5000 (10.1359)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:24:36.312400] Test:  [ 2510/10618]  eta: 0:39:08  loss: 4.1667 (4.1879)  acc1: 0.0000 (1.5681)  acc5: 12.5000 (10.1354)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:24:38.511052] Test:  [ 2520/10618]  eta: 0:39:03  loss: 4.1953 (4.1882)  acc1: 0.0000 (1.5668)  acc5: 0.0000 (10.1200)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:24:40.688776] Test:  [ 2530/10618]  eta: 0:38:58  loss: 4.2295 (4.1882)  acc1: 0.0000 (1.5656)  acc5: 12.5000 (10.1294)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:24:42.891101] Test:  [ 2540/10618]  eta: 0:38:53  loss: 4.1331 (4.1878)  acc1: 0.0000 (1.5693)  acc5: 12.5000 (10.1486)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:24:45.093362] Test:  [ 2550/10618]  eta: 0:38:48  loss: 4.1880 (4.1880)  acc1: 0.0000 (1.5729)  acc5: 12.5000 (10.1382)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:24:47.280658] Test:  [ 2560/10618]  eta: 0:38:43  loss: 4.2295 (4.1882)  acc1: 0.0000 (1.5717)  acc5: 12.5000 (10.1425)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:24:49.479535] Test:  [ 2570/10618]  eta: 0:38:38  loss: 4.2661 (4.1883)  acc1: 0.0000 (1.5753)  acc5: 12.5000 (10.1420)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:24:51.680796] Test:  [ 2580/10618]  eta: 0:38:33  loss: 4.2202 (4.1885)  acc1: 0.0000 (1.5788)  acc5: 0.0000 (10.1414)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:24:53.893712] Test:  [ 2590/10618]  eta: 0:38:28  loss: 4.2300 (4.1887)  acc1: 0.0000 (1.5824)  acc5: 0.0000 (10.1312)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:24:56.090485] Test:  [ 2600/10618]  eta: 0:38:23  loss: 4.2231 (4.1888)  acc1: 0.0000 (1.5811)  acc5: 0.0000 (10.1115)  time: 0.2204  data: 0.0002  max mem: 1611
+[11:24:58.286775] Test:  [ 2610/10618]  eta: 0:38:18  loss: 4.2231 (4.1888)  acc1: 0.0000 (1.5751)  acc5: 0.0000 (10.1063)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:25:00.473948] Test:  [ 2620/10618]  eta: 0:38:13  loss: 4.1770 (4.1888)  acc1: 0.0000 (1.5786)  acc5: 12.5000 (10.1250)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:25:02.662113] Test:  [ 2630/10618]  eta: 0:38:08  loss: 4.1809 (4.1887)  acc1: 0.0000 (1.5773)  acc5: 12.5000 (10.1340)  time: 0.2187  data: 0.0002  max mem: 1611
+[11:25:04.864469] Test:  [ 2640/10618]  eta: 0:38:03  loss: 4.1809 (4.1888)  acc1: 0.0000 (1.5761)  acc5: 12.5000 (10.1193)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:25:07.067671] Test:  [ 2650/10618]  eta: 0:37:58  loss: 4.1763 (4.1887)  acc1: 0.0000 (1.5702)  acc5: 12.5000 (10.1188)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:25:09.252959] Test:  [ 2660/10618]  eta: 0:37:53  loss: 4.1235 (4.1886)  acc1: 0.0000 (1.5737)  acc5: 12.5000 (10.1231)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:25:11.441675] Test:  [ 2670/10618]  eta: 0:37:49  loss: 4.1316 (4.1885)  acc1: 0.0000 (1.5678)  acc5: 12.5000 (10.1133)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:25:13.655414] Test:  [ 2680/10618]  eta: 0:37:44  loss: 4.2024 (4.1885)  acc1: 0.0000 (1.5666)  acc5: 12.5000 (10.1175)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:25:15.854833] Test:  [ 2690/10618]  eta: 0:37:39  loss: 4.2222 (4.1888)  acc1: 0.0000 (1.5608)  acc5: 0.0000 (10.1031)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:25:18.060709] Test:  [ 2700/10618]  eta: 0:37:34  loss: 4.2224 (4.1887)  acc1: 0.0000 (1.5596)  acc5: 0.0000 (10.1074)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:25:20.255585] Test:  [ 2710/10618]  eta: 0:37:30  loss: 4.1538 (4.1886)  acc1: 0.0000 (1.5585)  acc5: 12.5000 (10.1208)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:25:22.451252] Test:  [ 2720/10618]  eta: 0:37:25  loss: 4.1611 (4.1888)  acc1: 0.0000 (1.5573)  acc5: 12.5000 (10.1158)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:25:24.657212] Test:  [ 2730/10618]  eta: 0:37:20  loss: 4.1018 (4.1883)  acc1: 0.0000 (1.5608)  acc5: 12.5000 (10.1291)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:25:26.843469] Test:  [ 2740/10618]  eta: 0:37:15  loss: 4.1484 (4.1885)  acc1: 0.0000 (1.5551)  acc5: 12.5000 (10.1286)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:25:29.046105] Test:  [ 2750/10618]  eta: 0:37:11  loss: 4.2903 (4.1889)  acc1: 0.0000 (1.5585)  acc5: 12.5000 (10.1236)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:25:31.237749] Test:  [ 2760/10618]  eta: 0:37:06  loss: 4.2825 (4.1892)  acc1: 0.0000 (1.5574)  acc5: 0.0000 (10.1096)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:25:33.445497] Test:  [ 2770/10618]  eta: 0:37:01  loss: 4.1829 (4.1889)  acc1: 0.0000 (1.5608)  acc5: 0.0000 (10.1047)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:25:35.647706] Test:  [ 2780/10618]  eta: 0:36:57  loss: 4.1011 (4.1887)  acc1: 0.0000 (1.5687)  acc5: 0.0000 (10.0953)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:25:37.843446] Test:  [ 2790/10618]  eta: 0:36:52  loss: 4.1152 (4.1886)  acc1: 0.0000 (1.5720)  acc5: 0.0000 (10.0905)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:25:40.044549] Test:  [ 2800/10618]  eta: 0:36:48  loss: 4.1238 (4.1885)  acc1: 0.0000 (1.5753)  acc5: 12.5000 (10.0946)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:25:42.236709] Test:  [ 2810/10618]  eta: 0:36:43  loss: 4.1917 (4.1884)  acc1: 0.0000 (1.5831)  acc5: 12.5000 (10.1210)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:25:44.436611] Test:  [ 2820/10618]  eta: 0:36:39  loss: 4.1970 (4.1883)  acc1: 0.0000 (1.5775)  acc5: 12.5000 (10.1161)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:25:46.637145] Test:  [ 2830/10618]  eta: 0:36:34  loss: 4.1711 (4.1884)  acc1: 0.0000 (1.5719)  acc5: 12.5000 (10.1113)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:25:48.830368] Test:  [ 2840/10618]  eta: 0:36:29  loss: 4.1711 (4.1884)  acc1: 0.0000 (1.5839)  acc5: 12.5000 (10.1285)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:25:51.033266] Test:  [ 2850/10618]  eta: 0:36:25  loss: 4.1487 (4.1884)  acc1: 0.0000 (1.5915)  acc5: 12.5000 (10.1324)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:25:53.241769] Test:  [ 2860/10618]  eta: 0:36:21  loss: 4.1843 (4.1885)  acc1: 0.0000 (1.5860)  acc5: 12.5000 (10.1188)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:25:55.453098] Test:  [ 2870/10618]  eta: 0:36:16  loss: 4.1924 (4.1882)  acc1: 0.0000 (1.5892)  acc5: 12.5000 (10.1315)  time: 0.2209  data: 0.0001  max mem: 1611
+[11:25:57.641081] Test:  [ 2880/10618]  eta: 0:36:12  loss: 4.1553 (4.1882)  acc1: 0.0000 (1.5923)  acc5: 12.5000 (10.1180)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:25:59.828902] Test:  [ 2890/10618]  eta: 0:36:07  loss: 4.1553 (4.1882)  acc1: 0.0000 (1.5911)  acc5: 12.5000 (10.1219)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:26:02.035566] Test:  [ 2900/10618]  eta: 0:36:03  loss: 4.1704 (4.1882)  acc1: 0.0000 (1.5943)  acc5: 12.5000 (10.1344)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:26:04.226415] Test:  [ 2910/10618]  eta: 0:35:58  loss: 4.1704 (4.1881)  acc1: 0.0000 (1.5888)  acc5: 12.5000 (10.1340)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:26:06.415112] Test:  [ 2920/10618]  eta: 0:35:54  loss: 4.1147 (4.1878)  acc1: 0.0000 (1.5876)  acc5: 12.5000 (10.1506)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:26:08.613826] Test:  [ 2930/10618]  eta: 0:35:50  loss: 4.1147 (4.1876)  acc1: 0.0000 (1.5908)  acc5: 12.5000 (10.1501)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:26:10.811538] Test:  [ 2940/10618]  eta: 0:35:45  loss: 4.1702 (4.1876)  acc1: 0.0000 (1.5896)  acc5: 12.5000 (10.1539)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:26:13.005767] Test:  [ 2950/10618]  eta: 0:35:41  loss: 4.2134 (4.1877)  acc1: 0.0000 (1.5969)  acc5: 12.5000 (10.1660)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:26:15.204680] Test:  [ 2960/10618]  eta: 0:35:36  loss: 4.2378 (4.1877)  acc1: 0.0000 (1.6042)  acc5: 12.5000 (10.1655)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:26:17.415473] Test:  [ 2970/10618]  eta: 0:35:32  loss: 4.1501 (4.1876)  acc1: 0.0000 (1.5988)  acc5: 12.5000 (10.1649)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:26:19.608924] Test:  [ 2980/10618]  eta: 0:35:28  loss: 4.1831 (4.1878)  acc1: 0.0000 (1.5934)  acc5: 0.0000 (10.1434)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:26:21.805467] Test:  [ 2990/10618]  eta: 0:35:24  loss: 4.2454 (4.1880)  acc1: 0.0000 (1.5881)  acc5: 0.0000 (10.1346)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:26:24.015274] Test:  [ 3000/10618]  eta: 0:35:19  loss: 4.2341 (4.1880)  acc1: 0.0000 (1.5870)  acc5: 12.5000 (10.1341)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:26:26.208562] Test:  [ 3010/10618]  eta: 0:35:15  loss: 4.1643 (4.1882)  acc1: 0.0000 (1.5859)  acc5: 12.5000 (10.1337)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:26:28.403328] Test:  [ 3020/10618]  eta: 0:35:11  loss: 4.2458 (4.1883)  acc1: 0.0000 (1.5806)  acc5: 12.5000 (10.1332)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:26:30.598794] Test:  [ 3030/10618]  eta: 0:35:07  loss: 4.2642 (4.1885)  acc1: 0.0000 (1.5795)  acc5: 12.5000 (10.1369)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:26:32.797092] Test:  [ 3040/10618]  eta: 0:35:02  loss: 4.1279 (4.1883)  acc1: 0.0000 (1.5784)  acc5: 12.5000 (10.1570)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:26:34.999879] Test:  [ 3050/10618]  eta: 0:34:58  loss: 4.1299 (4.1883)  acc1: 0.0000 (1.5814)  acc5: 12.5000 (10.1524)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:26:37.198418] Test:  [ 3060/10618]  eta: 0:34:54  loss: 4.1804 (4.1884)  acc1: 0.0000 (1.5763)  acc5: 12.5000 (10.1560)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:26:39.401345] Test:  [ 3070/10618]  eta: 0:34:50  loss: 4.2231 (4.1886)  acc1: 0.0000 (1.5711)  acc5: 0.0000 (10.1514)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:26:41.598352] Test:  [ 3080/10618]  eta: 0:34:46  loss: 4.2571 (4.1886)  acc1: 0.0000 (1.5660)  acc5: 0.0000 (10.1428)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:26:43.796782] Test:  [ 3090/10618]  eta: 0:34:41  loss: 4.1682 (4.1885)  acc1: 0.0000 (1.5691)  acc5: 0.0000 (10.1504)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:26:45.999377] Test:  [ 3100/10618]  eta: 0:34:37  loss: 4.1733 (4.1886)  acc1: 0.0000 (1.5680)  acc5: 0.0000 (10.1217)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:26:48.211929] Test:  [ 3110/10618]  eta: 0:34:33  loss: 4.2454 (4.1890)  acc1: 0.0000 (1.5630)  acc5: 0.0000 (10.1133)  time: 0.2207  data: 0.0002  max mem: 1611
+[11:26:50.413494] Test:  [ 3120/10618]  eta: 0:34:29  loss: 4.2236 (4.1888)  acc1: 0.0000 (1.5620)  acc5: 0.0000 (10.1049)  time: 0.2206  data: 0.0002  max mem: 1611
+[11:26:52.599920] Test:  [ 3130/10618]  eta: 0:34:25  loss: 4.0991 (4.1888)  acc1: 0.0000 (1.5570)  acc5: 12.5000 (10.1166)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:26:54.815507] Test:  [ 3140/10618]  eta: 0:34:21  loss: 4.1489 (4.1889)  acc1: 0.0000 (1.5560)  acc5: 12.5000 (10.1242)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:26:57.014627] Test:  [ 3150/10618]  eta: 0:34:17  loss: 4.2393 (4.1890)  acc1: 0.0000 (1.5511)  acc5: 0.0000 (10.1000)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:26:59.194899] Test:  [ 3160/10618]  eta: 0:34:13  loss: 4.1982 (4.1888)  acc1: 0.0000 (1.5541)  acc5: 0.0000 (10.1036)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:27:01.396494] Test:  [ 3170/10618]  eta: 0:34:09  loss: 4.1895 (4.1887)  acc1: 0.0000 (1.5531)  acc5: 12.5000 (10.0915)  time: 0.2190  data: 0.0002  max mem: 1611
+[11:27:03.597509] Test:  [ 3180/10618]  eta: 0:34:05  loss: 4.1895 (4.1887)  acc1: 0.0000 (1.5522)  acc5: 0.0000 (10.0833)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:27:05.787589] Test:  [ 3190/10618]  eta: 0:34:01  loss: 4.2024 (4.1887)  acc1: 0.0000 (1.5473)  acc5: 0.0000 (10.0791)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:27:07.994118] Test:  [ 3200/10618]  eta: 0:33:57  loss: 4.1772 (4.1887)  acc1: 0.0000 (1.5503)  acc5: 12.5000 (10.1023)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:27:10.200732] Test:  [ 3210/10618]  eta: 0:33:53  loss: 4.1509 (4.1884)  acc1: 0.0000 (1.5494)  acc5: 12.5000 (10.1020)  time: 0.2206  data: 0.0002  max mem: 1611
+[11:27:12.403764] Test:  [ 3220/10618]  eta: 0:33:49  loss: 4.1357 (4.1885)  acc1: 0.0000 (1.5562)  acc5: 12.5000 (10.1094)  time: 0.2204  data: 0.0002  max mem: 1611
+[11:27:14.583849] Test:  [ 3230/10618]  eta: 0:33:45  loss: 4.1580 (4.1884)  acc1: 0.0000 (1.5552)  acc5: 12.5000 (10.0975)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:27:16.790341] Test:  [ 3240/10618]  eta: 0:33:41  loss: 4.1658 (4.1884)  acc1: 0.0000 (1.5620)  acc5: 12.5000 (10.1088)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:27:18.988732] Test:  [ 3250/10618]  eta: 0:33:37  loss: 4.1726 (4.1886)  acc1: 0.0000 (1.5611)  acc5: 12.5000 (10.0969)  time: 0.2202  data: 0.0002  max mem: 1611
+[11:27:21.185511] Test:  [ 3260/10618]  eta: 0:33:33  loss: 4.1125 (4.1882)  acc1: 0.0000 (1.5639)  acc5: 12.5000 (10.1004)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:27:23.378641] Test:  [ 3270/10618]  eta: 0:33:29  loss: 4.1470 (4.1885)  acc1: 0.0000 (1.5592)  acc5: 12.5000 (10.0848)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:27:25.576140] Test:  [ 3280/10618]  eta: 0:33:25  loss: 4.3052 (4.1888)  acc1: 0.0000 (1.5544)  acc5: 0.0000 (10.0655)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:27:27.779978] Test:  [ 3290/10618]  eta: 0:33:21  loss: 4.2310 (4.1890)  acc1: 0.0000 (1.5573)  acc5: 0.0000 (10.0691)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:27:29.966582] Test:  [ 3300/10618]  eta: 0:33:17  loss: 4.1750 (4.1889)  acc1: 0.0000 (1.5563)  acc5: 12.5000 (10.0727)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:27:32.157986] Test:  [ 3310/10618]  eta: 0:33:13  loss: 4.1492 (4.1890)  acc1: 0.0000 (1.5516)  acc5: 12.5000 (10.0725)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:27:34.357360] Test:  [ 3320/10618]  eta: 0:33:09  loss: 4.1492 (4.1890)  acc1: 0.0000 (1.5470)  acc5: 12.5000 (10.0647)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:27:36.549701] Test:  [ 3330/10618]  eta: 0:33:05  loss: 4.2078 (4.1890)  acc1: 0.0000 (1.5461)  acc5: 12.5000 (10.0721)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:27:38.737921] Test:  [ 3340/10618]  eta: 0:33:01  loss: 4.2078 (4.1892)  acc1: 0.0000 (1.5452)  acc5: 12.5000 (10.0644)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:27:40.935962] Test:  [ 3350/10618]  eta: 0:32:57  loss: 4.2100 (4.1892)  acc1: 0.0000 (1.5406)  acc5: 0.0000 (10.0455)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:27:43.140281] Test:  [ 3360/10618]  eta: 0:32:54  loss: 4.1924 (4.1892)  acc1: 0.0000 (1.5397)  acc5: 0.0000 (10.0491)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:27:45.322799] Test:  [ 3370/10618]  eta: 0:32:50  loss: 4.1230 (4.1889)  acc1: 0.0000 (1.5389)  acc5: 12.5000 (10.0675)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:27:47.512935] Test:  [ 3380/10618]  eta: 0:32:46  loss: 4.1138 (4.1890)  acc1: 0.0000 (1.5343)  acc5: 12.5000 (10.0599)  time: 0.2186  data: 0.0002  max mem: 1611
+[11:27:49.721834] Test:  [ 3390/10618]  eta: 0:32:42  loss: 4.1841 (4.1889)  acc1: 0.0000 (1.5335)  acc5: 0.0000 (10.0560)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:27:51.913405] Test:  [ 3400/10618]  eta: 0:32:38  loss: 4.1919 (4.1890)  acc1: 0.0000 (1.5363)  acc5: 0.0000 (10.0448)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:27:54.109084] Test:  [ 3410/10618]  eta: 0:32:34  loss: 4.2666 (4.1892)  acc1: 0.0000 (1.5355)  acc5: 0.0000 (10.0337)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:27:56.299594] Test:  [ 3420/10618]  eta: 0:32:31  loss: 4.1633 (4.1889)  acc1: 0.0000 (1.5456)  acc5: 12.5000 (10.0702)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:27:58.505669] Test:  [ 3430/10618]  eta: 0:32:27  loss: 4.1035 (4.1887)  acc1: 0.0000 (1.5484)  acc5: 12.5000 (10.0845)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:28:00.695189] Test:  [ 3440/10618]  eta: 0:32:23  loss: 4.1333 (4.1886)  acc1: 0.0000 (1.5475)  acc5: 12.5000 (10.0843)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:28:02.887918] Test:  [ 3450/10618]  eta: 0:32:19  loss: 4.1919 (4.1886)  acc1: 0.0000 (1.5430)  acc5: 12.5000 (10.0732)  time: 0.2190  data: 0.0002  max mem: 1611
+[11:28:05.096554] Test:  [ 3460/10618]  eta: 0:32:16  loss: 4.1853 (4.1886)  acc1: 0.0000 (1.5458)  acc5: 12.5000 (10.0802)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:28:07.284879] Test:  [ 3470/10618]  eta: 0:32:12  loss: 4.1819 (4.1887)  acc1: 0.0000 (1.5413)  acc5: 12.5000 (10.0691)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:28:09.479359] Test:  [ 3480/10618]  eta: 0:32:08  loss: 4.1777 (4.1887)  acc1: 0.0000 (1.5405)  acc5: 12.5000 (10.0761)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:28:11.691783] Test:  [ 3490/10618]  eta: 0:32:04  loss: 4.1384 (4.1886)  acc1: 0.0000 (1.5397)  acc5: 12.5000 (10.0831)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:28:13.895602] Test:  [ 3500/10618]  eta: 0:32:01  loss: 4.0691 (4.1884)  acc1: 0.0000 (1.5424)  acc5: 12.5000 (10.0793)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:28:16.094140] Test:  [ 3510/10618]  eta: 0:31:57  loss: 4.1675 (4.1885)  acc1: 0.0000 (1.5451)  acc5: 12.5000 (10.0826)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:28:18.302896] Test:  [ 3520/10618]  eta: 0:31:53  loss: 4.1699 (4.1884)  acc1: 0.0000 (1.5550)  acc5: 12.5000 (10.0930)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:28:20.514017] Test:  [ 3530/10618]  eta: 0:31:50  loss: 4.1387 (4.1882)  acc1: 0.0000 (1.5506)  acc5: 12.5000 (10.0998)  time: 0.2209  data: 0.0002  max mem: 1611
+[11:28:22.719647] Test:  [ 3540/10618]  eta: 0:31:46  loss: 4.1028 (4.1881)  acc1: 0.0000 (1.5532)  acc5: 12.5000 (10.1031)  time: 0.2208  data: 0.0002  max mem: 1611
+[11:28:24.917893] Test:  [ 3550/10618]  eta: 0:31:42  loss: 4.1792 (4.1881)  acc1: 0.0000 (1.5559)  acc5: 12.5000 (10.0993)  time: 0.2201  data: 0.0002  max mem: 1611
+[11:28:27.123259] Test:  [ 3560/10618]  eta: 0:31:39  loss: 4.2000 (4.1881)  acc1: 0.0000 (1.5550)  acc5: 0.0000 (10.0990)  time: 0.2201  data: 0.0002  max mem: 1611
+[11:28:29.332015] Test:  [ 3570/10618]  eta: 0:31:35  loss: 4.1418 (4.1879)  acc1: 0.0000 (1.5647)  acc5: 12.5000 (10.0987)  time: 0.2206  data: 0.0002  max mem: 1611
+[11:28:31.530755] Test:  [ 3580/10618]  eta: 0:31:31  loss: 4.0854 (4.1877)  acc1: 0.0000 (1.5743)  acc5: 12.5000 (10.1159)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:28:33.726544] Test:  [ 3590/10618]  eta: 0:31:28  loss: 4.1282 (4.1877)  acc1: 0.0000 (1.5734)  acc5: 12.5000 (10.1086)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:28:35.928633] Test:  [ 3600/10618]  eta: 0:31:24  loss: 4.1882 (4.1877)  acc1: 0.0000 (1.5725)  acc5: 12.5000 (10.1048)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:28:38.138911] Test:  [ 3610/10618]  eta: 0:31:20  loss: 4.1135 (4.1877)  acc1: 0.0000 (1.5716)  acc5: 12.5000 (10.1011)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:28:40.342028] Test:  [ 3620/10618]  eta: 0:31:17  loss: 4.1187 (4.1877)  acc1: 0.0000 (1.5707)  acc5: 12.5000 (10.0939)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:28:42.531711] Test:  [ 3630/10618]  eta: 0:31:13  loss: 4.1497 (4.1877)  acc1: 0.0000 (1.5733)  acc5: 0.0000 (10.0971)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:28:44.750649] Test:  [ 3640/10618]  eta: 0:31:10  loss: 4.1892 (4.1879)  acc1: 0.0000 (1.5758)  acc5: 12.5000 (10.0899)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:28:46.954344] Test:  [ 3650/10618]  eta: 0:31:06  loss: 4.1819 (4.1879)  acc1: 0.0000 (1.5715)  acc5: 0.0000 (10.0726)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:28:49.157594] Test:  [ 3660/10618]  eta: 0:31:02  loss: 4.1604 (4.1879)  acc1: 0.0000 (1.5809)  acc5: 12.5000 (10.0826)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:28:51.358074] Test:  [ 3670/10618]  eta: 0:30:59  loss: 4.1482 (4.1878)  acc1: 0.0000 (1.5902)  acc5: 12.5000 (10.0926)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:28:53.560571] Test:  [ 3680/10618]  eta: 0:30:55  loss: 4.1431 (4.1876)  acc1: 0.0000 (1.5926)  acc5: 12.5000 (10.1026)  time: 0.2201  data: 0.0002  max mem: 1611
+[11:28:55.768377] Test:  [ 3690/10618]  eta: 0:30:52  loss: 4.1431 (4.1878)  acc1: 0.0000 (1.5883)  acc5: 12.5000 (10.0887)  time: 0.2204  data: 0.0002  max mem: 1611
+[11:28:57.956511] Test:  [ 3700/10618]  eta: 0:30:48  loss: 4.0940 (4.1874)  acc1: 0.0000 (1.5840)  acc5: 12.5000 (10.1223)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:29:00.158035] Test:  [ 3710/10618]  eta: 0:30:45  loss: 4.0764 (4.1873)  acc1: 0.0000 (1.5865)  acc5: 12.5000 (10.1287)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:29:02.356294] Test:  [ 3720/10618]  eta: 0:30:41  loss: 4.1836 (4.1874)  acc1: 0.0000 (1.5856)  acc5: 12.5000 (10.1350)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:29:04.554327] Test:  [ 3730/10618]  eta: 0:30:37  loss: 4.2490 (4.1874)  acc1: 0.0000 (1.5880)  acc5: 12.5000 (10.1347)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:29:06.754823] Test:  [ 3740/10618]  eta: 0:30:34  loss: 4.2471 (4.1875)  acc1: 0.0000 (1.5871)  acc5: 0.0000 (10.1243)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:29:08.940407] Test:  [ 3750/10618]  eta: 0:30:30  loss: 4.2288 (4.1877)  acc1: 0.0000 (1.5896)  acc5: 0.0000 (10.1206)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:29:11.133476] Test:  [ 3760/10618]  eta: 0:30:27  loss: 4.1743 (4.1877)  acc1: 0.0000 (1.5920)  acc5: 12.5000 (10.1336)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:29:13.342618] Test:  [ 3770/10618]  eta: 0:30:23  loss: 4.1482 (4.1875)  acc1: 0.0000 (1.6043)  acc5: 12.5000 (10.1333)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:29:15.562682] Test:  [ 3780/10618]  eta: 0:30:20  loss: 4.1216 (4.1874)  acc1: 0.0000 (1.6034)  acc5: 12.5000 (10.1296)  time: 0.2214  data: 0.0001  max mem: 1611
+[11:29:17.786789] Test:  [ 3790/10618]  eta: 0:30:16  loss: 4.1555 (4.1875)  acc1: 0.0000 (1.6058)  acc5: 12.5000 (10.1326)  time: 0.2221  data: 0.0001  max mem: 1611
+[11:29:19.975501] Test:  [ 3800/10618]  eta: 0:30:13  loss: 4.1838 (4.1874)  acc1: 0.0000 (1.6016)  acc5: 12.5000 (10.1355)  time: 0.2205  data: 0.0002  max mem: 1611
+[11:29:22.202460] Test:  [ 3810/10618]  eta: 0:30:09  loss: 4.1848 (4.1875)  acc1: 0.0000 (1.6006)  acc5: 12.5000 (10.1351)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:29:24.397840] Test:  [ 3820/10618]  eta: 0:30:06  loss: 4.2588 (4.1878)  acc1: 0.0000 (1.5997)  acc5: 0.0000 (10.1217)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:29:26.593262] Test:  [ 3830/10618]  eta: 0:30:03  loss: 4.2588 (4.1877)  acc1: 0.0000 (1.5955)  acc5: 0.0000 (10.1279)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:29:28.792958] Test:  [ 3840/10618]  eta: 0:29:59  loss: 4.1587 (4.1877)  acc1: 0.0000 (1.6011)  acc5: 12.5000 (10.1211)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:29:31.001913] Test:  [ 3850/10618]  eta: 0:29:56  loss: 4.2385 (4.1879)  acc1: 0.0000 (1.6002)  acc5: 12.5000 (10.1143)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:29:33.197030] Test:  [ 3860/10618]  eta: 0:29:52  loss: 4.1841 (4.1879)  acc1: 0.0000 (1.5993)  acc5: 0.0000 (10.1042)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:29:35.391844] Test:  [ 3870/10618]  eta: 0:29:49  loss: 4.1562 (4.1879)  acc1: 0.0000 (1.5984)  acc5: 0.0000 (10.1040)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:29:37.613745] Test:  [ 3880/10618]  eta: 0:29:45  loss: 4.1501 (4.1878)  acc1: 0.0000 (1.5975)  acc5: 0.0000 (10.1005)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:29:39.804336] Test:  [ 3890/10618]  eta: 0:29:42  loss: 4.1501 (4.1879)  acc1: 0.0000 (1.5966)  acc5: 0.0000 (10.0970)  time: 0.2205  data: 0.0002  max mem: 1611
+[11:29:42.003720] Test:  [ 3900/10618]  eta: 0:29:38  loss: 4.2080 (4.1877)  acc1: 0.0000 (1.5989)  acc5: 12.5000 (10.1000)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:29:44.202341] Test:  [ 3910/10618]  eta: 0:29:35  loss: 4.2104 (4.1878)  acc1: 0.0000 (1.6013)  acc5: 0.0000 (10.0933)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:29:46.400282] Test:  [ 3920/10618]  eta: 0:29:32  loss: 4.1953 (4.1876)  acc1: 0.0000 (1.6067)  acc5: 12.5000 (10.1090)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:29:48.609822] Test:  [ 3930/10618]  eta: 0:29:28  loss: 4.2202 (4.1878)  acc1: 0.0000 (1.6090)  acc5: 12.5000 (10.1024)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:29:50.822631] Test:  [ 3940/10618]  eta: 0:29:25  loss: 4.2473 (4.1879)  acc1: 0.0000 (1.6113)  acc5: 12.5000 (10.1116)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:29:53.026474] Test:  [ 3950/10618]  eta: 0:29:21  loss: 4.2617 (4.1879)  acc1: 0.0000 (1.6167)  acc5: 12.5000 (10.1145)  time: 0.2208  data: 0.0001  max mem: 1611
+[11:29:55.215577] Test:  [ 3960/10618]  eta: 0:29:18  loss: 4.1748 (4.1877)  acc1: 0.0000 (1.6284)  acc5: 12.5000 (10.1332)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:29:57.410860] Test:  [ 3970/10618]  eta: 0:29:15  loss: 4.0801 (4.1877)  acc1: 0.0000 (1.6306)  acc5: 12.5000 (10.1297)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:29:59.607852] Test:  [ 3980/10618]  eta: 0:29:11  loss: 4.1602 (4.1877)  acc1: 0.0000 (1.6328)  acc5: 12.5000 (10.1388)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:30:01.810602] Test:  [ 3990/10618]  eta: 0:29:08  loss: 4.1602 (4.1877)  acc1: 0.0000 (1.6318)  acc5: 12.5000 (10.1290)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:30:04.002933] Test:  [ 4000/10618]  eta: 0:29:05  loss: 4.2026 (4.1878)  acc1: 0.0000 (1.6340)  acc5: 12.5000 (10.1287)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:30:06.206873] Test:  [ 4010/10618]  eta: 0:29:01  loss: 4.2156 (4.1879)  acc1: 0.0000 (1.6330)  acc5: 12.5000 (10.1315)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:30:08.409135] Test:  [ 4020/10618]  eta: 0:28:58  loss: 4.1902 (4.1877)  acc1: 0.0000 (1.6383)  acc5: 12.5000 (10.1405)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:30:10.605334] Test:  [ 4030/10618]  eta: 0:28:54  loss: 4.1223 (4.1877)  acc1: 0.0000 (1.6404)  acc5: 12.5000 (10.1433)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:30:12.811959] Test:  [ 4040/10618]  eta: 0:28:51  loss: 4.1897 (4.1878)  acc1: 0.0000 (1.6364)  acc5: 0.0000 (10.1244)  time: 0.2201  data: 0.0002  max mem: 1611
+[11:30:15.021007] Test:  [ 4050/10618]  eta: 0:28:48  loss: 4.1897 (4.1877)  acc1: 0.0000 (1.6323)  acc5: 0.0000 (10.1179)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:30:17.221090] Test:  [ 4060/10618]  eta: 0:28:45  loss: 4.1226 (4.1877)  acc1: 0.0000 (1.6375)  acc5: 12.5000 (10.1237)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:30:19.409265] Test:  [ 4070/10618]  eta: 0:28:41  loss: 4.1431 (4.1877)  acc1: 0.0000 (1.6427)  acc5: 12.5000 (10.1326)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:30:21.614137] Test:  [ 4080/10618]  eta: 0:28:38  loss: 4.1956 (4.1878)  acc1: 0.0000 (1.6479)  acc5: 12.5000 (10.1323)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:30:23.820734] Test:  [ 4090/10618]  eta: 0:28:35  loss: 4.2449 (4.1879)  acc1: 0.0000 (1.6500)  acc5: 0.0000 (10.1198)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:30:26.025105] Test:  [ 4100/10618]  eta: 0:28:31  loss: 4.2415 (4.1881)  acc1: 0.0000 (1.6490)  acc5: 0.0000 (10.1134)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:30:28.223259] Test:  [ 4110/10618]  eta: 0:28:28  loss: 4.2415 (4.1884)  acc1: 0.0000 (1.6511)  acc5: 0.0000 (10.1040)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:30:30.429997] Test:  [ 4120/10618]  eta: 0:28:25  loss: 4.2397 (4.1885)  acc1: 0.0000 (1.6471)  acc5: 0.0000 (10.1098)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:30:32.634724] Test:  [ 4130/10618]  eta: 0:28:21  loss: 4.2100 (4.1886)  acc1: 0.0000 (1.6461)  acc5: 0.0000 (10.1095)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:30:34.830018] Test:  [ 4140/10618]  eta: 0:28:18  loss: 4.1807 (4.1886)  acc1: 0.0000 (1.6482)  acc5: 12.5000 (10.1183)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:30:37.025660] Test:  [ 4150/10618]  eta: 0:28:15  loss: 4.1052 (4.1884)  acc1: 0.0000 (1.6442)  acc5: 12.5000 (10.1271)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:30:39.240069] Test:  [ 4160/10618]  eta: 0:28:12  loss: 4.1638 (4.1884)  acc1: 0.0000 (1.6462)  acc5: 12.5000 (10.1298)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:30:41.444756] Test:  [ 4170/10618]  eta: 0:28:08  loss: 4.1682 (4.1882)  acc1: 0.0000 (1.6483)  acc5: 12.5000 (10.1355)  time: 0.2209  data: 0.0002  max mem: 1611
+[11:30:43.639523] Test:  [ 4180/10618]  eta: 0:28:05  loss: 4.1641 (4.1884)  acc1: 0.0000 (1.6443)  acc5: 12.5000 (10.1292)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:30:45.839079] Test:  [ 4190/10618]  eta: 0:28:02  loss: 4.2683 (4.1885)  acc1: 0.0000 (1.6494)  acc5: 12.5000 (10.1259)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:30:48.036057] Test:  [ 4200/10618]  eta: 0:27:58  loss: 4.1631 (4.1884)  acc1: 0.0000 (1.6544)  acc5: 12.5000 (10.1375)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:30:50.238367] Test:  [ 4210/10618]  eta: 0:27:55  loss: 4.1221 (4.1883)  acc1: 0.0000 (1.6593)  acc5: 12.5000 (10.1371)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:30:52.438090] Test:  [ 4220/10618]  eta: 0:27:52  loss: 4.1719 (4.1884)  acc1: 0.0000 (1.6584)  acc5: 12.5000 (10.1339)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:30:54.642158] Test:  [ 4230/10618]  eta: 0:27:49  loss: 4.2695 (4.1886)  acc1: 0.0000 (1.6545)  acc5: 0.0000 (10.1276)  time: 0.2201  data: 0.0002  max mem: 1611
+[11:30:56.845015] Test:  [ 4240/10618]  eta: 0:27:46  loss: 4.2856 (4.1887)  acc1: 0.0000 (1.6535)  acc5: 0.0000 (10.1155)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:30:59.053161] Test:  [ 4250/10618]  eta: 0:27:42  loss: 4.2903 (4.1890)  acc1: 0.0000 (1.6496)  acc5: 0.0000 (10.1035)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:31:01.261466] Test:  [ 4260/10618]  eta: 0:27:39  loss: 4.2617 (4.1890)  acc1: 0.0000 (1.6545)  acc5: 12.5000 (10.1150)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:31:03.475595] Test:  [ 4270/10618]  eta: 0:27:36  loss: 4.2007 (4.1888)  acc1: 0.0000 (1.6594)  acc5: 12.5000 (10.1177)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:31:05.692210] Test:  [ 4280/10618]  eta: 0:27:33  loss: 4.0933 (4.1888)  acc1: 0.0000 (1.6556)  acc5: 12.5000 (10.1145)  time: 0.2215  data: 0.0001  max mem: 1611
+[11:31:07.888068] Test:  [ 4290/10618]  eta: 0:27:29  loss: 4.1724 (4.1888)  acc1: 0.0000 (1.6546)  acc5: 0.0000 (10.1055)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:31:10.090160] Test:  [ 4300/10618]  eta: 0:27:26  loss: 4.1606 (4.1888)  acc1: 0.0000 (1.6537)  acc5: 0.0000 (10.1052)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:31:12.295220] Test:  [ 4310/10618]  eta: 0:27:23  loss: 4.1606 (4.1888)  acc1: 0.0000 (1.6614)  acc5: 12.5000 (10.1224)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:31:14.502907] Test:  [ 4320/10618]  eta: 0:27:20  loss: 4.1924 (4.1888)  acc1: 0.0000 (1.6634)  acc5: 12.5000 (10.1192)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:31:16.697279] Test:  [ 4330/10618]  eta: 0:27:17  loss: 4.2324 (4.1889)  acc1: 0.0000 (1.6624)  acc5: 12.5000 (10.1103)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:31:18.909327] Test:  [ 4340/10618]  eta: 0:27:14  loss: 4.2383 (4.1890)  acc1: 0.0000 (1.6644)  acc5: 0.0000 (10.0956)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:31:21.102125] Test:  [ 4350/10618]  eta: 0:27:10  loss: 4.1641 (4.1891)  acc1: 0.0000 (1.6663)  acc5: 0.0000 (10.0954)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:31:23.302861] Test:  [ 4360/10618]  eta: 0:27:07  loss: 4.1216 (4.1889)  acc1: 0.0000 (1.6682)  acc5: 12.5000 (10.1009)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:31:25.501167] Test:  [ 4370/10618]  eta: 0:27:04  loss: 4.1729 (4.1890)  acc1: 0.0000 (1.6672)  acc5: 12.5000 (10.0892)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:31:27.697029] Test:  [ 4380/10618]  eta: 0:27:01  loss: 4.2158 (4.1890)  acc1: 0.0000 (1.6691)  acc5: 0.0000 (10.0805)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:31:29.892465] Test:  [ 4390/10618]  eta: 0:26:58  loss: 4.2271 (4.1890)  acc1: 0.0000 (1.6682)  acc5: 0.0000 (10.0746)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:31:32.076758] Test:  [ 4400/10618]  eta: 0:26:54  loss: 4.1777 (4.1890)  acc1: 0.0000 (1.6672)  acc5: 0.0000 (10.0716)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:31:34.278416] Test:  [ 4410/10618]  eta: 0:26:51  loss: 4.1777 (4.1890)  acc1: 0.0000 (1.6663)  acc5: 12.5000 (10.0827)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:31:36.477263] Test:  [ 4420/10618]  eta: 0:26:48  loss: 4.2942 (4.1893)  acc1: 0.0000 (1.6682)  acc5: 12.5000 (10.0741)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:31:38.664351] Test:  [ 4430/10618]  eta: 0:26:45  loss: 4.2517 (4.1894)  acc1: 0.0000 (1.6644)  acc5: 12.5000 (10.0767)  time: 0.2192  data: 0.0002  max mem: 1611
+[11:31:40.845706] Test:  [ 4440/10618]  eta: 0:26:42  loss: 4.1814 (4.1894)  acc1: 0.0000 (1.6635)  acc5: 0.0000 (10.0653)  time: 0.2183  data: 0.0002  max mem: 1611
+[11:31:43.012044] Test:  [ 4450/10618]  eta: 0:26:39  loss: 4.1919 (4.1893)  acc1: 0.0000 (1.6710)  acc5: 0.0000 (10.0708)  time: 0.2173  data: 0.0001  max mem: 1611
+[11:31:45.203935] Test:  [ 4460/10618]  eta: 0:26:35  loss: 4.1902 (4.1893)  acc1: 0.0000 (1.6728)  acc5: 12.5000 (10.0650)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:31:47.408682] Test:  [ 4470/10618]  eta: 0:26:32  loss: 4.1729 (4.1893)  acc1: 0.0000 (1.6691)  acc5: 12.5000 (10.0677)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:31:49.596716] Test:  [ 4480/10618]  eta: 0:26:29  loss: 4.1289 (4.1892)  acc1: 0.0000 (1.6709)  acc5: 12.5000 (10.0815)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:31:51.774891] Test:  [ 4490/10618]  eta: 0:26:26  loss: 4.1289 (4.1891)  acc1: 0.0000 (1.6728)  acc5: 12.5000 (10.0841)  time: 0.2182  data: 0.0001  max mem: 1611
+[11:31:53.950525] Test:  [ 4500/10618]  eta: 0:26:23  loss: 4.1064 (4.1889)  acc1: 0.0000 (1.6774)  acc5: 12.5000 (10.0950)  time: 0.2176  data: 0.0001  max mem: 1611
+[11:31:56.131101] Test:  [ 4510/10618]  eta: 0:26:20  loss: 4.0916 (4.1890)  acc1: 0.0000 (1.6765)  acc5: 12.5000 (10.0920)  time: 0.2177  data: 0.0001  max mem: 1611
+[11:31:58.313987] Test:  [ 4520/10618]  eta: 0:26:17  loss: 4.1030 (4.1890)  acc1: 0.0000 (1.6727)  acc5: 12.5000 (10.0863)  time: 0.2181  data: 0.0001  max mem: 1611
+[11:32:00.497793] Test:  [ 4530/10618]  eta: 0:26:13  loss: 4.0850 (4.1889)  acc1: 0.0000 (1.6718)  acc5: 0.0000 (10.0888)  time: 0.2182  data: 0.0002  max mem: 1611
+[11:32:02.692555] Test:  [ 4540/10618]  eta: 0:26:10  loss: 4.0652 (4.1887)  acc1: 0.0000 (1.6791)  acc5: 12.5000 (10.0996)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:32:04.870889] Test:  [ 4550/10618]  eta: 0:26:07  loss: 4.1250 (4.1887)  acc1: 0.0000 (1.6837)  acc5: 12.5000 (10.0994)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:32:07.062123] Test:  [ 4560/10618]  eta: 0:26:04  loss: 4.1948 (4.1887)  acc1: 0.0000 (1.6827)  acc5: 12.5000 (10.1020)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:32:09.252215] Test:  [ 4570/10618]  eta: 0:26:01  loss: 4.1418 (4.1886)  acc1: 0.0000 (1.6873)  acc5: 0.0000 (10.1045)  time: 0.2190  data: 0.0002  max mem: 1611
+[11:32:11.450249] Test:  [ 4580/10618]  eta: 0:25:58  loss: 4.1587 (4.1887)  acc1: 0.0000 (1.6836)  acc5: 0.0000 (10.0960)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:32:13.631348] Test:  [ 4590/10618]  eta: 0:25:55  loss: 4.1985 (4.1887)  acc1: 0.0000 (1.6881)  acc5: 0.0000 (10.0958)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:32:15.817521] Test:  [ 4600/10618]  eta: 0:25:52  loss: 4.2322 (4.1890)  acc1: 0.0000 (1.6844)  acc5: 0.0000 (10.0848)  time: 0.2183  data: 0.0001  max mem: 1611
+[11:32:18.015136] Test:  [ 4610/10618]  eta: 0:25:49  loss: 4.2053 (4.1889)  acc1: 0.0000 (1.6835)  acc5: 0.0000 (10.0737)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:32:20.197905] Test:  [ 4620/10618]  eta: 0:25:46  loss: 4.1433 (4.1888)  acc1: 0.0000 (1.6798)  acc5: 0.0000 (10.0736)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:32:22.383869] Test:  [ 4630/10618]  eta: 0:25:42  loss: 4.1863 (4.1889)  acc1: 0.0000 (1.6816)  acc5: 12.5000 (10.0707)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:32:24.582388] Test:  [ 4640/10618]  eta: 0:25:39  loss: 4.2861 (4.1890)  acc1: 0.0000 (1.6807)  acc5: 0.0000 (10.0598)  time: 0.2191  data: 0.0002  max mem: 1611
+[11:32:26.770420] Test:  [ 4650/10618]  eta: 0:25:36  loss: 4.2065 (4.1890)  acc1: 0.0000 (1.6851)  acc5: 0.0000 (10.0624)  time: 0.2192  data: 0.0002  max mem: 1611
+[11:32:28.956655] Test:  [ 4660/10618]  eta: 0:25:33  loss: 4.2065 (4.1892)  acc1: 0.0000 (1.6815)  acc5: 0.0000 (10.0515)  time: 0.2186  data: 0.0002  max mem: 1611
+[11:32:31.142093] Test:  [ 4670/10618]  eta: 0:25:30  loss: 4.2649 (4.1893)  acc1: 0.0000 (1.6859)  acc5: 0.0000 (10.0541)  time: 0.2185  data: 0.0002  max mem: 1611
+[11:32:33.344078] Test:  [ 4680/10618]  eta: 0:25:27  loss: 4.2061 (4.1893)  acc1: 0.0000 (1.6850)  acc5: 12.5000 (10.0593)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:32:35.524459] Test:  [ 4690/10618]  eta: 0:25:24  loss: 4.1436 (4.1891)  acc1: 0.0000 (1.6814)  acc5: 12.5000 (10.0698)  time: 0.2190  data: 0.0002  max mem: 1611
+[11:32:37.710528] Test:  [ 4700/10618]  eta: 0:25:21  loss: 4.1724 (4.1891)  acc1: 0.0000 (1.6805)  acc5: 12.5000 (10.0643)  time: 0.2182  data: 0.0002  max mem: 1611
+[11:32:39.916770] Test:  [ 4710/10618]  eta: 0:25:18  loss: 4.1907 (4.1892)  acc1: 0.0000 (1.6769)  acc5: 0.0000 (10.0669)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:32:42.120815] Test:  [ 4720/10618]  eta: 0:25:15  loss: 4.1628 (4.1891)  acc1: 0.0000 (1.6760)  acc5: 0.0000 (10.0641)  time: 0.2204  data: 0.0002  max mem: 1611
+[11:32:44.310346] Test:  [ 4730/10618]  eta: 0:25:12  loss: 4.2473 (4.1893)  acc1: 0.0000 (1.6751)  acc5: 12.5000 (10.0613)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:32:46.507941] Test:  [ 4740/10618]  eta: 0:25:09  loss: 4.2827 (4.1894)  acc1: 0.0000 (1.6716)  acc5: 0.0000 (10.0506)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:32:48.704279] Test:  [ 4750/10618]  eta: 0:25:06  loss: 4.1357 (4.1893)  acc1: 0.0000 (1.6681)  acc5: 0.0000 (10.0505)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:32:50.890056] Test:  [ 4760/10618]  eta: 0:25:03  loss: 4.1482 (4.1891)  acc1: 0.0000 (1.6698)  acc5: 0.0000 (10.0530)  time: 0.2190  data: 0.0002  max mem: 1611
+[11:32:53.083196] Test:  [ 4770/10618]  eta: 0:25:00  loss: 4.1819 (4.1892)  acc1: 0.0000 (1.6663)  acc5: 12.5000 (10.0503)  time: 0.2189  data: 0.0002  max mem: 1611
+[11:32:55.287624] Test:  [ 4780/10618]  eta: 0:24:57  loss: 4.2095 (4.1893)  acc1: 0.0000 (1.6654)  acc5: 0.0000 (10.0397)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:32:57.491443] Test:  [ 4790/10618]  eta: 0:24:54  loss: 4.1875 (4.1892)  acc1: 0.0000 (1.6646)  acc5: 0.0000 (10.0370)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:32:59.681385] Test:  [ 4800/10618]  eta: 0:24:51  loss: 4.1482 (4.1893)  acc1: 0.0000 (1.6663)  acc5: 0.0000 (10.0318)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:33:01.895709] Test:  [ 4810/10618]  eta: 0:24:48  loss: 4.1892 (4.1892)  acc1: 0.0000 (1.6655)  acc5: 0.0000 (10.0265)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:33:04.105010] Test:  [ 4820/10618]  eta: 0:24:45  loss: 4.1831 (4.1893)  acc1: 0.0000 (1.6698)  acc5: 0.0000 (10.0316)  time: 0.2211  data: 0.0001  max mem: 1611
+[11:33:06.298638] Test:  [ 4830/10618]  eta: 0:24:42  loss: 4.2119 (4.1893)  acc1: 0.0000 (1.6715)  acc5: 12.5000 (10.0316)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:33:08.503374] Test:  [ 4840/10618]  eta: 0:24:39  loss: 4.2026 (4.1893)  acc1: 0.0000 (1.6758)  acc5: 12.5000 (10.0367)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:33:10.706782] Test:  [ 4850/10618]  eta: 0:24:36  loss: 4.2083 (4.1894)  acc1: 0.0000 (1.6723)  acc5: 0.0000 (10.0289)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:33:12.905468] Test:  [ 4860/10618]  eta: 0:24:33  loss: 4.2346 (4.1894)  acc1: 0.0000 (1.6715)  acc5: 0.0000 (10.0365)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:33:15.106843] Test:  [ 4870/10618]  eta: 0:24:30  loss: 4.1880 (4.1895)  acc1: 0.0000 (1.6732)  acc5: 12.5000 (10.0441)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:33:17.312655] Test:  [ 4880/10618]  eta: 0:24:27  loss: 4.1951 (4.1894)  acc1: 0.0000 (1.6825)  acc5: 12.5000 (10.0517)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:33:19.516988] Test:  [ 4890/10618]  eta: 0:24:24  loss: 4.1467 (4.1893)  acc1: 0.0000 (1.6817)  acc5: 12.5000 (10.0465)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:33:21.719842] Test:  [ 4900/10618]  eta: 0:24:21  loss: 4.1467 (4.1893)  acc1: 0.0000 (1.6859)  acc5: 0.0000 (10.0439)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:33:23.918131] Test:  [ 4910/10618]  eta: 0:24:18  loss: 4.2185 (4.1893)  acc1: 0.0000 (1.6901)  acc5: 12.5000 (10.0489)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:33:26.129073] Test:  [ 4920/10618]  eta: 0:24:15  loss: 4.1321 (4.1893)  acc1: 0.0000 (1.6892)  acc5: 12.5000 (10.0462)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:33:28.326545] Test:  [ 4930/10618]  eta: 0:24:12  loss: 4.1135 (4.1892)  acc1: 0.0000 (1.6883)  acc5: 12.5000 (10.0563)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:33:30.520943] Test:  [ 4940/10618]  eta: 0:24:09  loss: 4.1536 (4.1893)  acc1: 0.0000 (1.6874)  acc5: 12.5000 (10.0536)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:33:32.728361] Test:  [ 4950/10618]  eta: 0:24:06  loss: 4.1599 (4.1892)  acc1: 0.0000 (1.6916)  acc5: 12.5000 (10.0611)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:33:34.927757] Test:  [ 4960/10618]  eta: 0:24:03  loss: 4.1675 (4.1892)  acc1: 0.0000 (1.6882)  acc5: 12.5000 (10.0635)  time: 0.2203  data: 0.0002  max mem: 1611
+[11:33:37.127189] Test:  [ 4970/10618]  eta: 0:24:00  loss: 4.1091 (4.1890)  acc1: 0.0000 (1.6873)  acc5: 0.0000 (10.0583)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:33:39.323138] Test:  [ 4980/10618]  eta: 0:23:57  loss: 4.0984 (4.1890)  acc1: 0.0000 (1.6889)  acc5: 0.0000 (10.0532)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:33:41.533210] Test:  [ 4990/10618]  eta: 0:23:54  loss: 4.2039 (4.1890)  acc1: 0.0000 (1.6981)  acc5: 12.5000 (10.0556)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:33:43.729053] Test:  [ 5000/10618]  eta: 0:23:51  loss: 4.2563 (4.1892)  acc1: 0.0000 (1.6972)  acc5: 12.5000 (10.0555)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:33:45.920726] Test:  [ 5010/10618]  eta: 0:23:48  loss: 4.1846 (4.1892)  acc1: 0.0000 (1.6963)  acc5: 12.5000 (10.0579)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:33:48.121596] Test:  [ 5020/10618]  eta: 0:23:45  loss: 4.1846 (4.1893)  acc1: 0.0000 (1.6954)  acc5: 0.0000 (10.0478)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:33:50.327717] Test:  [ 5030/10618]  eta: 0:23:43  loss: 4.2791 (4.1895)  acc1: 0.0000 (1.6945)  acc5: 0.0000 (10.0427)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:33:52.524570] Test:  [ 5040/10618]  eta: 0:23:40  loss: 4.1621 (4.1894)  acc1: 0.0000 (1.6936)  acc5: 0.0000 (10.0427)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:33:54.718709] Test:  [ 5050/10618]  eta: 0:23:37  loss: 4.1125 (4.1894)  acc1: 0.0000 (1.6927)  acc5: 0.0000 (10.0327)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:33:56.929493] Test:  [ 5060/10618]  eta: 0:23:34  loss: 4.1758 (4.1895)  acc1: 0.0000 (1.6919)  acc5: 0.0000 (10.0326)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:33:59.124830] Test:  [ 5070/10618]  eta: 0:23:31  loss: 4.2915 (4.1898)  acc1: 0.0000 (1.6959)  acc5: 12.5000 (10.0276)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:34:01.312382] Test:  [ 5080/10618]  eta: 0:23:28  loss: 4.2754 (4.1899)  acc1: 0.0000 (1.6950)  acc5: 0.0000 (10.0177)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:34:03.506665] Test:  [ 5090/10618]  eta: 0:23:25  loss: 4.2209 (4.1899)  acc1: 0.0000 (1.6917)  acc5: 0.0000 (10.0128)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:34:05.699731] Test:  [ 5100/10618]  eta: 0:23:22  loss: 4.2507 (4.1900)  acc1: 0.0000 (1.6908)  acc5: 0.0000 (10.0054)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:34:07.893251] Test:  [ 5110/10618]  eta: 0:23:19  loss: 4.1860 (4.1899)  acc1: 0.0000 (1.6924)  acc5: 0.0000 (10.0054)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:34:10.096522] Test:  [ 5120/10618]  eta: 0:23:16  loss: 4.1096 (4.1899)  acc1: 0.0000 (1.6916)  acc5: 12.5000 (10.0054)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:34:12.294025] Test:  [ 5130/10618]  eta: 0:23:13  loss: 4.1541 (4.1899)  acc1: 0.0000 (1.6883)  acc5: 12.5000 (10.0029)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:34:14.501009] Test:  [ 5140/10618]  eta: 0:23:10  loss: 4.1738 (4.1898)  acc1: 0.0000 (1.6874)  acc5: 0.0000 (9.9956)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:34:16.680297] Test:  [ 5150/10618]  eta: 0:23:08  loss: 4.1814 (4.1899)  acc1: 0.0000 (1.6841)  acc5: 0.0000 (9.9908)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:34:18.878725] Test:  [ 5160/10618]  eta: 0:23:05  loss: 4.2031 (4.1900)  acc1: 0.0000 (1.6857)  acc5: 0.0000 (9.9884)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:34:21.090604] Test:  [ 5170/10618]  eta: 0:23:02  loss: 4.2444 (4.1900)  acc1: 0.0000 (1.6849)  acc5: 0.0000 (9.9836)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:34:23.291295] Test:  [ 5180/10618]  eta: 0:22:59  loss: 4.1785 (4.1900)  acc1: 0.0000 (1.6865)  acc5: 0.0000 (9.9739)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:34:25.489076] Test:  [ 5190/10618]  eta: 0:22:56  loss: 4.1750 (4.1899)  acc1: 0.0000 (1.6832)  acc5: 0.0000 (9.9764)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:34:27.690677] Test:  [ 5200/10618]  eta: 0:22:53  loss: 4.1138 (4.1900)  acc1: 0.0000 (1.6872)  acc5: 12.5000 (9.9789)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:34:29.891722] Test:  [ 5210/10618]  eta: 0:22:50  loss: 4.1750 (4.1900)  acc1: 0.0000 (1.6863)  acc5: 12.5000 (9.9741)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:34:32.090593] Test:  [ 5220/10618]  eta: 0:22:47  loss: 4.2544 (4.1902)  acc1: 0.0000 (1.6831)  acc5: 0.0000 (9.9670)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:34:34.278922] Test:  [ 5230/10618]  eta: 0:22:44  loss: 4.2544 (4.1902)  acc1: 0.0000 (1.6871)  acc5: 12.5000 (9.9718)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:34:36.492707] Test:  [ 5240/10618]  eta: 0:22:42  loss: 4.1885 (4.1902)  acc1: 0.0000 (1.6862)  acc5: 12.5000 (9.9623)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:34:38.696411] Test:  [ 5250/10618]  eta: 0:22:39  loss: 4.1885 (4.1903)  acc1: 0.0000 (1.6854)  acc5: 0.0000 (9.9671)  time: 0.2208  data: 0.0002  max mem: 1611
+[11:34:40.896903] Test:  [ 5260/10618]  eta: 0:22:36  loss: 4.1558 (4.1902)  acc1: 0.0000 (1.6869)  acc5: 12.5000 (9.9791)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:34:43.109848] Test:  [ 5270/10618]  eta: 0:22:33  loss: 4.2012 (4.1903)  acc1: 0.0000 (1.6837)  acc5: 12.5000 (9.9720)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:34:45.309576] Test:  [ 5280/10618]  eta: 0:22:30  loss: 4.1958 (4.1902)  acc1: 0.0000 (1.6877)  acc5: 12.5000 (9.9792)  time: 0.2206  data: 0.0002  max mem: 1611
+[11:34:47.506071] Test:  [ 5290/10618]  eta: 0:22:27  loss: 4.1226 (4.1901)  acc1: 0.0000 (1.6868)  acc5: 12.5000 (9.9839)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:34:49.686826] Test:  [ 5300/10618]  eta: 0:22:24  loss: 4.1873 (4.1903)  acc1: 0.0000 (1.6907)  acc5: 12.5000 (9.9816)  time: 0.2188  data: 0.0002  max mem: 1611
+[11:34:51.891800] Test:  [ 5310/10618]  eta: 0:22:22  loss: 4.2209 (4.1903)  acc1: 0.0000 (1.6899)  acc5: 12.5000 (9.9793)  time: 0.2192  data: 0.0002  max mem: 1611
+[11:34:54.085886] Test:  [ 5320/10618]  eta: 0:22:19  loss: 4.0781 (4.1902)  acc1: 0.0000 (1.6914)  acc5: 12.5000 (9.9817)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:34:56.292887] Test:  [ 5330/10618]  eta: 0:22:16  loss: 4.1824 (4.1903)  acc1: 0.0000 (1.6929)  acc5: 12.5000 (9.9770)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:34:58.501467] Test:  [ 5340/10618]  eta: 0:22:13  loss: 4.1985 (4.1903)  acc1: 0.0000 (1.6898)  acc5: 12.5000 (9.9771)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:35:00.719644] Test:  [ 5350/10618]  eta: 0:22:10  loss: 4.1570 (4.1902)  acc1: 0.0000 (1.6913)  acc5: 12.5000 (9.9888)  time: 0.2213  data: 0.0001  max mem: 1611
+[11:35:02.923107] Test:  [ 5360/10618]  eta: 0:22:07  loss: 4.1270 (4.1902)  acc1: 0.0000 (1.6881)  acc5: 12.5000 (9.9818)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:35:05.112934] Test:  [ 5370/10618]  eta: 0:22:04  loss: 4.1775 (4.1902)  acc1: 0.0000 (1.6850)  acc5: 0.0000 (9.9702)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:35:07.317305] Test:  [ 5380/10618]  eta: 0:22:02  loss: 4.2090 (4.1903)  acc1: 0.0000 (1.6865)  acc5: 0.0000 (9.9610)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:35:09.520324] Test:  [ 5390/10618]  eta: 0:21:59  loss: 4.2090 (4.1903)  acc1: 0.0000 (1.6857)  acc5: 0.0000 (9.9610)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:35:11.719155] Test:  [ 5400/10618]  eta: 0:21:56  loss: 4.2246 (4.1903)  acc1: 0.0000 (1.6849)  acc5: 12.5000 (9.9611)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:35:13.933404] Test:  [ 5410/10618]  eta: 0:21:53  loss: 4.1992 (4.1904)  acc1: 0.0000 (1.6841)  acc5: 0.0000 (9.9543)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:35:16.147298] Test:  [ 5420/10618]  eta: 0:21:50  loss: 4.1748 (4.1903)  acc1: 0.0000 (1.6833)  acc5: 0.0000 (9.9520)  time: 0.2213  data: 0.0002  max mem: 1611
+[11:35:18.356327] Test:  [ 5430/10618]  eta: 0:21:47  loss: 4.1472 (4.1903)  acc1: 0.0000 (1.6825)  acc5: 12.5000 (9.9590)  time: 0.2211  data: 0.0001  max mem: 1611
+[11:35:20.562325] Test:  [ 5440/10618]  eta: 0:21:45  loss: 4.2629 (4.1906)  acc1: 0.0000 (1.6794)  acc5: 12.5000 (9.9499)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:35:22.777642] Test:  [ 5450/10618]  eta: 0:21:42  loss: 4.2422 (4.1905)  acc1: 0.0000 (1.6786)  acc5: 0.0000 (9.9500)  time: 0.2210  data: 0.0002  max mem: 1611
+[11:35:24.973766] Test:  [ 5460/10618]  eta: 0:21:39  loss: 4.2422 (4.1907)  acc1: 0.0000 (1.6778)  acc5: 12.5000 (9.9478)  time: 0.2205  data: 0.0002  max mem: 1611
+[11:35:27.174593] Test:  [ 5470/10618]  eta: 0:21:36  loss: 4.2463 (4.1907)  acc1: 0.0000 (1.6793)  acc5: 0.0000 (9.9433)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:35:29.373571] Test:  [ 5480/10618]  eta: 0:21:33  loss: 4.1721 (4.1906)  acc1: 0.0000 (1.6785)  acc5: 12.5000 (9.9412)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:35:31.575851] Test:  [ 5490/10618]  eta: 0:21:31  loss: 4.1848 (4.1907)  acc1: 0.0000 (1.6777)  acc5: 0.0000 (9.9322)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:35:33.783716] Test:  [ 5500/10618]  eta: 0:21:28  loss: 4.2400 (4.1907)  acc1: 0.0000 (1.6792)  acc5: 0.0000 (9.9323)  time: 0.2204  data: 0.0002  max mem: 1611
+[11:35:35.979433] Test:  [ 5510/10618]  eta: 0:21:25  loss: 4.2285 (4.1908)  acc1: 0.0000 (1.6807)  acc5: 0.0000 (9.9233)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:35:38.185312] Test:  [ 5520/10618]  eta: 0:21:22  loss: 4.1960 (4.1908)  acc1: 0.0000 (1.6822)  acc5: 12.5000 (9.9303)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:35:40.384760] Test:  [ 5530/10618]  eta: 0:21:19  loss: 4.1760 (4.1908)  acc1: 0.0000 (1.6837)  acc5: 12.5000 (9.9304)  time: 0.2202  data: 0.0002  max mem: 1611
+[11:35:42.592890] Test:  [ 5540/10618]  eta: 0:21:17  loss: 4.1106 (4.1905)  acc1: 0.0000 (1.6852)  acc5: 12.5000 (9.9418)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:35:44.790839] Test:  [ 5550/10618]  eta: 0:21:14  loss: 4.1277 (4.1906)  acc1: 0.0000 (1.6889)  acc5: 12.5000 (9.9397)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:35:46.992740] Test:  [ 5560/10618]  eta: 0:21:11  loss: 4.2080 (4.1908)  acc1: 0.0000 (1.6858)  acc5: 0.0000 (9.9263)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:35:49.187651] Test:  [ 5570/10618]  eta: 0:21:08  loss: 4.2393 (4.1908)  acc1: 0.0000 (1.6851)  acc5: 0.0000 (9.9264)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:35:51.390418] Test:  [ 5580/10618]  eta: 0:21:05  loss: 4.2280 (4.1907)  acc1: 0.0000 (1.6910)  acc5: 0.0000 (9.9310)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:35:53.601642] Test:  [ 5590/10618]  eta: 0:21:03  loss: 4.2434 (4.1909)  acc1: 0.0000 (1.6880)  acc5: 0.0000 (9.9244)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:35:55.798667] Test:  [ 5600/10618]  eta: 0:21:00  loss: 4.1699 (4.1908)  acc1: 0.0000 (1.6894)  acc5: 12.5000 (9.9357)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:35:57.994761] Test:  [ 5610/10618]  eta: 0:20:57  loss: 4.1350 (4.1908)  acc1: 0.0000 (1.6953)  acc5: 12.5000 (9.9336)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:36:00.213645] Test:  [ 5620/10618]  eta: 0:20:54  loss: 4.1804 (4.1908)  acc1: 0.0000 (1.6968)  acc5: 0.0000 (9.9248)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:36:02.412687] Test:  [ 5630/10618]  eta: 0:20:51  loss: 4.1699 (4.1907)  acc1: 0.0000 (1.6960)  acc5: 0.0000 (9.9316)  time: 0.2208  data: 0.0001  max mem: 1611
+[11:36:04.622935] Test:  [ 5640/10618]  eta: 0:20:49  loss: 4.1553 (4.1906)  acc1: 0.0000 (1.7018)  acc5: 12.5000 (9.9362)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:36:06.843586] Test:  [ 5650/10618]  eta: 0:20:46  loss: 4.1746 (4.1907)  acc1: 0.0000 (1.6988)  acc5: 0.0000 (9.9252)  time: 0.2215  data: 0.0001  max mem: 1611
+[11:36:09.045122] Test:  [ 5660/10618]  eta: 0:20:43  loss: 4.2090 (4.1908)  acc1: 0.0000 (1.6958)  acc5: 0.0000 (9.9276)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:36:11.241393] Test:  [ 5670/10618]  eta: 0:20:40  loss: 4.1594 (4.1907)  acc1: 0.0000 (1.6928)  acc5: 0.0000 (9.9211)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:36:13.458266] Test:  [ 5680/10618]  eta: 0:20:38  loss: 4.1755 (4.1907)  acc1: 0.0000 (1.6942)  acc5: 0.0000 (9.9256)  time: 0.2206  data: 0.0002  max mem: 1611
+[11:36:15.671788] Test:  [ 5690/10618]  eta: 0:20:35  loss: 4.1904 (4.1907)  acc1: 0.0000 (1.6913)  acc5: 12.5000 (9.9236)  time: 0.2214  data: 0.0001  max mem: 1611
+[11:36:17.882331] Test:  [ 5700/10618]  eta: 0:20:32  loss: 4.1758 (4.1907)  acc1: 0.0000 (1.6883)  acc5: 0.0000 (9.9171)  time: 0.2211  data: 0.0001  max mem: 1611
+[11:36:20.091693] Test:  [ 5710/10618]  eta: 0:20:29  loss: 4.1567 (4.1906)  acc1: 0.0000 (1.6941)  acc5: 12.5000 (9.9282)  time: 0.2209  data: 0.0001  max mem: 1611
+[11:36:22.298432] Test:  [ 5720/10618]  eta: 0:20:26  loss: 4.1670 (4.1905)  acc1: 0.0000 (1.6955)  acc5: 12.5000 (9.9240)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:36:24.500040] Test:  [ 5730/10618]  eta: 0:20:24  loss: 4.1941 (4.1905)  acc1: 0.0000 (1.6969)  acc5: 12.5000 (9.9263)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:36:26.697550] Test:  [ 5740/10618]  eta: 0:20:21  loss: 4.1870 (4.1904)  acc1: 0.0000 (1.6940)  acc5: 12.5000 (9.9242)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:36:28.894578] Test:  [ 5750/10618]  eta: 0:20:18  loss: 4.1619 (4.1904)  acc1: 0.0000 (1.6910)  acc5: 0.0000 (9.9157)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:36:31.109049] Test:  [ 5760/10618]  eta: 0:20:15  loss: 4.1951 (4.1905)  acc1: 0.0000 (1.6902)  acc5: 0.0000 (9.9136)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:36:33.317963] Test:  [ 5770/10618]  eta: 0:20:13  loss: 4.1956 (4.1906)  acc1: 0.0000 (1.6895)  acc5: 0.0000 (9.9073)  time: 0.2211  data: 0.0001  max mem: 1611
+[11:36:35.509079] Test:  [ 5780/10618]  eta: 0:20:10  loss: 4.1821 (4.1905)  acc1: 0.0000 (1.6887)  acc5: 12.5000 (9.9118)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:36:37.696271] Test:  [ 5790/10618]  eta: 0:20:07  loss: 4.0762 (4.1903)  acc1: 0.0000 (1.6880)  acc5: 12.5000 (9.9206)  time: 0.2188  data: 0.0002  max mem: 1611
+[11:36:39.897141] Test:  [ 5800/10618]  eta: 0:20:04  loss: 4.1216 (4.1902)  acc1: 0.0000 (1.6894)  acc5: 12.5000 (9.9272)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:36:42.090475] Test:  [ 5810/10618]  eta: 0:20:02  loss: 4.1929 (4.1902)  acc1: 0.0000 (1.6886)  acc5: 12.5000 (9.9208)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:36:44.273541] Test:  [ 5820/10618]  eta: 0:19:59  loss: 4.1345 (4.1900)  acc1: 0.0000 (1.6921)  acc5: 0.0000 (9.9274)  time: 0.2187  data: 0.0002  max mem: 1611
+[11:36:46.487078] Test:  [ 5830/10618]  eta: 0:19:56  loss: 4.1479 (4.1901)  acc1: 0.0000 (1.6892)  acc5: 12.5000 (9.9233)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:36:48.675739] Test:  [ 5840/10618]  eta: 0:19:53  loss: 4.1763 (4.1899)  acc1: 0.0000 (1.6971)  acc5: 12.5000 (9.9255)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:36:50.873358] Test:  [ 5850/10618]  eta: 0:19:51  loss: 4.1689 (4.1899)  acc1: 0.0000 (1.6963)  acc5: 12.5000 (9.9257)  time: 0.2192  data: 0.0002  max mem: 1611
+[11:36:53.066151] Test:  [ 5860/10618]  eta: 0:19:48  loss: 4.1689 (4.1899)  acc1: 0.0000 (1.6977)  acc5: 12.5000 (9.9258)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:36:55.245798] Test:  [ 5870/10618]  eta: 0:19:45  loss: 4.2078 (4.1900)  acc1: 0.0000 (1.6948)  acc5: 0.0000 (9.9131)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:36:57.432032] Test:  [ 5880/10618]  eta: 0:19:42  loss: 4.1089 (4.1899)  acc1: 0.0000 (1.6919)  acc5: 0.0000 (9.9175)  time: 0.2182  data: 0.0001  max mem: 1611
+[11:36:59.607776] Test:  [ 5890/10618]  eta: 0:19:40  loss: 4.0818 (4.1899)  acc1: 0.0000 (1.6954)  acc5: 12.5000 (9.9177)  time: 0.2180  data: 0.0001  max mem: 1611
+[11:37:01.801419] Test:  [ 5900/10618]  eta: 0:19:37  loss: 4.2175 (4.1900)  acc1: 0.0000 (1.6946)  acc5: 0.0000 (9.9115)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:37:03.986227] Test:  [ 5910/10618]  eta: 0:19:34  loss: 4.2202 (4.1900)  acc1: 0.0000 (1.6939)  acc5: 12.5000 (9.9137)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:37:06.164378] Test:  [ 5920/10618]  eta: 0:19:31  loss: 4.2075 (4.1899)  acc1: 0.0000 (1.6973)  acc5: 12.5000 (9.9202)  time: 0.2181  data: 0.0001  max mem: 1611
+[11:37:08.355877] Test:  [ 5930/10618]  eta: 0:19:29  loss: 4.2075 (4.1900)  acc1: 0.0000 (1.6966)  acc5: 0.0000 (9.9119)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:37:10.544580] Test:  [ 5940/10618]  eta: 0:19:26  loss: 4.1865 (4.1899)  acc1: 0.0000 (1.6958)  acc5: 12.5000 (9.9163)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:37:12.726290] Test:  [ 5950/10618]  eta: 0:19:23  loss: 4.1865 (4.1899)  acc1: 0.0000 (1.6951)  acc5: 12.5000 (9.9122)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:37:14.917050] Test:  [ 5960/10618]  eta: 0:19:20  loss: 4.2009 (4.1899)  acc1: 0.0000 (1.6943)  acc5: 0.0000 (9.9123)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:37:17.100931] Test:  [ 5970/10618]  eta: 0:19:18  loss: 4.1624 (4.1899)  acc1: 0.0000 (1.6915)  acc5: 12.5000 (9.9083)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:37:19.284956] Test:  [ 5980/10618]  eta: 0:19:15  loss: 4.1724 (4.1898)  acc1: 0.0000 (1.6929)  acc5: 0.0000 (9.9085)  time: 0.2183  data: 0.0002  max mem: 1611
+[11:37:21.462481] Test:  [ 5990/10618]  eta: 0:19:12  loss: 4.1973 (4.1899)  acc1: 0.0000 (1.6921)  acc5: 0.0000 (9.9003)  time: 0.2180  data: 0.0002  max mem: 1611
+[11:37:23.657943] Test:  [ 6000/10618]  eta: 0:19:10  loss: 4.2112 (4.1900)  acc1: 0.0000 (1.6914)  acc5: 0.0000 (9.8984)  time: 0.2186  data: 0.0002  max mem: 1611
+[11:37:25.859598] Test:  [ 6010/10618]  eta: 0:19:07  loss: 4.2173 (4.1901)  acc1: 0.0000 (1.6927)  acc5: 12.5000 (9.8985)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:37:28.039244] Test:  [ 6020/10618]  eta: 0:19:04  loss: 4.2124 (4.1901)  acc1: 0.0000 (1.6899)  acc5: 12.5000 (9.8966)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:37:30.228722] Test:  [ 6030/10618]  eta: 0:19:01  loss: 4.1758 (4.1901)  acc1: 0.0000 (1.6954)  acc5: 12.5000 (9.9051)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:37:32.432437] Test:  [ 6040/10618]  eta: 0:18:59  loss: 4.1987 (4.1902)  acc1: 0.0000 (1.6947)  acc5: 12.5000 (9.9032)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:37:34.630889] Test:  [ 6050/10618]  eta: 0:18:56  loss: 4.1443 (4.1900)  acc1: 0.0000 (1.6960)  acc5: 12.5000 (9.9240)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:37:36.825571] Test:  [ 6060/10618]  eta: 0:18:53  loss: 4.1992 (4.1901)  acc1: 0.0000 (1.6953)  acc5: 12.5000 (9.9200)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:37:39.023032] Test:  [ 6070/10618]  eta: 0:18:51  loss: 4.2068 (4.1901)  acc1: 0.0000 (1.6925)  acc5: 0.0000 (9.9160)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:37:41.228696] Test:  [ 6080/10618]  eta: 0:18:48  loss: 4.2068 (4.1901)  acc1: 0.0000 (1.6917)  acc5: 12.5000 (9.9202)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:37:43.431788] Test:  [ 6090/10618]  eta: 0:18:45  loss: 4.2258 (4.1902)  acc1: 0.0000 (1.6890)  acc5: 0.0000 (9.9081)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:37:45.634612] Test:  [ 6100/10618]  eta: 0:18:42  loss: 4.2354 (4.1903)  acc1: 0.0000 (1.6882)  acc5: 0.0000 (9.9041)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:37:47.853165] Test:  [ 6110/10618]  eta: 0:18:40  loss: 4.1985 (4.1903)  acc1: 0.0000 (1.6855)  acc5: 0.0000 (9.8981)  time: 0.2210  data: 0.0002  max mem: 1611
+[11:37:50.055365] Test:  [ 6120/10618]  eta: 0:18:37  loss: 4.1985 (4.1903)  acc1: 0.0000 (1.6827)  acc5: 12.5000 (9.9024)  time: 0.2209  data: 0.0001  max mem: 1611
+[11:37:52.250141] Test:  [ 6130/10618]  eta: 0:18:34  loss: 4.1841 (4.1903)  acc1: 0.0000 (1.6800)  acc5: 12.5000 (9.9087)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:37:54.456662] Test:  [ 6140/10618]  eta: 0:18:32  loss: 4.1824 (4.1903)  acc1: 0.0000 (1.6834)  acc5: 12.5000 (9.9068)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:37:56.660217] Test:  [ 6150/10618]  eta: 0:18:29  loss: 4.1917 (4.1903)  acc1: 0.0000 (1.6887)  acc5: 0.0000 (9.9049)  time: 0.2204  data: 0.0002  max mem: 1611
+[11:37:58.850713] Test:  [ 6160/10618]  eta: 0:18:26  loss: 4.1802 (4.1902)  acc1: 0.0000 (1.6880)  acc5: 0.0000 (9.9010)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:38:01.056546] Test:  [ 6170/10618]  eta: 0:18:24  loss: 4.1235 (4.1902)  acc1: 0.0000 (1.6934)  acc5: 12.5000 (9.8991)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:38:03.277735] Test:  [ 6180/10618]  eta: 0:18:21  loss: 4.2148 (4.1902)  acc1: 0.0000 (1.6947)  acc5: 12.5000 (9.9013)  time: 0.2213  data: 0.0001  max mem: 1611
+[11:38:05.491069] Test:  [ 6190/10618]  eta: 0:18:18  loss: 4.2148 (4.1902)  acc1: 0.0000 (1.6920)  acc5: 12.5000 (9.8974)  time: 0.2216  data: 0.0001  max mem: 1611
+[11:38:07.688328] Test:  [ 6200/10618]  eta: 0:18:16  loss: 4.1863 (4.1903)  acc1: 0.0000 (1.6913)  acc5: 12.5000 (9.8976)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:38:09.876028] Test:  [ 6210/10618]  eta: 0:18:13  loss: 4.1863 (4.1903)  acc1: 0.0000 (1.6885)  acc5: 12.5000 (9.8978)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:38:12.086731] Test:  [ 6220/10618]  eta: 0:18:10  loss: 4.2256 (4.1904)  acc1: 0.0000 (1.6878)  acc5: 0.0000 (9.8939)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:38:14.288441] Test:  [ 6230/10618]  eta: 0:18:08  loss: 4.2256 (4.1904)  acc1: 0.0000 (1.6871)  acc5: 0.0000 (9.8961)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:38:16.484436] Test:  [ 6240/10618]  eta: 0:18:05  loss: 4.2065 (4.1905)  acc1: 0.0000 (1.6844)  acc5: 0.0000 (9.8902)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:38:18.694044] Test:  [ 6250/10618]  eta: 0:18:02  loss: 4.2056 (4.1904)  acc1: 0.0000 (1.6837)  acc5: 12.5000 (9.8944)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:38:20.889228] Test:  [ 6260/10618]  eta: 0:18:00  loss: 4.2056 (4.1905)  acc1: 0.0000 (1.6850)  acc5: 12.5000 (9.8926)  time: 0.2202  data: 0.0002  max mem: 1611
+[11:38:23.089701] Test:  [ 6270/10618]  eta: 0:17:57  loss: 4.1763 (4.1905)  acc1: 0.0000 (1.6903)  acc5: 12.5000 (9.8928)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:38:25.279713] Test:  [ 6280/10618]  eta: 0:17:54  loss: 4.1670 (4.1905)  acc1: 0.0000 (1.6896)  acc5: 12.5000 (9.8949)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:38:27.479596] Test:  [ 6290/10618]  eta: 0:17:52  loss: 4.2327 (4.1906)  acc1: 0.0000 (1.6889)  acc5: 0.0000 (9.8931)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:38:29.659360] Test:  [ 6300/10618]  eta: 0:17:49  loss: 4.2634 (4.1906)  acc1: 0.0000 (1.6882)  acc5: 0.0000 (9.8953)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:38:31.848207] Test:  [ 6310/10618]  eta: 0:17:46  loss: 4.2241 (4.1907)  acc1: 0.0000 (1.6895)  acc5: 0.0000 (9.8934)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:38:34.074175] Test:  [ 6320/10618]  eta: 0:17:44  loss: 4.2119 (4.1907)  acc1: 0.0000 (1.6928)  acc5: 12.5000 (9.8976)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:38:36.268423] Test:  [ 6330/10618]  eta: 0:17:41  loss: 4.1489 (4.1906)  acc1: 0.0000 (1.6901)  acc5: 12.5000 (9.9036)  time: 0.2209  data: 0.0001  max mem: 1611
+[11:38:38.447604] Test:  [ 6340/10618]  eta: 0:17:38  loss: 4.1543 (4.1906)  acc1: 0.0000 (1.6894)  acc5: 12.5000 (9.9018)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:38:40.641585] Test:  [ 6350/10618]  eta: 0:17:36  loss: 4.1543 (4.1905)  acc1: 0.0000 (1.6946)  acc5: 12.5000 (9.9138)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:38:42.841855] Test:  [ 6360/10618]  eta: 0:17:33  loss: 4.1482 (4.1905)  acc1: 0.0000 (1.6959)  acc5: 12.5000 (9.9179)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:38:45.015612] Test:  [ 6370/10618]  eta: 0:17:30  loss: 4.2117 (4.1905)  acc1: 0.0000 (1.6952)  acc5: 12.5000 (9.9160)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:38:47.211354] Test:  [ 6380/10618]  eta: 0:17:28  loss: 4.1582 (4.1904)  acc1: 0.0000 (1.6964)  acc5: 12.5000 (9.9162)  time: 0.2184  data: 0.0002  max mem: 1611
+[11:38:49.398019] Test:  [ 6390/10618]  eta: 0:17:25  loss: 4.1199 (4.1905)  acc1: 0.0000 (1.6938)  acc5: 0.0000 (9.9104)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:38:51.583878] Test:  [ 6400/10618]  eta: 0:17:22  loss: 4.1313 (4.1904)  acc1: 0.0000 (1.6950)  acc5: 12.5000 (9.9125)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:38:53.768193] Test:  [ 6410/10618]  eta: 0:17:20  loss: 4.1313 (4.1903)  acc1: 0.0000 (1.6924)  acc5: 12.5000 (9.9127)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:38:55.942769] Test:  [ 6420/10618]  eta: 0:17:17  loss: 4.1941 (4.1905)  acc1: 0.0000 (1.6898)  acc5: 0.0000 (9.9050)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:38:58.130312] Test:  [ 6430/10618]  eta: 0:17:14  loss: 4.2158 (4.1905)  acc1: 0.0000 (1.6871)  acc5: 0.0000 (9.9051)  time: 0.2180  data: 0.0001  max mem: 1611
+[11:39:00.314352] Test:  [ 6440/10618]  eta: 0:17:12  loss: 4.1912 (4.1905)  acc1: 0.0000 (1.6884)  acc5: 0.0000 (9.9014)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:39:02.509366] Test:  [ 6450/10618]  eta: 0:17:09  loss: 4.1565 (4.1905)  acc1: 0.0000 (1.6877)  acc5: 0.0000 (9.9074)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:39:04.701890] Test:  [ 6460/10618]  eta: 0:17:06  loss: 4.2349 (4.1906)  acc1: 0.0000 (1.6851)  acc5: 0.0000 (9.9017)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:39:06.891915] Test:  [ 6470/10618]  eta: 0:17:04  loss: 4.2302 (4.1906)  acc1: 0.0000 (1.6844)  acc5: 12.5000 (9.9038)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:39:09.070607] Test:  [ 6480/10618]  eta: 0:17:01  loss: 4.2302 (4.1906)  acc1: 0.0000 (1.6818)  acc5: 12.5000 (9.8943)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:39:11.254289] Test:  [ 6490/10618]  eta: 0:16:58  loss: 4.1897 (4.1905)  acc1: 0.0000 (1.6831)  acc5: 0.0000 (9.9022)  time: 0.2180  data: 0.0002  max mem: 1611
+[11:39:13.452067] Test:  [ 6500/10618]  eta: 0:16:56  loss: 4.1265 (4.1905)  acc1: 0.0000 (1.6824)  acc5: 12.5000 (9.8985)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:39:15.636256] Test:  [ 6510/10618]  eta: 0:16:53  loss: 4.1797 (4.1905)  acc1: 0.0000 (1.6798)  acc5: 12.5000 (9.8967)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:39:17.823509] Test:  [ 6520/10618]  eta: 0:16:50  loss: 4.1155 (4.1904)  acc1: 0.0000 (1.6773)  acc5: 12.5000 (9.9045)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:39:20.013222] Test:  [ 6530/10618]  eta: 0:16:48  loss: 4.1401 (4.1904)  acc1: 0.0000 (1.6785)  acc5: 12.5000 (9.9085)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:39:22.192315] Test:  [ 6540/10618]  eta: 0:16:45  loss: 4.1941 (4.1904)  acc1: 0.0000 (1.6817)  acc5: 12.5000 (9.9087)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:39:24.368870] Test:  [ 6550/10618]  eta: 0:16:42  loss: 4.1191 (4.1903)  acc1: 0.0000 (1.6849)  acc5: 0.0000 (9.9012)  time: 0.2177  data: 0.0001  max mem: 1611
+[11:39:26.554578] Test:  [ 6560/10618]  eta: 0:16:40  loss: 4.1033 (4.1902)  acc1: 0.0000 (1.6918)  acc5: 0.0000 (9.9051)  time: 0.2180  data: 0.0001  max mem: 1611
+[11:39:28.751409] Test:  [ 6570/10618]  eta: 0:16:37  loss: 4.1777 (4.1902)  acc1: 0.0000 (1.6930)  acc5: 12.5000 (9.9072)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:39:30.929488] Test:  [ 6580/10618]  eta: 0:16:35  loss: 4.2012 (4.1903)  acc1: 0.0000 (1.6924)  acc5: 12.5000 (9.9073)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:39:33.109337] Test:  [ 6590/10618]  eta: 0:16:32  loss: 4.2302 (4.1904)  acc1: 0.0000 (1.6917)  acc5: 0.0000 (9.9018)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:39:35.308254] Test:  [ 6600/10618]  eta: 0:16:29  loss: 4.2385 (4.1903)  acc1: 0.0000 (1.6910)  acc5: 12.5000 (9.9038)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:39:37.507745] Test:  [ 6610/10618]  eta: 0:16:27  loss: 4.1797 (4.1903)  acc1: 0.0000 (1.6904)  acc5: 12.5000 (9.9039)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:39:39.700397] Test:  [ 6620/10618]  eta: 0:16:24  loss: 4.1643 (4.1904)  acc1: 0.0000 (1.6897)  acc5: 12.5000 (9.9022)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:39:41.889528] Test:  [ 6630/10618]  eta: 0:16:21  loss: 4.1731 (4.1903)  acc1: 0.0000 (1.6947)  acc5: 12.5000 (9.9042)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:39:44.097556] Test:  [ 6640/10618]  eta: 0:16:19  loss: 4.2197 (4.1904)  acc1: 0.0000 (1.6940)  acc5: 0.0000 (9.8931)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:39:46.287336] Test:  [ 6650/10618]  eta: 0:16:16  loss: 4.2344 (4.1906)  acc1: 0.0000 (1.6915)  acc5: 0.0000 (9.8895)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:39:48.481443] Test:  [ 6660/10618]  eta: 0:16:14  loss: 4.2007 (4.1904)  acc1: 0.0000 (1.6946)  acc5: 12.5000 (9.8915)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:39:50.679447] Test:  [ 6670/10618]  eta: 0:16:11  loss: 4.1321 (4.1904)  acc1: 0.0000 (1.6976)  acc5: 12.5000 (9.8973)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:39:52.879169] Test:  [ 6680/10618]  eta: 0:16:08  loss: 4.1694 (4.1904)  acc1: 0.0000 (1.6970)  acc5: 12.5000 (9.8993)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:39:55.069825] Test:  [ 6690/10618]  eta: 0:16:06  loss: 4.1514 (4.1904)  acc1: 0.0000 (1.6944)  acc5: 12.5000 (9.9051)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:39:57.261963] Test:  [ 6700/10618]  eta: 0:16:03  loss: 4.1179 (4.1903)  acc1: 0.0000 (1.6975)  acc5: 12.5000 (9.9071)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:39:59.466324] Test:  [ 6710/10618]  eta: 0:16:00  loss: 4.1191 (4.1903)  acc1: 0.0000 (1.6968)  acc5: 12.5000 (9.9035)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:40:01.655246] Test:  [ 6720/10618]  eta: 0:15:58  loss: 4.1873 (4.1904)  acc1: 0.0000 (1.6943)  acc5: 12.5000 (9.9111)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:40:03.847618] Test:  [ 6730/10618]  eta: 0:15:55  loss: 4.2061 (4.1905)  acc1: 0.0000 (1.6937)  acc5: 12.5000 (9.9075)  time: 0.2190  data: 0.0002  max mem: 1611
+[11:40:06.052500] Test:  [ 6740/10618]  eta: 0:15:53  loss: 4.1926 (4.1905)  acc1: 0.0000 (1.6967)  acc5: 0.0000 (9.9039)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:40:08.240595] Test:  [ 6750/10618]  eta: 0:15:50  loss: 4.1484 (4.1905)  acc1: 0.0000 (1.6960)  acc5: 0.0000 (9.9004)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:40:10.436783] Test:  [ 6760/10618]  eta: 0:15:47  loss: 4.1113 (4.1904)  acc1: 0.0000 (1.6954)  acc5: 12.5000 (9.9079)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:40:12.638177] Test:  [ 6770/10618]  eta: 0:15:45  loss: 4.1824 (4.1905)  acc1: 0.0000 (1.6947)  acc5: 0.0000 (9.8970)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:40:14.840106] Test:  [ 6780/10618]  eta: 0:15:42  loss: 4.1653 (4.1905)  acc1: 0.0000 (1.6941)  acc5: 0.0000 (9.8971)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:40:17.019808] Test:  [ 6790/10618]  eta: 0:15:40  loss: 4.1431 (4.1906)  acc1: 0.0000 (1.6934)  acc5: 12.5000 (9.8918)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:40:19.214890] Test:  [ 6800/10618]  eta: 0:15:37  loss: 4.1711 (4.1907)  acc1: 0.0000 (1.6928)  acc5: 0.0000 (9.8919)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:40:21.413976] Test:  [ 6810/10618]  eta: 0:15:34  loss: 4.1475 (4.1906)  acc1: 0.0000 (1.6958)  acc5: 0.0000 (9.8921)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:40:23.604111] Test:  [ 6820/10618]  eta: 0:15:32  loss: 4.1194 (4.1905)  acc1: 0.0000 (1.6970)  acc5: 12.5000 (9.9051)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:40:25.795187] Test:  [ 6830/10618]  eta: 0:15:29  loss: 4.1423 (4.1906)  acc1: 0.0000 (1.6963)  acc5: 12.5000 (9.8979)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:40:27.992829] Test:  [ 6840/10618]  eta: 0:15:27  loss: 4.2314 (4.1907)  acc1: 0.0000 (1.6993)  acc5: 0.0000 (9.8926)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:40:30.191553] Test:  [ 6850/10618]  eta: 0:15:24  loss: 4.2251 (4.1906)  acc1: 0.0000 (1.6987)  acc5: 0.0000 (9.8891)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:40:32.392532] Test:  [ 6860/10618]  eta: 0:15:21  loss: 4.1394 (4.1906)  acc1: 0.0000 (1.6980)  acc5: 12.5000 (9.8892)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:40:34.589851] Test:  [ 6870/10618]  eta: 0:15:19  loss: 4.1597 (4.1905)  acc1: 0.0000 (1.6955)  acc5: 12.5000 (9.8912)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:40:36.785016] Test:  [ 6880/10618]  eta: 0:15:16  loss: 4.1809 (4.1905)  acc1: 0.0000 (1.6967)  acc5: 12.5000 (9.8950)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:40:38.971600] Test:  [ 6890/10618]  eta: 0:15:14  loss: 4.1116 (4.1905)  acc1: 0.0000 (1.6961)  acc5: 0.0000 (9.8879)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:40:41.150718] Test:  [ 6900/10618]  eta: 0:15:11  loss: 4.1035 (4.1904)  acc1: 0.0000 (1.6990)  acc5: 0.0000 (9.8917)  time: 0.2182  data: 0.0001  max mem: 1611
+[11:40:43.339433] Test:  [ 6910/10618]  eta: 0:15:08  loss: 4.1694 (4.1905)  acc1: 0.0000 (1.7002)  acc5: 12.5000 (9.8882)  time: 0.2183  data: 0.0001  max mem: 1611
+[11:40:45.542781] Test:  [ 6920/10618]  eta: 0:15:06  loss: 4.2839 (4.1906)  acc1: 0.0000 (1.6977)  acc5: 0.0000 (9.8848)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:40:47.738527] Test:  [ 6930/10618]  eta: 0:15:03  loss: 4.2883 (4.1907)  acc1: 0.0000 (1.6989)  acc5: 0.0000 (9.8813)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:40:49.933209] Test:  [ 6940/10618]  eta: 0:15:01  loss: 4.1943 (4.1907)  acc1: 0.0000 (1.6982)  acc5: 12.5000 (9.8887)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:40:52.138044] Test:  [ 6950/10618]  eta: 0:14:58  loss: 4.1826 (4.1908)  acc1: 0.0000 (1.6976)  acc5: 12.5000 (9.8835)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:40:54.342512] Test:  [ 6960/10618]  eta: 0:14:56  loss: 4.1929 (4.1909)  acc1: 0.0000 (1.6952)  acc5: 0.0000 (9.8800)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:40:56.536883] Test:  [ 6970/10618]  eta: 0:14:53  loss: 4.2014 (4.1910)  acc1: 0.0000 (1.6927)  acc5: 12.5000 (9.8784)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:40:58.732013] Test:  [ 6980/10618]  eta: 0:14:50  loss: 4.2502 (4.1910)  acc1: 0.0000 (1.6975)  acc5: 12.5000 (9.8822)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:41:00.936045] Test:  [ 6990/10618]  eta: 0:14:48  loss: 4.1699 (4.1910)  acc1: 0.0000 (1.6968)  acc5: 12.5000 (9.8788)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:41:03.129384] Test:  [ 7000/10618]  eta: 0:14:45  loss: 4.0754 (4.1908)  acc1: 0.0000 (1.6998)  acc5: 0.0000 (9.8789)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:41:05.316756] Test:  [ 7010/10618]  eta: 0:14:43  loss: 4.0989 (4.1909)  acc1: 0.0000 (1.6973)  acc5: 12.5000 (9.8827)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:41:07.538622] Test:  [ 7020/10618]  eta: 0:14:40  loss: 4.2703 (4.1910)  acc1: 0.0000 (1.6967)  acc5: 12.5000 (9.8775)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:41:09.739182] Test:  [ 7030/10618]  eta: 0:14:37  loss: 4.2612 (4.1910)  acc1: 0.0000 (1.6943)  acc5: 12.5000 (9.8777)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:41:11.931625] Test:  [ 7040/10618]  eta: 0:14:35  loss: 4.2004 (4.1910)  acc1: 0.0000 (1.6954)  acc5: 12.5000 (9.8761)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:41:14.128164] Test:  [ 7050/10618]  eta: 0:14:32  loss: 4.2520 (4.1912)  acc1: 0.0000 (1.6966)  acc5: 12.5000 (9.8745)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:41:16.322729] Test:  [ 7060/10618]  eta: 0:14:30  loss: 4.2703 (4.1912)  acc1: 0.0000 (1.6942)  acc5: 12.5000 (9.8729)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:41:18.525499] Test:  [ 7070/10618]  eta: 0:14:27  loss: 4.1362 (4.1911)  acc1: 0.0000 (1.6988)  acc5: 12.5000 (9.8748)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:41:20.721957] Test:  [ 7080/10618]  eta: 0:14:25  loss: 4.0959 (4.1911)  acc1: 0.0000 (1.7000)  acc5: 12.5000 (9.8733)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:41:22.926397] Test:  [ 7090/10618]  eta: 0:14:22  loss: 4.1123 (4.1910)  acc1: 0.0000 (1.6976)  acc5: 12.5000 (9.8770)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:41:25.124742] Test:  [ 7100/10618]  eta: 0:14:19  loss: 4.1138 (4.1910)  acc1: 0.0000 (1.6969)  acc5: 12.5000 (9.8807)  time: 0.2201  data: 0.0002  max mem: 1611
+[11:41:27.326117] Test:  [ 7110/10618]  eta: 0:14:17  loss: 4.1929 (4.1910)  acc1: 0.0000 (1.6963)  acc5: 12.5000 (9.8808)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:41:29.525349] Test:  [ 7120/10618]  eta: 0:14:14  loss: 4.0779 (4.1908)  acc1: 0.0000 (1.6957)  acc5: 12.5000 (9.8863)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:41:31.715118] Test:  [ 7130/10618]  eta: 0:14:12  loss: 4.1455 (4.1909)  acc1: 0.0000 (1.6951)  acc5: 12.5000 (9.8882)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:41:33.913196] Test:  [ 7140/10618]  eta: 0:14:09  loss: 4.2544 (4.1910)  acc1: 0.0000 (1.6944)  acc5: 12.5000 (9.8848)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:41:36.119628] Test:  [ 7150/10618]  eta: 0:14:07  loss: 4.2493 (4.1910)  acc1: 0.0000 (1.6938)  acc5: 0.0000 (9.8867)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:41:38.321865] Test:  [ 7160/10618]  eta: 0:14:04  loss: 4.2424 (4.1912)  acc1: 0.0000 (1.6915)  acc5: 0.0000 (9.8782)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:41:40.513070] Test:  [ 7170/10618]  eta: 0:14:02  loss: 4.2097 (4.1912)  acc1: 0.0000 (1.6926)  acc5: 0.0000 (9.8801)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:41:42.708138] Test:  [ 7180/10618]  eta: 0:13:59  loss: 4.1255 (4.1910)  acc1: 0.0000 (1.6937)  acc5: 12.5000 (9.8820)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:41:44.920692] Test:  [ 7190/10618]  eta: 0:13:56  loss: 4.1169 (4.1909)  acc1: 0.0000 (1.6914)  acc5: 12.5000 (9.8856)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:41:47.126761] Test:  [ 7200/10618]  eta: 0:13:54  loss: 4.1196 (4.1909)  acc1: 0.0000 (1.6890)  acc5: 12.5000 (9.8875)  time: 0.2209  data: 0.0001  max mem: 1611
+[11:41:49.329344] Test:  [ 7210/10618]  eta: 0:13:51  loss: 4.1777 (4.1909)  acc1: 0.0000 (1.6884)  acc5: 12.5000 (9.8859)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:41:51.523352] Test:  [ 7220/10618]  eta: 0:13:49  loss: 4.1729 (4.1908)  acc1: 0.0000 (1.6878)  acc5: 12.5000 (9.8930)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:41:53.725431] Test:  [ 7230/10618]  eta: 0:13:46  loss: 4.1414 (4.1907)  acc1: 0.0000 (1.6872)  acc5: 12.5000 (9.8966)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:41:55.920141] Test:  [ 7240/10618]  eta: 0:13:44  loss: 4.1487 (4.1907)  acc1: 0.0000 (1.6866)  acc5: 12.5000 (9.9002)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:41:58.106930] Test:  [ 7250/10618]  eta: 0:13:41  loss: 4.1333 (4.1906)  acc1: 0.0000 (1.6843)  acc5: 12.5000 (9.9055)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:42:00.314282] Test:  [ 7260/10618]  eta: 0:13:39  loss: 4.2119 (4.1907)  acc1: 0.0000 (1.6819)  acc5: 12.5000 (9.9005)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:42:02.502128] Test:  [ 7270/10618]  eta: 0:13:36  loss: 4.1956 (4.1906)  acc1: 0.0000 (1.6848)  acc5: 0.0000 (9.9024)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:42:04.687647] Test:  [ 7280/10618]  eta: 0:13:33  loss: 4.1523 (4.1906)  acc1: 0.0000 (1.6825)  acc5: 0.0000 (9.9008)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:42:06.881711] Test:  [ 7290/10618]  eta: 0:13:31  loss: 4.2126 (4.1906)  acc1: 0.0000 (1.6819)  acc5: 0.0000 (9.8940)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:42:09.089993] Test:  [ 7300/10618]  eta: 0:13:28  loss: 4.2205 (4.1906)  acc1: 0.0000 (1.6813)  acc5: 0.0000 (9.8873)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:42:11.288304] Test:  [ 7310/10618]  eta: 0:13:26  loss: 4.2275 (4.1907)  acc1: 0.0000 (1.6790)  acc5: 0.0000 (9.8807)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:42:13.489642] Test:  [ 7320/10618]  eta: 0:13:23  loss: 4.1753 (4.1907)  acc1: 0.0000 (1.6801)  acc5: 12.5000 (9.8825)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:42:15.689757] Test:  [ 7330/10618]  eta: 0:13:21  loss: 4.1394 (4.1906)  acc1: 0.0000 (1.6795)  acc5: 12.5000 (9.8861)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:42:17.883641] Test:  [ 7340/10618]  eta: 0:13:18  loss: 4.1482 (4.1906)  acc1: 0.0000 (1.6789)  acc5: 12.5000 (9.8846)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:42:20.097136] Test:  [ 7350/10618]  eta: 0:13:16  loss: 4.1570 (4.1906)  acc1: 0.0000 (1.6800)  acc5: 12.5000 (9.8932)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:42:22.293039] Test:  [ 7360/10618]  eta: 0:13:13  loss: 4.1062 (4.1905)  acc1: 0.0000 (1.6795)  acc5: 12.5000 (9.8917)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:42:24.489680] Test:  [ 7370/10618]  eta: 0:13:11  loss: 4.1267 (4.1905)  acc1: 0.0000 (1.6823)  acc5: 12.5000 (9.8918)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:42:26.688730] Test:  [ 7380/10618]  eta: 0:13:08  loss: 4.1367 (4.1905)  acc1: 0.0000 (1.6851)  acc5: 12.5000 (9.8920)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:42:28.887496] Test:  [ 7390/10618]  eta: 0:13:05  loss: 4.1760 (4.1904)  acc1: 0.0000 (1.6828)  acc5: 12.5000 (9.8921)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:42:31.095474] Test:  [ 7400/10618]  eta: 0:13:03  loss: 4.1675 (4.1904)  acc1: 0.0000 (1.6839)  acc5: 12.5000 (9.8922)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:42:33.278108] Test:  [ 7410/10618]  eta: 0:13:00  loss: 4.1736 (4.1905)  acc1: 0.0000 (1.6867)  acc5: 12.5000 (9.8890)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:42:35.460969] Test:  [ 7420/10618]  eta: 0:12:58  loss: 4.2078 (4.1905)  acc1: 0.0000 (1.6844)  acc5: 0.0000 (9.8807)  time: 0.2182  data: 0.0001  max mem: 1611
+[11:42:37.658324] Test:  [ 7430/10618]  eta: 0:12:55  loss: 4.1394 (4.1904)  acc1: 0.0000 (1.6821)  acc5: 0.0000 (9.8826)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:42:39.859094] Test:  [ 7440/10618]  eta: 0:12:53  loss: 4.0464 (4.1902)  acc1: 0.0000 (1.6866)  acc5: 12.5000 (9.8844)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:42:42.046617] Test:  [ 7450/10618]  eta: 0:12:50  loss: 4.0830 (4.1901)  acc1: 0.0000 (1.6877)  acc5: 12.5000 (9.8896)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:42:44.238985] Test:  [ 7460/10618]  eta: 0:12:48  loss: 4.1287 (4.1901)  acc1: 0.0000 (1.6888)  acc5: 12.5000 (9.8881)  time: 0.2189  data: 0.0002  max mem: 1611
+[11:42:46.449255] Test:  [ 7470/10618]  eta: 0:12:45  loss: 4.1824 (4.1900)  acc1: 0.0000 (1.6882)  acc5: 12.5000 (9.8916)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:42:48.636170] Test:  [ 7480/10618]  eta: 0:12:43  loss: 4.1824 (4.1901)  acc1: 0.0000 (1.6876)  acc5: 0.0000 (9.8850)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:42:50.827310] Test:  [ 7490/10618]  eta: 0:12:40  loss: 4.2336 (4.1901)  acc1: 0.0000 (1.6854)  acc5: 0.0000 (9.8819)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:42:53.039351] Test:  [ 7500/10618]  eta: 0:12:38  loss: 4.1799 (4.1902)  acc1: 0.0000 (1.6831)  acc5: 0.0000 (9.8820)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:42:55.232747] Test:  [ 7510/10618]  eta: 0:12:35  loss: 4.1665 (4.1902)  acc1: 0.0000 (1.6859)  acc5: 0.0000 (9.8805)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:42:57.425054] Test:  [ 7520/10618]  eta: 0:12:33  loss: 4.1907 (4.1902)  acc1: 0.0000 (1.6836)  acc5: 12.5000 (9.8823)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:42:59.615488] Test:  [ 7530/10618]  eta: 0:12:30  loss: 4.2209 (4.1901)  acc1: 0.0000 (1.6830)  acc5: 12.5000 (9.8792)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:43:01.817793] Test:  [ 7540/10618]  eta: 0:12:27  loss: 4.1860 (4.1901)  acc1: 0.0000 (1.6825)  acc5: 0.0000 (9.8744)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:43:04.013111] Test:  [ 7550/10618]  eta: 0:12:25  loss: 4.2393 (4.1903)  acc1: 0.0000 (1.6819)  acc5: 0.0000 (9.8712)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:43:06.210276] Test:  [ 7560/10618]  eta: 0:12:22  loss: 4.2607 (4.1904)  acc1: 0.0000 (1.6797)  acc5: 0.0000 (9.8664)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:43:08.419704] Test:  [ 7570/10618]  eta: 0:12:20  loss: 4.1851 (4.1903)  acc1: 0.0000 (1.6791)  acc5: 0.0000 (9.8649)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:43:10.623063] Test:  [ 7580/10618]  eta: 0:12:17  loss: 4.1387 (4.1903)  acc1: 0.0000 (1.6818)  acc5: 0.0000 (9.8618)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:43:12.823636] Test:  [ 7590/10618]  eta: 0:12:15  loss: 4.1733 (4.1903)  acc1: 0.0000 (1.6813)  acc5: 0.0000 (9.8604)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:43:15.013446] Test:  [ 7600/10618]  eta: 0:12:12  loss: 4.1733 (4.1903)  acc1: 0.0000 (1.6807)  acc5: 12.5000 (9.8589)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:43:17.233810] Test:  [ 7610/10618]  eta: 0:12:10  loss: 4.1641 (4.1903)  acc1: 0.0000 (1.6818)  acc5: 12.5000 (9.8591)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:43:19.445179] Test:  [ 7620/10618]  eta: 0:12:07  loss: 4.1560 (4.1902)  acc1: 0.0000 (1.6812)  acc5: 12.5000 (9.8626)  time: 0.2215  data: 0.0001  max mem: 1611
+[11:43:21.651077] Test:  [ 7630/10618]  eta: 0:12:05  loss: 4.1497 (4.1901)  acc1: 0.0000 (1.6790)  acc5: 0.0000 (9.8562)  time: 0.2208  data: 0.0002  max mem: 1611
+[11:43:23.856749] Test:  [ 7640/10618]  eta: 0:12:02  loss: 4.1738 (4.1902)  acc1: 0.0000 (1.6784)  acc5: 0.0000 (9.8515)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:43:26.052095] Test:  [ 7650/10618]  eta: 0:12:00  loss: 4.2849 (4.1904)  acc1: 0.0000 (1.6763)  acc5: 0.0000 (9.8468)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:43:28.250136] Test:  [ 7660/10618]  eta: 0:11:57  loss: 4.2131 (4.1903)  acc1: 0.0000 (1.6741)  acc5: 12.5000 (9.8486)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:43:30.448727] Test:  [ 7670/10618]  eta: 0:11:55  loss: 4.1926 (4.1904)  acc1: 0.0000 (1.6751)  acc5: 0.0000 (9.8439)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:43:32.652115] Test:  [ 7680/10618]  eta: 0:11:52  loss: 4.1663 (4.1903)  acc1: 0.0000 (1.6762)  acc5: 12.5000 (9.8522)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:43:34.862506] Test:  [ 7690/10618]  eta: 0:11:50  loss: 4.1582 (4.1904)  acc1: 0.0000 (1.6773)  acc5: 12.5000 (9.8492)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:43:37.047188] Test:  [ 7700/10618]  eta: 0:11:47  loss: 4.2505 (4.1906)  acc1: 0.0000 (1.6751)  acc5: 0.0000 (9.8429)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:43:39.260535] Test:  [ 7710/10618]  eta: 0:11:45  loss: 4.2603 (4.1906)  acc1: 0.0000 (1.6746)  acc5: 0.0000 (9.8415)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:43:41.447539] Test:  [ 7720/10618]  eta: 0:11:42  loss: 4.2544 (4.1907)  acc1: 0.0000 (1.6740)  acc5: 12.5000 (9.8400)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:43:43.635540] Test:  [ 7730/10618]  eta: 0:11:40  loss: 4.2212 (4.1907)  acc1: 0.0000 (1.6718)  acc5: 0.0000 (9.8419)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:43:45.836242] Test:  [ 7740/10618]  eta: 0:11:37  loss: 4.1260 (4.1906)  acc1: 0.0000 (1.6697)  acc5: 0.0000 (9.8388)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:43:48.038136] Test:  [ 7750/10618]  eta: 0:11:35  loss: 4.1558 (4.1906)  acc1: 0.0000 (1.6708)  acc5: 12.5000 (9.8455)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:43:50.236972] Test:  [ 7760/10618]  eta: 0:11:32  loss: 4.1687 (4.1906)  acc1: 0.0000 (1.6702)  acc5: 12.5000 (9.8409)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:43:52.423710] Test:  [ 7770/10618]  eta: 0:11:30  loss: 4.2021 (4.1906)  acc1: 0.0000 (1.6697)  acc5: 12.5000 (9.8427)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:43:54.625441] Test:  [ 7780/10618]  eta: 0:11:27  loss: 4.1650 (4.1905)  acc1: 0.0000 (1.6707)  acc5: 12.5000 (9.8413)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:43:56.812375] Test:  [ 7790/10618]  eta: 0:11:25  loss: 4.1084 (4.1905)  acc1: 0.0000 (1.6734)  acc5: 12.5000 (9.8399)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:43:59.004899] Test:  [ 7800/10618]  eta: 0:11:22  loss: 4.2336 (4.1906)  acc1: 0.0000 (1.6729)  acc5: 12.5000 (9.8401)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:44:01.198915] Test:  [ 7810/10618]  eta: 0:11:20  loss: 4.2383 (4.1906)  acc1: 0.0000 (1.6707)  acc5: 12.5000 (9.8371)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:44:03.400146] Test:  [ 7820/10618]  eta: 0:11:17  loss: 4.2607 (4.1907)  acc1: 0.0000 (1.6702)  acc5: 12.5000 (9.8357)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:44:05.591303] Test:  [ 7830/10618]  eta: 0:11:15  loss: 4.2317 (4.1907)  acc1: 0.0000 (1.6681)  acc5: 0.0000 (9.8327)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:44:07.788422] Test:  [ 7840/10618]  eta: 0:11:12  loss: 4.1106 (4.1907)  acc1: 0.0000 (1.6707)  acc5: 12.5000 (9.8377)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:44:09.990351] Test:  [ 7850/10618]  eta: 0:11:10  loss: 4.1118 (4.1906)  acc1: 0.0000 (1.6718)  acc5: 12.5000 (9.8379)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:44:12.186621] Test:  [ 7860/10618]  eta: 0:11:07  loss: 4.1890 (4.1906)  acc1: 0.0000 (1.6696)  acc5: 0.0000 (9.8334)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:44:14.369588] Test:  [ 7870/10618]  eta: 0:11:05  loss: 4.1936 (4.1906)  acc1: 0.0000 (1.6691)  acc5: 0.0000 (9.8336)  time: 0.2189  data: 0.0002  max mem: 1611
+[11:44:16.566582] Test:  [ 7880/10618]  eta: 0:11:02  loss: 4.1716 (4.1906)  acc1: 0.0000 (1.6702)  acc5: 12.5000 (9.8369)  time: 0.2189  data: 0.0002  max mem: 1611
+[11:44:18.762647] Test:  [ 7890/10618]  eta: 0:11:00  loss: 4.1973 (4.1906)  acc1: 0.0000 (1.6712)  acc5: 12.5000 (9.8403)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:44:20.957614] Test:  [ 7900/10618]  eta: 0:10:57  loss: 4.1973 (4.1906)  acc1: 0.0000 (1.6738)  acc5: 12.5000 (9.8389)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:44:23.164410] Test:  [ 7910/10618]  eta: 0:10:55  loss: 4.1719 (4.1906)  acc1: 0.0000 (1.6733)  acc5: 0.0000 (9.8360)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:44:25.357399] Test:  [ 7920/10618]  eta: 0:10:52  loss: 4.1646 (4.1906)  acc1: 0.0000 (1.6712)  acc5: 12.5000 (9.8346)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:44:27.534238] Test:  [ 7930/10618]  eta: 0:10:50  loss: 4.2678 (4.1908)  acc1: 0.0000 (1.6691)  acc5: 0.0000 (9.8254)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:44:29.724032] Test:  [ 7940/10618]  eta: 0:10:47  loss: 4.2866 (4.1909)  acc1: 0.0000 (1.6670)  acc5: 0.0000 (9.8161)  time: 0.2183  data: 0.0001  max mem: 1611
+[11:44:31.915788] Test:  [ 7950/10618]  eta: 0:10:45  loss: 4.2258 (4.1910)  acc1: 0.0000 (1.6665)  acc5: 0.0000 (9.8179)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:44:34.112548] Test:  [ 7960/10618]  eta: 0:10:42  loss: 4.1697 (4.1909)  acc1: 0.0000 (1.6722)  acc5: 12.5000 (9.8245)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:44:36.285528] Test:  [ 7970/10618]  eta: 0:10:40  loss: 4.1606 (4.1909)  acc1: 0.0000 (1.6717)  acc5: 12.5000 (9.8247)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:44:38.472952] Test:  [ 7980/10618]  eta: 0:10:37  loss: 4.1997 (4.1909)  acc1: 0.0000 (1.6712)  acc5: 0.0000 (9.8218)  time: 0.2179  data: 0.0001  max mem: 1611
+[11:44:40.662747] Test:  [ 7990/10618]  eta: 0:10:35  loss: 4.2317 (4.1910)  acc1: 0.0000 (1.6706)  acc5: 0.0000 (9.8157)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:44:42.855521] Test:  [ 8000/10618]  eta: 0:10:32  loss: 4.1804 (4.1909)  acc1: 0.0000 (1.6701)  acc5: 0.0000 (9.8128)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:44:45.042432] Test:  [ 8010/10618]  eta: 0:10:30  loss: 4.1440 (4.1909)  acc1: 0.0000 (1.6680)  acc5: 12.5000 (9.8131)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:44:47.236407] Test:  [ 8020/10618]  eta: 0:10:27  loss: 4.2400 (4.1910)  acc1: 0.0000 (1.6675)  acc5: 0.0000 (9.8071)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:44:49.432458] Test:  [ 8030/10618]  eta: 0:10:25  loss: 4.1836 (4.1909)  acc1: 0.0000 (1.6654)  acc5: 12.5000 (9.8120)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:44:51.636054] Test:  [ 8040/10618]  eta: 0:10:22  loss: 4.1467 (4.1910)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.8107)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:44:53.836081] Test:  [ 8050/10618]  eta: 0:10:20  loss: 4.1755 (4.1909)  acc1: 0.0000 (1.6659)  acc5: 12.5000 (9.8124)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:44:56.026495] Test:  [ 8060/10618]  eta: 0:10:17  loss: 4.1643 (4.1910)  acc1: 0.0000 (1.6670)  acc5: 12.5000 (9.8173)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:44:58.226327] Test:  [ 8070/10618]  eta: 0:10:15  loss: 4.1904 (4.1909)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.8253)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:45:00.404706] Test:  [ 8080/10618]  eta: 0:10:12  loss: 4.1938 (4.1909)  acc1: 0.0000 (1.6675)  acc5: 12.5000 (9.8255)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:45:02.603743] Test:  [ 8090/10618]  eta: 0:10:10  loss: 4.1753 (4.1910)  acc1: 0.0000 (1.6685)  acc5: 0.0000 (9.8226)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:45:04.805799] Test:  [ 8100/10618]  eta: 0:10:07  loss: 4.1509 (4.1910)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.8244)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:45:07.004295] Test:  [ 8110/10618]  eta: 0:10:05  loss: 4.1882 (4.1910)  acc1: 0.0000 (1.6644)  acc5: 12.5000 (9.8185)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:45:09.206732] Test:  [ 8120/10618]  eta: 0:10:02  loss: 4.2229 (4.1910)  acc1: 0.0000 (1.6654)  acc5: 0.0000 (9.8156)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:45:11.411470] Test:  [ 8130/10618]  eta: 0:10:00  loss: 4.1960 (4.1910)  acc1: 0.0000 (1.6634)  acc5: 0.0000 (9.8158)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:45:13.609415] Test:  [ 8140/10618]  eta: 0:09:57  loss: 4.1443 (4.1909)  acc1: 0.0000 (1.6629)  acc5: 0.0000 (9.8191)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:45:15.806353] Test:  [ 8150/10618]  eta: 0:09:55  loss: 4.1628 (4.1908)  acc1: 0.0000 (1.6624)  acc5: 0.0000 (9.8178)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:45:18.007914] Test:  [ 8160/10618]  eta: 0:09:52  loss: 4.1770 (4.1909)  acc1: 0.0000 (1.6603)  acc5: 0.0000 (9.8104)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:45:20.218013] Test:  [ 8170/10618]  eta: 0:09:50  loss: 4.1853 (4.1908)  acc1: 0.0000 (1.6583)  acc5: 0.0000 (9.8060)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:45:22.432000] Test:  [ 8180/10618]  eta: 0:09:47  loss: 4.1768 (4.1909)  acc1: 0.0000 (1.6609)  acc5: 0.0000 (9.8063)  time: 0.2211  data: 0.0001  max mem: 1611
+[11:45:24.639033] Test:  [ 8190/10618]  eta: 0:09:45  loss: 4.2212 (4.1909)  acc1: 0.0000 (1.6604)  acc5: 12.5000 (9.8065)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:45:26.843158] Test:  [ 8200/10618]  eta: 0:09:43  loss: 4.2249 (4.1909)  acc1: 0.0000 (1.6583)  acc5: 12.5000 (9.8052)  time: 0.2205  data: 0.0002  max mem: 1611
+[11:45:29.055487] Test:  [ 8210/10618]  eta: 0:09:40  loss: 4.1428 (4.1908)  acc1: 0.0000 (1.6578)  acc5: 12.5000 (9.8070)  time: 0.2207  data: 0.0001  max mem: 1611
+[11:45:31.262511] Test:  [ 8220/10618]  eta: 0:09:38  loss: 4.1428 (4.1909)  acc1: 0.0000 (1.6573)  acc5: 0.0000 (9.8011)  time: 0.2209  data: 0.0002  max mem: 1611
+[11:45:33.448983] Test:  [ 8230/10618]  eta: 0:09:35  loss: 4.2043 (4.1909)  acc1: 0.0000 (1.6568)  acc5: 0.0000 (9.7968)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:45:35.653034] Test:  [ 8240/10618]  eta: 0:09:33  loss: 4.1929 (4.1909)  acc1: 0.0000 (1.6579)  acc5: 0.0000 (9.7971)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:45:37.853910] Test:  [ 8250/10618]  eta: 0:09:30  loss: 4.1511 (4.1908)  acc1: 0.0000 (1.6559)  acc5: 12.5000 (9.7943)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:45:40.043301] Test:  [ 8260/10618]  eta: 0:09:28  loss: 4.1484 (4.1907)  acc1: 0.0000 (1.6554)  acc5: 12.5000 (9.8006)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:45:42.242530] Test:  [ 8270/10618]  eta: 0:09:25  loss: 4.1484 (4.1909)  acc1: 0.0000 (1.6564)  acc5: 12.5000 (9.7963)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:45:44.443056] Test:  [ 8280/10618]  eta: 0:09:23  loss: 4.1445 (4.1908)  acc1: 0.0000 (1.6604)  acc5: 12.5000 (9.7980)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:45:46.651212] Test:  [ 8290/10618]  eta: 0:09:20  loss: 4.1316 (4.1908)  acc1: 0.0000 (1.6614)  acc5: 12.5000 (9.7998)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:45:48.837193] Test:  [ 8300/10618]  eta: 0:09:18  loss: 4.1316 (4.1907)  acc1: 0.0000 (1.6609)  acc5: 12.5000 (9.8030)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:45:51.044484] Test:  [ 8310/10618]  eta: 0:09:15  loss: 4.0916 (4.1906)  acc1: 0.0000 (1.6650)  acc5: 12.5000 (9.8063)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:45:53.242515] Test:  [ 8320/10618]  eta: 0:09:13  loss: 4.1726 (4.1907)  acc1: 0.0000 (1.6675)  acc5: 12.5000 (9.8050)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:45:55.428119] Test:  [ 8330/10618]  eta: 0:09:10  loss: 4.2302 (4.1907)  acc1: 0.0000 (1.6655)  acc5: 12.5000 (9.8052)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:45:57.638180] Test:  [ 8340/10618]  eta: 0:09:08  loss: 4.1960 (4.1908)  acc1: 0.0000 (1.6650)  acc5: 12.5000 (9.8070)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:45:59.841701] Test:  [ 8350/10618]  eta: 0:09:06  loss: 4.2297 (4.1909)  acc1: 0.0000 (1.6630)  acc5: 12.5000 (9.8072)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:46:02.040562] Test:  [ 8360/10618]  eta: 0:09:03  loss: 4.1860 (4.1908)  acc1: 0.0000 (1.6610)  acc5: 0.0000 (9.8059)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:46:04.242192] Test:  [ 8370/10618]  eta: 0:09:01  loss: 4.1743 (4.1908)  acc1: 0.0000 (1.6635)  acc5: 0.0000 (9.8062)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:46:06.453534] Test:  [ 8380/10618]  eta: 0:08:58  loss: 4.1743 (4.1909)  acc1: 0.0000 (1.6615)  acc5: 12.5000 (9.8034)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:46:08.656465] Test:  [ 8390/10618]  eta: 0:08:56  loss: 4.1721 (4.1908)  acc1: 0.0000 (1.6640)  acc5: 12.5000 (9.8051)  time: 0.2206  data: 0.0001  max mem: 1611
+[11:46:10.851510] Test:  [ 8400/10618]  eta: 0:08:53  loss: 4.1887 (4.1908)  acc1: 0.0000 (1.6635)  acc5: 12.5000 (9.8039)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:46:13.056450] Test:  [ 8410/10618]  eta: 0:08:51  loss: 4.2493 (4.1910)  acc1: 0.0000 (1.6630)  acc5: 12.5000 (9.8026)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:46:15.258758] Test:  [ 8420/10618]  eta: 0:08:48  loss: 4.2493 (4.1909)  acc1: 0.0000 (1.6640)  acc5: 12.5000 (9.8029)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:46:17.457156] Test:  [ 8430/10618]  eta: 0:08:46  loss: 4.1775 (4.1910)  acc1: 0.0000 (1.6620)  acc5: 12.5000 (9.8001)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:46:19.642752] Test:  [ 8440/10618]  eta: 0:08:43  loss: 4.1978 (4.1910)  acc1: 0.0000 (1.6615)  acc5: 0.0000 (9.8019)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:46:21.845108] Test:  [ 8450/10618]  eta: 0:08:41  loss: 4.2629 (4.1912)  acc1: 0.0000 (1.6596)  acc5: 0.0000 (9.7932)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:46:24.026984] Test:  [ 8460/10618]  eta: 0:08:38  loss: 4.2551 (4.1912)  acc1: 0.0000 (1.6591)  acc5: 0.0000 (9.7949)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:46:26.215214] Test:  [ 8470/10618]  eta: 0:08:36  loss: 4.2551 (4.1913)  acc1: 0.0000 (1.6586)  acc5: 0.0000 (9.7863)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:46:28.418155] Test:  [ 8480/10618]  eta: 0:08:34  loss: 4.2104 (4.1913)  acc1: 0.0000 (1.6596)  acc5: 0.0000 (9.7807)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:46:30.601944] Test:  [ 8490/10618]  eta: 0:08:31  loss: 4.1602 (4.1912)  acc1: 0.0000 (1.6606)  acc5: 0.0000 (9.7809)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:46:32.792319] Test:  [ 8500/10618]  eta: 0:08:29  loss: 4.1182 (4.1912)  acc1: 0.0000 (1.6616)  acc5: 0.0000 (9.7812)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:46:34.975174] Test:  [ 8510/10618]  eta: 0:08:26  loss: 4.1072 (4.1911)  acc1: 0.0000 (1.6655)  acc5: 12.5000 (9.7859)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:46:37.171739] Test:  [ 8520/10618]  eta: 0:08:24  loss: 4.1555 (4.1911)  acc1: 0.0000 (1.6650)  acc5: 12.5000 (9.7876)  time: 0.2189  data: 0.0002  max mem: 1611
+[11:46:39.352749] Test:  [ 8530/10618]  eta: 0:08:21  loss: 4.1765 (4.1911)  acc1: 0.0000 (1.6660)  acc5: 12.5000 (9.7878)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:46:41.544975] Test:  [ 8540/10618]  eta: 0:08:19  loss: 4.2166 (4.1912)  acc1: 0.0000 (1.6640)  acc5: 0.0000 (9.7852)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:46:43.752394] Test:  [ 8550/10618]  eta: 0:08:16  loss: 4.2166 (4.1913)  acc1: 0.0000 (1.6621)  acc5: 0.0000 (9.7781)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:46:45.939618] Test:  [ 8560/10618]  eta: 0:08:14  loss: 4.1594 (4.1912)  acc1: 0.0000 (1.6616)  acc5: 0.0000 (9.7827)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:46:48.122337] Test:  [ 8570/10618]  eta: 0:08:11  loss: 4.1069 (4.1911)  acc1: 0.0000 (1.6640)  acc5: 12.5000 (9.7874)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:46:50.330311] Test:  [ 8580/10618]  eta: 0:08:09  loss: 4.1331 (4.1912)  acc1: 0.0000 (1.6621)  acc5: 0.0000 (9.7847)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:46:52.524749] Test:  [ 8590/10618]  eta: 0:08:07  loss: 4.2349 (4.1912)  acc1: 0.0000 (1.6616)  acc5: 12.5000 (9.7922)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:46:54.722241] Test:  [ 8600/10618]  eta: 0:08:04  loss: 4.1868 (4.1912)  acc1: 0.0000 (1.6611)  acc5: 12.5000 (9.7925)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:46:56.919253] Test:  [ 8610/10618]  eta: 0:08:02  loss: 4.1711 (4.1912)  acc1: 0.0000 (1.6592)  acc5: 12.5000 (9.7942)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:46:59.106751] Test:  [ 8620/10618]  eta: 0:07:59  loss: 4.1465 (4.1911)  acc1: 0.0000 (1.6602)  acc5: 12.5000 (9.7944)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:47:01.297677] Test:  [ 8630/10618]  eta: 0:07:57  loss: 4.1597 (4.1910)  acc1: 0.0000 (1.6597)  acc5: 12.5000 (9.7946)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:47:03.480793] Test:  [ 8640/10618]  eta: 0:07:54  loss: 4.1606 (4.1910)  acc1: 0.0000 (1.6621)  acc5: 12.5000 (9.7963)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:47:05.682253] Test:  [ 8650/10618]  eta: 0:07:52  loss: 4.1125 (4.1910)  acc1: 0.0000 (1.6660)  acc5: 12.5000 (9.8023)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:47:07.869326] Test:  [ 8660/10618]  eta: 0:07:49  loss: 4.1091 (4.1910)  acc1: 0.0000 (1.6655)  acc5: 12.5000 (9.8054)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:47:10.059982] Test:  [ 8670/10618]  eta: 0:07:47  loss: 4.1572 (4.1910)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.8100)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:47:12.250350] Test:  [ 8680/10618]  eta: 0:07:44  loss: 4.1438 (4.1910)  acc1: 0.0000 (1.6660)  acc5: 12.5000 (9.8073)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:47:14.465816] Test:  [ 8690/10618]  eta: 0:07:42  loss: 4.2256 (4.1911)  acc1: 0.0000 (1.6655)  acc5: 0.0000 (9.8004)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:47:16.650356] Test:  [ 8700/10618]  eta: 0:07:40  loss: 4.2246 (4.1911)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.8035)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:47:18.843396] Test:  [ 8710/10618]  eta: 0:07:37  loss: 4.1626 (4.1912)  acc1: 0.0000 (1.6660)  acc5: 12.5000 (9.7994)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:47:21.042053] Test:  [ 8720/10618]  eta: 0:07:35  loss: 4.1965 (4.1912)  acc1: 0.0000 (1.6641)  acc5: 0.0000 (9.7925)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:47:23.238438] Test:  [ 8730/10618]  eta: 0:07:32  loss: 4.1301 (4.1911)  acc1: 0.0000 (1.6650)  acc5: 0.0000 (9.7970)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:47:25.431343] Test:  [ 8740/10618]  eta: 0:07:30  loss: 4.1069 (4.1910)  acc1: 0.0000 (1.6660)  acc5: 12.5000 (9.7944)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:47:27.628136] Test:  [ 8750/10618]  eta: 0:07:27  loss: 4.1282 (4.1910)  acc1: 0.0000 (1.6684)  acc5: 12.5000 (9.8017)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:47:29.841552] Test:  [ 8760/10618]  eta: 0:07:25  loss: 4.1724 (4.1910)  acc1: 0.0000 (1.6679)  acc5: 12.5000 (9.7991)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:47:32.029086] Test:  [ 8770/10618]  eta: 0:07:23  loss: 4.1724 (4.1909)  acc1: 0.0000 (1.6703)  acc5: 12.5000 (9.8036)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:47:34.228700] Test:  [ 8780/10618]  eta: 0:07:20  loss: 4.1472 (4.1910)  acc1: 0.0000 (1.6684)  acc5: 12.5000 (9.8053)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:47:36.438577] Test:  [ 8790/10618]  eta: 0:07:18  loss: 4.2798 (4.1910)  acc1: 0.0000 (1.6693)  acc5: 12.5000 (9.8055)  time: 0.2204  data: 0.0002  max mem: 1611
+[11:47:38.635092] Test:  [ 8800/10618]  eta: 0:07:15  loss: 4.2300 (4.1911)  acc1: 0.0000 (1.6688)  acc5: 12.5000 (9.8071)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:47:40.821399] Test:  [ 8810/10618]  eta: 0:07:13  loss: 4.1973 (4.1910)  acc1: 0.0000 (1.6670)  acc5: 12.5000 (9.8059)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:47:43.009494] Test:  [ 8820/10618]  eta: 0:07:10  loss: 4.1877 (4.1911)  acc1: 0.0000 (1.6679)  acc5: 12.5000 (9.8118)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:47:45.209960] Test:  [ 8830/10618]  eta: 0:07:08  loss: 4.2273 (4.1910)  acc1: 0.0000 (1.6674)  acc5: 12.5000 (9.8092)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:47:47.415270] Test:  [ 8840/10618]  eta: 0:07:05  loss: 4.1096 (4.1909)  acc1: 0.0000 (1.6712)  acc5: 12.5000 (9.8165)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:47:49.604015] Test:  [ 8850/10618]  eta: 0:07:03  loss: 4.1096 (4.1909)  acc1: 0.0000 (1.6707)  acc5: 12.5000 (9.8153)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:47:51.811099] Test:  [ 8860/10618]  eta: 0:07:01  loss: 4.2661 (4.1910)  acc1: 0.0000 (1.6702)  acc5: 0.0000 (9.8141)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:47:54.012125] Test:  [ 8870/10618]  eta: 0:06:58  loss: 4.2786 (4.1910)  acc1: 0.0000 (1.6712)  acc5: 0.0000 (9.8157)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:47:56.216686] Test:  [ 8880/10618]  eta: 0:06:56  loss: 4.2576 (4.1911)  acc1: 0.0000 (1.6693)  acc5: 12.5000 (9.8159)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:47:58.407482] Test:  [ 8890/10618]  eta: 0:06:53  loss: 4.2239 (4.1911)  acc1: 0.0000 (1.6716)  acc5: 12.5000 (9.8147)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:48:00.590241] Test:  [ 8900/10618]  eta: 0:06:51  loss: 4.1726 (4.1911)  acc1: 0.0000 (1.6712)  acc5: 0.0000 (9.8093)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:48:02.798876] Test:  [ 8910/10618]  eta: 0:06:48  loss: 4.1567 (4.1911)  acc1: 0.0000 (1.6707)  acc5: 0.0000 (9.8053)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:48:05.001028] Test:  [ 8920/10618]  eta: 0:06:46  loss: 4.2241 (4.1912)  acc1: 0.0000 (1.6702)  acc5: 0.0000 (9.7999)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:48:07.201320] Test:  [ 8930/10618]  eta: 0:06:44  loss: 4.2366 (4.1913)  acc1: 0.0000 (1.6683)  acc5: 12.5000 (9.7987)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:48:09.393781] Test:  [ 8940/10618]  eta: 0:06:41  loss: 4.2366 (4.1914)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.7962)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:48:11.588937] Test:  [ 8950/10618]  eta: 0:06:39  loss: 4.2004 (4.1914)  acc1: 0.0000 (1.6660)  acc5: 0.0000 (9.7950)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:48:13.786390] Test:  [ 8960/10618]  eta: 0:06:36  loss: 4.1494 (4.1913)  acc1: 0.0000 (1.6656)  acc5: 12.5000 (9.7966)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:48:15.984290] Test:  [ 8970/10618]  eta: 0:06:34  loss: 4.1494 (4.1913)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.7927)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:48:18.186835] Test:  [ 8980/10618]  eta: 0:06:31  loss: 4.1729 (4.1913)  acc1: 0.0000 (1.6646)  acc5: 0.0000 (9.7887)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:48:20.374718] Test:  [ 8990/10618]  eta: 0:06:29  loss: 4.1946 (4.1913)  acc1: 0.0000 (1.6628)  acc5: 12.5000 (9.7890)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:48:22.570218] Test:  [ 9000/10618]  eta: 0:06:27  loss: 4.1697 (4.1913)  acc1: 0.0000 (1.6609)  acc5: 12.5000 (9.7892)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:48:24.775964] Test:  [ 9010/10618]  eta: 0:06:24  loss: 4.1670 (4.1912)  acc1: 0.0000 (1.6591)  acc5: 12.5000 (9.7880)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:48:26.967045] Test:  [ 9020/10618]  eta: 0:06:22  loss: 4.1875 (4.1912)  acc1: 0.0000 (1.6572)  acc5: 12.5000 (9.7883)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:48:29.168251] Test:  [ 9030/10618]  eta: 0:06:19  loss: 4.1975 (4.1912)  acc1: 0.0000 (1.6568)  acc5: 12.5000 (9.7899)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:48:31.357399] Test:  [ 9040/10618]  eta: 0:06:17  loss: 4.1975 (4.1912)  acc1: 0.0000 (1.6577)  acc5: 12.5000 (9.7929)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:48:33.555537] Test:  [ 9050/10618]  eta: 0:06:14  loss: 4.1946 (4.1913)  acc1: 0.0000 (1.6573)  acc5: 12.5000 (9.7917)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:48:35.733877] Test:  [ 9060/10618]  eta: 0:06:12  loss: 4.2144 (4.1913)  acc1: 0.0000 (1.6554)  acc5: 0.0000 (9.7892)  time: 0.2187  data: 0.0002  max mem: 1611
+[11:48:37.934835] Test:  [ 9070/10618]  eta: 0:06:10  loss: 4.2627 (4.1914)  acc1: 0.0000 (1.6536)  acc5: 0.0000 (9.7825)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:48:40.123091] Test:  [ 9080/10618]  eta: 0:06:07  loss: 4.1963 (4.1913)  acc1: 0.0000 (1.6546)  acc5: 0.0000 (9.7814)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:48:42.318625] Test:  [ 9090/10618]  eta: 0:06:05  loss: 4.1187 (4.1913)  acc1: 0.0000 (1.6555)  acc5: 12.5000 (9.7844)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:48:44.526225] Test:  [ 9100/10618]  eta: 0:06:02  loss: 4.1187 (4.1913)  acc1: 0.0000 (1.6564)  acc5: 12.5000 (9.7819)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:48:46.718420] Test:  [ 9110/10618]  eta: 0:06:00  loss: 4.1465 (4.1913)  acc1: 0.0000 (1.6560)  acc5: 0.0000 (9.7780)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:48:48.898851] Test:  [ 9120/10618]  eta: 0:05:57  loss: 4.1465 (4.1912)  acc1: 0.0000 (1.6555)  acc5: 12.5000 (9.7851)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:48:51.075300] Test:  [ 9130/10618]  eta: 0:05:55  loss: 4.2024 (4.1913)  acc1: 0.0000 (1.6564)  acc5: 12.5000 (9.7867)  time: 0.2178  data: 0.0001  max mem: 1611
+[11:48:53.281744] Test:  [ 9140/10618]  eta: 0:05:53  loss: 4.2024 (4.1913)  acc1: 0.0000 (1.6546)  acc5: 0.0000 (9.7869)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:48:55.451118] Test:  [ 9150/10618]  eta: 0:05:50  loss: 4.2217 (4.1913)  acc1: 0.0000 (1.6556)  acc5: 0.0000 (9.7872)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:48:57.632709] Test:  [ 9160/10618]  eta: 0:05:48  loss: 4.2273 (4.1914)  acc1: 0.0000 (1.6537)  acc5: 12.5000 (9.7833)  time: 0.2175  data: 0.0001  max mem: 1611
+[11:48:59.839844] Test:  [ 9170/10618]  eta: 0:05:45  loss: 4.2405 (4.1914)  acc1: 0.0000 (1.6560)  acc5: 12.5000 (9.7808)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:49:02.042573] Test:  [ 9180/10618]  eta: 0:05:43  loss: 4.1870 (4.1914)  acc1: 0.0000 (1.6556)  acc5: 12.5000 (9.7811)  time: 0.2204  data: 0.0001  max mem: 1611
+[11:49:04.233571] Test:  [ 9190/10618]  eta: 0:05:41  loss: 4.2690 (4.1915)  acc1: 0.0000 (1.6538)  acc5: 0.0000 (9.7759)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:49:06.418070] Test:  [ 9200/10618]  eta: 0:05:38  loss: 4.2126 (4.1915)  acc1: 0.0000 (1.6561)  acc5: 0.0000 (9.7775)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:49:08.610688] Test:  [ 9210/10618]  eta: 0:05:36  loss: 4.2126 (4.1915)  acc1: 0.0000 (1.6570)  acc5: 12.5000 (9.7764)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:49:10.799682] Test:  [ 9220/10618]  eta: 0:05:33  loss: 4.2483 (4.1916)  acc1: 0.0000 (1.6579)  acc5: 0.0000 (9.7752)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:49:12.972187] Test:  [ 9230/10618]  eta: 0:05:31  loss: 4.1963 (4.1915)  acc1: 0.0000 (1.6588)  acc5: 0.0000 (9.7741)  time: 0.2180  data: 0.0001  max mem: 1611
+[11:49:15.169341] Test:  [ 9240/10618]  eta: 0:05:28  loss: 4.1287 (4.1915)  acc1: 0.0000 (1.6611)  acc5: 12.5000 (9.7744)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:49:17.352154] Test:  [ 9250/10618]  eta: 0:05:26  loss: 4.1475 (4.1915)  acc1: 0.0000 (1.6606)  acc5: 12.5000 (9.7746)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:49:19.534944] Test:  [ 9260/10618]  eta: 0:05:24  loss: 4.2275 (4.1915)  acc1: 0.0000 (1.6642)  acc5: 12.5000 (9.7776)  time: 0.2182  data: 0.0001  max mem: 1611
+[11:49:21.726928] Test:  [ 9270/10618]  eta: 0:05:21  loss: 4.2512 (4.1916)  acc1: 0.0000 (1.6651)  acc5: 0.0000 (9.7711)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:49:23.919183] Test:  [ 9280/10618]  eta: 0:05:19  loss: 4.2390 (4.1915)  acc1: 0.0000 (1.6633)  acc5: 0.0000 (9.7700)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:49:26.095883] Test:  [ 9290/10618]  eta: 0:05:16  loss: 4.2129 (4.1916)  acc1: 0.0000 (1.6642)  acc5: 12.5000 (9.7702)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:49:28.275394] Test:  [ 9300/10618]  eta: 0:05:14  loss: 4.2485 (4.1916)  acc1: 0.0000 (1.6625)  acc5: 0.0000 (9.7664)  time: 0.2177  data: 0.0001  max mem: 1611
+[11:49:30.464210] Test:  [ 9310/10618]  eta: 0:05:12  loss: 4.2280 (4.1916)  acc1: 0.0000 (1.6647)  acc5: 0.0000 (9.7694)  time: 0.2183  data: 0.0001  max mem: 1611
+[11:49:32.663540] Test:  [ 9320/10618]  eta: 0:05:09  loss: 4.1365 (4.1915)  acc1: 0.0000 (1.6656)  acc5: 12.5000 (9.7736)  time: 0.2193  data: 0.0002  max mem: 1611
+[11:49:34.845873] Test:  [ 9330/10618]  eta: 0:05:07  loss: 4.1836 (4.1915)  acc1: 0.0000 (1.6678)  acc5: 12.5000 (9.7792)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:49:37.039542] Test:  [ 9340/10618]  eta: 0:05:04  loss: 4.1045 (4.1914)  acc1: 0.0000 (1.6674)  acc5: 12.5000 (9.7821)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:49:39.224066] Test:  [ 9350/10618]  eta: 0:05:02  loss: 4.1299 (4.1914)  acc1: 0.0000 (1.6656)  acc5: 12.5000 (9.7810)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:49:41.401939] Test:  [ 9360/10618]  eta: 0:04:59  loss: 4.1672 (4.1915)  acc1: 0.0000 (1.6652)  acc5: 12.5000 (9.7786)  time: 0.2180  data: 0.0001  max mem: 1611
+[11:49:43.579386] Test:  [ 9370/10618]  eta: 0:04:57  loss: 4.1895 (4.1915)  acc1: 0.0000 (1.6634)  acc5: 12.5000 (9.7762)  time: 0.2177  data: 0.0001  max mem: 1611
+[11:49:45.786338] Test:  [ 9380/10618]  eta: 0:04:55  loss: 4.2280 (4.1914)  acc1: 0.0000 (1.6616)  acc5: 12.5000 (9.7777)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:49:47.980587] Test:  [ 9390/10618]  eta: 0:04:52  loss: 4.1946 (4.1915)  acc1: 0.0000 (1.6598)  acc5: 12.5000 (9.7793)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:49:50.168380] Test:  [ 9400/10618]  eta: 0:04:50  loss: 4.1213 (4.1914)  acc1: 0.0000 (1.6581)  acc5: 12.5000 (9.7849)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:49:52.364258] Test:  [ 9410/10618]  eta: 0:04:47  loss: 4.2678 (4.1915)  acc1: 0.0000 (1.6576)  acc5: 12.5000 (9.7824)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:49:54.553889] Test:  [ 9420/10618]  eta: 0:04:45  loss: 4.2788 (4.1915)  acc1: 0.0000 (1.6572)  acc5: 12.5000 (9.7866)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:49:56.736648] Test:  [ 9430/10618]  eta: 0:04:43  loss: 4.2803 (4.1916)  acc1: 0.0000 (1.6554)  acc5: 12.5000 (9.7842)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:49:58.931355] Test:  [ 9440/10618]  eta: 0:04:40  loss: 4.2803 (4.1916)  acc1: 0.0000 (1.6537)  acc5: 0.0000 (9.7831)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:50:01.119114] Test:  [ 9450/10618]  eta: 0:04:38  loss: 4.1582 (4.1915)  acc1: 0.0000 (1.6559)  acc5: 12.5000 (9.7834)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:50:03.305829] Test:  [ 9460/10618]  eta: 0:04:35  loss: 4.1570 (4.1915)  acc1: 0.0000 (1.6568)  acc5: 12.5000 (9.7849)  time: 0.2186  data: 0.0001  max mem: 1611
+[11:50:05.484332] Test:  [ 9470/10618]  eta: 0:04:33  loss: 4.1245 (4.1915)  acc1: 0.0000 (1.6577)  acc5: 0.0000 (9.7865)  time: 0.2182  data: 0.0001  max mem: 1611
+[11:50:07.674740] Test:  [ 9480/10618]  eta: 0:04:31  loss: 4.2156 (4.1914)  acc1: 0.0000 (1.6573)  acc5: 0.0000 (9.7827)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:50:09.865663] Test:  [ 9490/10618]  eta: 0:04:28  loss: 4.2236 (4.1915)  acc1: 0.0000 (1.6568)  acc5: 0.0000 (9.7777)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:50:12.053390] Test:  [ 9500/10618]  eta: 0:04:26  loss: 4.2612 (4.1916)  acc1: 0.0000 (1.6564)  acc5: 0.0000 (9.7779)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:50:14.250949] Test:  [ 9510/10618]  eta: 0:04:23  loss: 4.2239 (4.1916)  acc1: 0.0000 (1.6560)  acc5: 12.5000 (9.7808)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:50:16.456937] Test:  [ 9520/10618]  eta: 0:04:21  loss: 4.1589 (4.1915)  acc1: 0.0000 (1.6569)  acc5: 12.5000 (9.7810)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:50:18.647473] Test:  [ 9530/10618]  eta: 0:04:19  loss: 4.1494 (4.1915)  acc1: 0.0000 (1.6577)  acc5: 12.5000 (9.7786)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:50:20.841923] Test:  [ 9540/10618]  eta: 0:04:16  loss: 4.1653 (4.1916)  acc1: 0.0000 (1.6586)  acc5: 0.0000 (9.7775)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:50:23.037163] Test:  [ 9550/10618]  eta: 0:04:14  loss: 4.1389 (4.1915)  acc1: 0.0000 (1.6582)  acc5: 0.0000 (9.7765)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:50:25.236909] Test:  [ 9560/10618]  eta: 0:04:11  loss: 4.2051 (4.1916)  acc1: 0.0000 (1.6578)  acc5: 0.0000 (9.7754)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:50:27.440509] Test:  [ 9570/10618]  eta: 0:04:09  loss: 4.2446 (4.1916)  acc1: 0.0000 (1.6560)  acc5: 12.5000 (9.7808)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:50:29.625055] Test:  [ 9580/10618]  eta: 0:04:07  loss: 4.1284 (4.1916)  acc1: 0.0000 (1.6543)  acc5: 12.5000 (9.7811)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:50:31.817629] Test:  [ 9590/10618]  eta: 0:04:04  loss: 4.1689 (4.1915)  acc1: 0.0000 (1.6565)  acc5: 12.5000 (9.7865)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:50:34.006209] Test:  [ 9600/10618]  eta: 0:04:02  loss: 4.1951 (4.1916)  acc1: 0.0000 (1.6561)  acc5: 12.5000 (9.7828)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:50:36.196777] Test:  [ 9610/10618]  eta: 0:03:59  loss: 4.1831 (4.1916)  acc1: 0.0000 (1.6557)  acc5: 0.0000 (9.7792)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:50:38.383361] Test:  [ 9620/10618]  eta: 0:03:57  loss: 4.1548 (4.1915)  acc1: 0.0000 (1.6565)  acc5: 12.5000 (9.7833)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:50:40.582726] Test:  [ 9630/10618]  eta: 0:03:55  loss: 4.1982 (4.1916)  acc1: 0.0000 (1.6587)  acc5: 12.5000 (9.7848)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:50:42.765446] Test:  [ 9640/10618]  eta: 0:03:52  loss: 4.1443 (4.1915)  acc1: 0.0000 (1.6622)  acc5: 12.5000 (9.7876)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:50:44.953471] Test:  [ 9650/10618]  eta: 0:03:50  loss: 4.1628 (4.1916)  acc1: 0.0000 (1.6604)  acc5: 12.5000 (9.7891)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:50:47.162093] Test:  [ 9660/10618]  eta: 0:03:47  loss: 4.1628 (4.1915)  acc1: 0.0000 (1.6600)  acc5: 12.5000 (9.7945)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:50:49.342654] Test:  [ 9670/10618]  eta: 0:03:45  loss: 4.1201 (4.1915)  acc1: 0.0000 (1.6596)  acc5: 12.5000 (9.7947)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:50:51.525983] Test:  [ 9680/10618]  eta: 0:03:43  loss: 4.1812 (4.1916)  acc1: 0.0000 (1.6579)  acc5: 0.0000 (9.7898)  time: 0.2181  data: 0.0001  max mem: 1611
+[11:50:53.709793] Test:  [ 9690/10618]  eta: 0:03:40  loss: 4.1812 (4.1916)  acc1: 0.0000 (1.6562)  acc5: 0.0000 (9.7913)  time: 0.2183  data: 0.0001  max mem: 1611
+[11:50:55.903057] Test:  [ 9700/10618]  eta: 0:03:38  loss: 4.1033 (4.1916)  acc1: 0.0000 (1.6545)  acc5: 0.0000 (9.7889)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:50:58.089122] Test:  [ 9710/10618]  eta: 0:03:35  loss: 4.1685 (4.1916)  acc1: 0.0000 (1.6528)  acc5: 0.0000 (9.7879)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:51:00.277919] Test:  [ 9720/10618]  eta: 0:03:33  loss: 4.2197 (4.1916)  acc1: 0.0000 (1.6524)  acc5: 0.0000 (9.7868)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:51:02.468607] Test:  [ 9730/10618]  eta: 0:03:31  loss: 4.2122 (4.1916)  acc1: 0.0000 (1.6558)  acc5: 0.0000 (9.7870)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:51:04.648079] Test:  [ 9740/10618]  eta: 0:03:28  loss: 4.2319 (4.1916)  acc1: 0.0000 (1.6554)  acc5: 12.5000 (9.7872)  time: 0.2184  data: 0.0001  max mem: 1611
+[11:51:06.844221] Test:  [ 9750/10618]  eta: 0:03:26  loss: 4.2283 (4.1915)  acc1: 0.0000 (1.6562)  acc5: 12.5000 (9.7849)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:51:09.029872] Test:  [ 9760/10618]  eta: 0:03:23  loss: 4.1611 (4.1915)  acc1: 0.0000 (1.6545)  acc5: 12.5000 (9.7838)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:51:11.228921] Test:  [ 9770/10618]  eta: 0:03:21  loss: 4.1121 (4.1915)  acc1: 0.0000 (1.6592)  acc5: 12.5000 (9.7905)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:51:13.422498] Test:  [ 9780/10618]  eta: 0:03:19  loss: 4.0801 (4.1914)  acc1: 0.0000 (1.6639)  acc5: 12.5000 (9.7945)  time: 0.2196  data: 0.0001  max mem: 1611
+[11:51:15.612840] Test:  [ 9790/10618]  eta: 0:03:16  loss: 4.1035 (4.1914)  acc1: 0.0000 (1.6635)  acc5: 12.5000 (9.7909)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:51:17.804174] Test:  [ 9800/10618]  eta: 0:03:14  loss: 4.2290 (4.1915)  acc1: 0.0000 (1.6644)  acc5: 0.0000 (9.7873)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:51:20.002846] Test:  [ 9810/10618]  eta: 0:03:11  loss: 4.2205 (4.1915)  acc1: 0.0000 (1.6639)  acc5: 12.5000 (9.7875)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:51:22.195599] Test:  [ 9820/10618]  eta: 0:03:09  loss: 4.1504 (4.1915)  acc1: 0.0000 (1.6635)  acc5: 12.5000 (9.7928)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:51:24.380425] Test:  [ 9830/10618]  eta: 0:03:07  loss: 4.2014 (4.1915)  acc1: 0.0000 (1.6631)  acc5: 12.5000 (9.7917)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:51:26.580702] Test:  [ 9840/10618]  eta: 0:03:04  loss: 4.1570 (4.1915)  acc1: 0.0000 (1.6627)  acc5: 12.5000 (9.7907)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:51:28.771955] Test:  [ 9850/10618]  eta: 0:03:02  loss: 4.1262 (4.1915)  acc1: 0.0000 (1.6635)  acc5: 12.5000 (9.7934)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:51:30.961114] Test:  [ 9860/10618]  eta: 0:02:59  loss: 4.2070 (4.1916)  acc1: 0.0000 (1.6618)  acc5: 0.0000 (9.7898)  time: 0.2189  data: 0.0002  max mem: 1611
+[11:51:33.150259] Test:  [ 9870/10618]  eta: 0:02:57  loss: 4.1851 (4.1916)  acc1: 0.0000 (1.6652)  acc5: 12.5000 (9.7926)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:51:35.365897] Test:  [ 9880/10618]  eta: 0:02:55  loss: 4.1633 (4.1916)  acc1: 0.0000 (1.6648)  acc5: 12.5000 (9.7915)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:51:37.543102] Test:  [ 9890/10618]  eta: 0:02:52  loss: 4.1921 (4.1916)  acc1: 0.0000 (1.6657)  acc5: 12.5000 (9.7930)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:51:39.739989] Test:  [ 9900/10618]  eta: 0:02:50  loss: 4.2263 (4.1917)  acc1: 0.0000 (1.6652)  acc5: 12.5000 (9.7894)  time: 0.2186  data: 0.0002  max mem: 1611
+[11:51:41.933317] Test:  [ 9910/10618]  eta: 0:02:48  loss: 4.2068 (4.1916)  acc1: 0.0000 (1.6686)  acc5: 12.5000 (9.7972)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:51:44.115138] Test:  [ 9920/10618]  eta: 0:02:45  loss: 4.1897 (4.1917)  acc1: 0.0000 (1.6694)  acc5: 12.5000 (9.7987)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:51:46.281322] Test:  [ 9930/10618]  eta: 0:02:43  loss: 4.1492 (4.1916)  acc1: 0.0000 (1.6728)  acc5: 12.5000 (9.7976)  time: 0.2173  data: 0.0001  max mem: 1611
+[11:51:48.464911] Test:  [ 9940/10618]  eta: 0:02:40  loss: 4.1509 (4.1917)  acc1: 0.0000 (1.6724)  acc5: 0.0000 (9.7928)  time: 0.2174  data: 0.0001  max mem: 1611
+[11:51:50.670406] Test:  [ 9950/10618]  eta: 0:02:38  loss: 4.2251 (4.1917)  acc1: 0.0000 (1.6719)  acc5: 0.0000 (9.7880)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:51:52.850071] Test:  [ 9960/10618]  eta: 0:02:36  loss: 4.1323 (4.1916)  acc1: 0.0000 (1.6703)  acc5: 12.5000 (9.7907)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:51:55.032723] Test:  [ 9970/10618]  eta: 0:02:33  loss: 4.2476 (4.1917)  acc1: 0.0000 (1.6686)  acc5: 12.5000 (9.7884)  time: 0.2180  data: 0.0001  max mem: 1611
+[11:51:57.227094] Test:  [ 9980/10618]  eta: 0:02:31  loss: 4.2483 (4.1917)  acc1: 0.0000 (1.6694)  acc5: 0.0000 (9.7861)  time: 0.2188  data: 0.0002  max mem: 1611
+[11:51:59.415921] Test:  [ 9990/10618]  eta: 0:02:28  loss: 4.1541 (4.1916)  acc1: 0.0000 (1.6715)  acc5: 0.0000 (9.7863)  time: 0.2191  data: 0.0002  max mem: 1611
+[11:52:01.593460] Test:  [10000/10618]  eta: 0:02:26  loss: 4.2312 (4.1917)  acc1: 0.0000 (1.6711)  acc5: 0.0000 (9.7803)  time: 0.2182  data: 0.0002  max mem: 1611
+[11:52:03.778851] Test:  [10010/10618]  eta: 0:02:24  loss: 4.2883 (4.1918)  acc1: 0.0000 (1.6707)  acc5: 0.0000 (9.7767)  time: 0.2181  data: 0.0002  max mem: 1611
+[11:52:05.978989] Test:  [10020/10618]  eta: 0:02:21  loss: 4.2227 (4.1918)  acc1: 0.0000 (1.6702)  acc5: 12.5000 (9.7832)  time: 0.2192  data: 0.0002  max mem: 1611
+[11:52:08.181503] Test:  [10030/10618]  eta: 0:02:19  loss: 4.1216 (4.1917)  acc1: 0.0000 (1.6698)  acc5: 12.5000 (9.7872)  time: 0.2200  data: 0.0002  max mem: 1611
+[11:52:10.375998] Test:  [10040/10618]  eta: 0:02:17  loss: 4.1348 (4.1917)  acc1: 0.0000 (1.6682)  acc5: 12.5000 (9.7836)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:52:12.571420] Test:  [10050/10618]  eta: 0:02:14  loss: 4.1411 (4.1916)  acc1: 0.0000 (1.6677)  acc5: 0.0000 (9.7851)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:52:14.761614] Test:  [10060/10618]  eta: 0:02:12  loss: 4.2532 (4.1917)  acc1: 0.0000 (1.6673)  acc5: 12.5000 (9.7841)  time: 0.2192  data: 0.0002  max mem: 1611
+[11:52:16.942989] Test:  [10070/10618]  eta: 0:02:09  loss: 4.3037 (4.1918)  acc1: 0.0000 (1.6657)  acc5: 0.0000 (9.7806)  time: 0.2185  data: 0.0002  max mem: 1611
+[11:52:19.146713] Test:  [10080/10618]  eta: 0:02:07  loss: 4.1506 (4.1917)  acc1: 0.0000 (1.6702)  acc5: 12.5000 (9.7857)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:52:21.344259] Test:  [10090/10618]  eta: 0:02:05  loss: 4.0720 (4.1916)  acc1: 0.0000 (1.6686)  acc5: 12.5000 (9.7859)  time: 0.2200  data: 0.0001  max mem: 1611
+[11:52:23.534896] Test:  [10100/10618]  eta: 0:02:02  loss: 4.1755 (4.1916)  acc1: 0.0000 (1.6669)  acc5: 12.5000 (9.7899)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:52:25.720557] Test:  [10110/10618]  eta: 0:02:00  loss: 4.2080 (4.1916)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.7901)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:52:27.918107] Test:  [10120/10618]  eta: 0:01:58  loss: 4.1790 (4.1916)  acc1: 0.0000 (1.6649)  acc5: 0.0000 (9.7841)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:52:30.103337] Test:  [10130/10618]  eta: 0:01:55  loss: 4.1355 (4.1916)  acc1: 0.0000 (1.6632)  acc5: 0.0000 (9.7819)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:52:32.282222] Test:  [10140/10618]  eta: 0:01:53  loss: 4.1655 (4.1916)  acc1: 0.0000 (1.6616)  acc5: 0.0000 (9.7784)  time: 0.2181  data: 0.0001  max mem: 1611
+[11:52:34.474931] Test:  [10150/10618]  eta: 0:01:50  loss: 4.1804 (4.1916)  acc1: 0.0000 (1.6612)  acc5: 0.0000 (9.7737)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:52:36.670365] Test:  [10160/10618]  eta: 0:01:48  loss: 4.0752 (4.1916)  acc1: 0.0000 (1.6608)  acc5: 0.0000 (9.7788)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:52:38.857740] Test:  [10170/10618]  eta: 0:01:46  loss: 4.0752 (4.1915)  acc1: 0.0000 (1.6628)  acc5: 12.5000 (9.7839)  time: 0.2191  data: 0.0001  max mem: 1611
+[11:52:41.046450] Test:  [10180/10618]  eta: 0:01:43  loss: 4.0356 (4.1914)  acc1: 0.0000 (1.6649)  acc5: 12.5000 (9.7903)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:52:43.244702] Test:  [10190/10618]  eta: 0:01:41  loss: 4.1411 (4.1914)  acc1: 0.0000 (1.6632)  acc5: 12.5000 (9.7880)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:52:45.435939] Test:  [10200/10618]  eta: 0:01:38  loss: 4.2537 (4.1915)  acc1: 0.0000 (1.6616)  acc5: 0.0000 (9.7834)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:52:47.623515] Test:  [10210/10618]  eta: 0:01:36  loss: 4.2776 (4.1915)  acc1: 0.0000 (1.6612)  acc5: 0.0000 (9.7860)  time: 0.2189  data: 0.0001  max mem: 1611
+[11:52:49.807041] Test:  [10220/10618]  eta: 0:01:34  loss: 4.2354 (4.1916)  acc1: 0.0000 (1.6620)  acc5: 0.0000 (9.7826)  time: 0.2185  data: 0.0001  max mem: 1611
+[11:52:51.999977] Test:  [10230/10618]  eta: 0:01:31  loss: 4.1729 (4.1916)  acc1: 0.0000 (1.6628)  acc5: 12.5000 (9.7864)  time: 0.2187  data: 0.0001  max mem: 1611
+[11:52:54.202845] Test:  [10240/10618]  eta: 0:01:29  loss: 4.1719 (4.1916)  acc1: 0.0000 (1.6624)  acc5: 12.5000 (9.7854)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:52:56.398760] Test:  [10250/10618]  eta: 0:01:27  loss: 4.1292 (4.1916)  acc1: 0.0000 (1.6620)  acc5: 12.5000 (9.7905)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:52:58.599086] Test:  [10260/10618]  eta: 0:01:24  loss: 4.2319 (4.1916)  acc1: 0.0000 (1.6604)  acc5: 0.0000 (9.7834)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:53:00.795399] Test:  [10270/10618]  eta: 0:01:22  loss: 4.2607 (4.1917)  acc1: 0.0000 (1.6612)  acc5: 0.0000 (9.7812)  time: 0.2197  data: 0.0002  max mem: 1611
+[11:53:02.989909] Test:  [10280/10618]  eta: 0:01:20  loss: 4.2004 (4.1916)  acc1: 0.0000 (1.6596)  acc5: 12.5000 (9.7850)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:53:05.180093] Test:  [10290/10618]  eta: 0:01:17  loss: 4.2124 (4.1917)  acc1: 0.0000 (1.6592)  acc5: 12.5000 (9.7828)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:53:07.383643] Test:  [10300/10618]  eta: 0:01:15  loss: 4.2290 (4.1917)  acc1: 0.0000 (1.6576)  acc5: 12.5000 (9.7867)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:53:09.579418] Test:  [10310/10618]  eta: 0:01:12  loss: 4.2290 (4.1918)  acc1: 0.0000 (1.6608)  acc5: 12.5000 (9.7869)  time: 0.2199  data: 0.0002  max mem: 1611
+[11:53:11.761881] Test:  [10320/10618]  eta: 0:01:10  loss: 4.2432 (4.1918)  acc1: 0.0000 (1.6617)  acc5: 12.5000 (9.7895)  time: 0.2188  data: 0.0001  max mem: 1611
+[11:53:13.968694] Test:  [10330/10618]  eta: 0:01:08  loss: 4.1311 (4.1917)  acc1: 0.0000 (1.6637)  acc5: 12.5000 (9.7897)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:53:16.152933] Test:  [10340/10618]  eta: 0:01:05  loss: 4.1201 (4.1917)  acc1: 0.0000 (1.6657)  acc5: 12.5000 (9.7899)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:53:18.337233] Test:  [10350/10618]  eta: 0:01:03  loss: 4.2100 (4.1917)  acc1: 0.0000 (1.6665)  acc5: 12.5000 (9.7889)  time: 0.2183  data: 0.0001  max mem: 1611
+[11:53:20.542140] Test:  [10360/10618]  eta: 0:01:01  loss: 4.1738 (4.1917)  acc1: 0.0000 (1.6649)  acc5: 12.5000 (9.7915)  time: 0.2194  data: 0.0001  max mem: 1611
+[11:53:22.742892] Test:  [10370/10618]  eta: 0:00:58  loss: 4.1321 (4.1917)  acc1: 0.0000 (1.6633)  acc5: 12.5000 (9.7905)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:53:24.939999] Test:  [10380/10618]  eta: 0:00:56  loss: 4.1565 (4.1917)  acc1: 0.0000 (1.6629)  acc5: 0.0000 (9.7883)  time: 0.2198  data: 0.0002  max mem: 1611
+[11:53:27.124139] Test:  [10390/10618]  eta: 0:00:53  loss: 4.1741 (4.1918)  acc1: 0.0000 (1.6625)  acc5: 12.5000 (9.7861)  time: 0.2190  data: 0.0001  max mem: 1611
+[11:53:29.331015] Test:  [10400/10618]  eta: 0:00:51  loss: 4.2175 (4.1918)  acc1: 0.0000 (1.6609)  acc5: 12.5000 (9.7851)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:53:31.526816] Test:  [10410/10618]  eta: 0:00:49  loss: 4.0740 (4.1917)  acc1: 0.0000 (1.6593)  acc5: 12.5000 (9.7925)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:53:33.718016] Test:  [10420/10618]  eta: 0:00:46  loss: 4.1101 (4.1917)  acc1: 0.0000 (1.6589)  acc5: 12.5000 (9.7891)  time: 0.2193  data: 0.0001  max mem: 1611
+[11:53:35.919294] Test:  [10430/10618]  eta: 0:00:44  loss: 4.2822 (4.1918)  acc1: 0.0000 (1.6597)  acc5: 0.0000 (9.7893)  time: 0.2195  data: 0.0002  max mem: 1611
+[11:53:38.110970] Test:  [10440/10618]  eta: 0:00:42  loss: 4.1399 (4.1917)  acc1: 0.0000 (1.6581)  acc5: 0.0000 (9.7871)  time: 0.2196  data: 0.0002  max mem: 1611
+[11:53:40.314642] Test:  [10450/10618]  eta: 0:00:39  loss: 4.1399 (4.1918)  acc1: 0.0000 (1.6577)  acc5: 0.0000 (9.7826)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:53:42.511287] Test:  [10460/10618]  eta: 0:00:37  loss: 4.1553 (4.1918)  acc1: 0.0000 (1.6597)  acc5: 0.0000 (9.7899)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:53:44.714135] Test:  [10470/10618]  eta: 0:00:34  loss: 4.1553 (4.1918)  acc1: 0.0000 (1.6582)  acc5: 12.5000 (9.7877)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:53:46.903821] Test:  [10480/10618]  eta: 0:00:32  loss: 4.1907 (4.1918)  acc1: 0.0000 (1.6566)  acc5: 12.5000 (9.7879)  time: 0.2195  data: 0.0001  max mem: 1611
+[11:53:49.109408] Test:  [10490/10618]  eta: 0:00:30  loss: 4.1907 (4.1918)  acc1: 0.0000 (1.6550)  acc5: 12.5000 (9.7858)  time: 0.2197  data: 0.0001  max mem: 1611
+[11:53:51.315002] Test:  [10500/10618]  eta: 0:00:27  loss: 4.1990 (4.1918)  acc1: 0.0000 (1.6558)  acc5: 12.5000 (9.7895)  time: 0.2205  data: 0.0001  max mem: 1611
+[11:53:53.506335] Test:  [10510/10618]  eta: 0:00:25  loss: 4.1990 (4.1918)  acc1: 0.0000 (1.6554)  acc5: 12.5000 (9.7874)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:53:55.703753] Test:  [10520/10618]  eta: 0:00:23  loss: 4.1482 (4.1918)  acc1: 0.0000 (1.6550)  acc5: 12.5000 (9.7911)  time: 0.2194  data: 0.0002  max mem: 1611
+[11:53:57.891239] Test:  [10530/10618]  eta: 0:00:20  loss: 4.1423 (4.1918)  acc1: 0.0000 (1.6546)  acc5: 12.5000 (9.7866)  time: 0.2192  data: 0.0001  max mem: 1611
+[11:54:00.101516] Test:  [10540/10618]  eta: 0:00:18  loss: 4.2083 (4.1918)  acc1: 0.0000 (1.6554)  acc5: 0.0000 (9.7880)  time: 0.2198  data: 0.0001  max mem: 1611
+[11:54:02.312182] Test:  [10550/10618]  eta: 0:00:16  loss: 4.2446 (4.1919)  acc1: 0.0000 (1.6539)  acc5: 12.5000 (9.7929)  time: 0.2210  data: 0.0001  max mem: 1611
+[11:54:04.508353] Test:  [10560/10618]  eta: 0:00:13  loss: 4.2446 (4.1919)  acc1: 0.0000 (1.6570)  acc5: 12.5000 (9.7943)  time: 0.2203  data: 0.0001  max mem: 1611
+[11:54:06.711031] Test:  [10570/10618]  eta: 0:00:11  loss: 4.1797 (4.1919)  acc1: 0.0000 (1.6555)  acc5: 0.0000 (9.7933)  time: 0.2199  data: 0.0001  max mem: 1611
+[11:54:08.914220] Test:  [10580/10618]  eta: 0:00:08  loss: 4.1550 (4.1918)  acc1: 0.0000 (1.6575)  acc5: 0.0000 (9.7959)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:54:11.116581] Test:  [10590/10618]  eta: 0:00:06  loss: 4.1550 (4.1918)  acc1: 0.0000 (1.6582)  acc5: 0.0000 (9.7984)  time: 0.2202  data: 0.0001  max mem: 1611
+[11:54:13.318242] Test:  [10600/10618]  eta: 0:00:04  loss: 4.2207 (4.1918)  acc1: 0.0000 (1.6579)  acc5: 0.0000 (9.7939)  time: 0.2201  data: 0.0001  max mem: 1611
+[11:54:15.520815] Test:  [10610/10618]  eta: 0:00:01  loss: 4.2117 (4.1918)  acc1: 0.0000 (1.6563)  acc5: 0.0000 (9.7905)  time: 0.2201  data: 0.0005  max mem: 1611
+[11:54:16.971007] Test:  [10617/10618]  eta: 0:00:00  loss: 4.1987 (4.1919)  acc1: 0.0000 (1.6553)  acc5: 0.0000 (9.7882)  time: 0.2153  data: 0.0005  max mem: 1611
+[11:54:17.103497] Test: Total time: 0:41:48 (0.2362 s / it)
+[11:54:17.103683] * Acc@1 1.655 Acc@5 9.788 loss 4.192
+[11:54:17.103829] Evaluation on 84939 test images- acc1: 1.66%, acc5: 9.79%
+/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/launch.py:186: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  FutureWarning,
