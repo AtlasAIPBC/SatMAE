@@ -1,0 +1,12 @@
+python -m torch.distributed.launch --nproc_per_node=1 \
+    --nnodes=1 --master_port=1234 /home/ada/satmae/SatMAE/main_finetune.py \
+    --output_dir /home/ada/satmae/other_data/eurosat/evaluation/rgb_nontemporal \
+    --log_dir /home/ada/satmae/other_data/eurosat/evaluation/rgb_nontemporal \
+    --device cuda \
+    --batch_size 8 \
+    --model vit_large_patch16 \
+    --resume /home/ada/satmae/temporal/checkpoints/fmow_finetune.pth  \
+    --dist_eval --eval --num_workers 8 --dataset euro_sat \
+    --train_path /home/ada/satmae/other_data/eurosat/train_rgb.txt \
+    --test_path /home/ada/satmae/other_data/eurosat/val_rgb.txt \
+    --nb_classes 10
