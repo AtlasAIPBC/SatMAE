@@ -6,7 +6,7 @@ python -m torch.distributed.launch --nproc_per_node=1 \
     --batch_size 8 \
     --model vit_large_patch16 \
     --resume /home/ada/satmae/temporal/checkpoints/fmow_finetune.pth  \
-    --dist_eval --eval --num_workers 8 --dataset euro_sat \
-    --train_path /home/ada/satmae/other_data/eurosat/train_rgb.txt \
-    --test_path /home/ada/satmae/other_data/eurosat/val_rgb.txt \
-    --nb_classes 10
+    --dist_eval --eval --num_workers 8 --dataset rgb \
+    --train_path /home/ada/satmae/other_data/eurosat/train_rgb.csv \
+    --test_path /home/ada/satmae/other_data/eurosat/val_rgb.csv \
+    --nb_classes 1000
