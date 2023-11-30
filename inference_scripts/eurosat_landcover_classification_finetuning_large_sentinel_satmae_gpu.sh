@@ -1,0 +1,13 @@
+python -m torch.distributed.launch --nproc_per_node=1 main_finetune.py \
+--batch_size 8 --accum_iter 16 --blr 0.0002 \
+--epochs 30 --num_workers 16 \
+--input_size 96 --patch_size 8  \
+--weight_decay 0.05 --drop_path 0.2 --reprob 0.25 --mixup 0.8 --cutmix 1.0 \
+--model_type group_c  \
+--dataset_type euro_sat --dropped_bands 0 9 10 \
+--train_path /home/ada/satmae/other_data/eurosat/train_ms.txt \
+--test_path /home/ada/satmae/other_data/eurosat/val_ms.txt \
+--output_dir /home/ada/satmae/other_data/eurosat/evaluation/sentinel \
+--log_dir /home/ada/satmae/other_data/eurosat/evaluation/sentinel \
+--finetune /home/ada/satmae/multispectral/checkpoints/pretrain-vit-large-e199.pth \
+--save_every 10
