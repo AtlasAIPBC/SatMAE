@@ -373,7 +373,8 @@ def main(args):
     elif args.smoothing > 0.:
         criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
     else:
-        criterion = torch.nn.CrossEntropyLoss()
+        # criterion = torch.nn.CrossEntropyLoss()
+        criterion = torch.nn.MultiLabelSoftMarginLoss()
 
     print("criterion = %s" % str(criterion))
 
