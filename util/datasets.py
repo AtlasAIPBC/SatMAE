@@ -39,6 +39,15 @@ CATEGORIES = ["airport", "airport_hangar", "airport_terminal", "amusement_park",
               "tower", "tunnel_opening", "waste_disposal", "water_treatment_facility",
               "wind_farm", "zoo"]
 
+CATEGORIES_big = [
+    'Urban fabric', 'Industrial or commercial units', 'Arable land', 'Permanent crops', 
+    'Pastures', 'Complex cultivation patterns', 
+    'Land principally occupied by agriculture, with significant areas of natural vegetation',
+    'Agro-forestry areas', 'Broad-leaved forest',
+    'Coniferous forest', 'Mixed forest', 'Natural grassland and sparsely vegetated areas', 
+    'Moors, heathland and sclerophyllous vegetation', 'Transitional woodland, shrub', 
+    'Beaches, dunes, sands', 'Inland wetlands', 'Coastal wetlands', 'Inland waters', 'Marine waters'
+]
 
 class SatelliteDataset(Dataset):
     """
@@ -511,6 +520,180 @@ class SentinelIndividualImageDataset(SatelliteDataset):
 
         return transforms.Compose(t)
 
+class BigEarthNetImageDataset(SatelliteDataset):
+    label_types = ['value', 'one-hot']
+    mean = [1370.19151926, 1184.3824625 , 1120.77120066, 1136.26026392,
+            1263.73947144, 1645.40315151, 1846.87040806, 1762.59530783,
+            1972.62420416,  582.72633433,   14.77112979, 1732.16362238, 1247.91870117]
+    std = [633.15169573,  650.2842772 ,  712.12507725,  965.23119807,
+           948.9819932 , 1108.06650639, 1258.36394548, 1233.1492281 ,
+           1364.38688993,  472.37967789,   14.3114637 , 1310.36996126, 1087.6020813]
+
+    def __init__(self,
+                 csv_path: str,
+                 transform: Any,
+                 years: Optional[List[int]] = [*range(2000, 2021)],
+                 categories: Optional[List[str]] = None,
+                 label_type: str = 'one-hot',
+                 masked_bands: Optional[List[int]] = None,
+                 dropped_bands: Optional[List[int]] = None):
+        """
+        Creates dataset for multi-spectral single image classification.
+        Usually used for fMoW-Sentinel dataset.
+        :param csv_path: path to csv file.
+        :param transform: pytorch Transform for transforms and tensor conversion
+        :param years: List of years to take images from, None to not filter
+        :param categories: List of categories to take images from, None to not filter
+        :param label_type: 'values' for single label, 'one-hot' for one hot labels
+        :param masked_bands: List of indices corresponding to which bands to mask out
+        :param dropped_bands:  List of indices corresponding to which bands to drop from input image tensor
+        """
+        super().__init__(in_c=13)
+        self.df = pd.read_csv(csv_path) \
+            .sort_values(['category', 'location_id', 'timestamp'])
+
+        # Filter by category
+        self.categories = CATEGORIES_big
+
+        # Filter by year
+        if years is not None:
+            self.df['year'] = [int(timestamp.split('-')[0]) for timestamp in self.df['timestamp']]
+            self.df = self.df[self.df['year'].isin(years)]
+
+        self.indices = self.df.index.unique().to_numpy()
+
+        self.transform = transform
+
+        if label_type not in self.label_types:
+            raise ValueError(
+                f'FMOWDataset label_type {label_type} not allowed. Label_type must be one of the following:',
+                ', '.join(self.label_types))
+        self.label_type = label_type
+
+        self.masked_bands = masked_bands
+        self.dropped_bands = dropped_bands
+        if self.dropped_bands is not None:
+            self.in_c = self.in_c - len(dropped_bands)
+
+    def __len__(self):
+        return len(self.df)
+
+    def open_image(self, img_path):
+
+        if os.path.isdir(img_path):
+
+            # Handle directory case
+            # list all tif files in patch path
+            # patch path has path to patch folder. a folder has a collection of single band images
+            tif_files = [f for f in os.listdir(img_path) if f.endswith('.tif')]
+
+            # Desired order of bands
+            desired_order = [
+                'B01', 'B02', 'B03', 'B04', 'B05', 'B06', 
+                'B07', 'B08', 'B09', 'B11', 'B12', 'B8A'
+            ]
+
+            # Create empty list to store sorted files
+            sorted_files = []
+
+            # Read first file to get initial dimensions and data type
+            with rasterio.open(os.path.join(img_path, tif_files[0])) as data:
+                bands = len(tif_files)
+                height, width = data.height, data.width
+                dtype = data.read(1).dtype
+
+            # Create empty array to store stacked bands
+            stacked_img = np.empty((bands, 20, 20), dtype=dtype)
+
+            # Sort files based on desired band order
+            for file_name in tif_files:
+                for target_string in desired_order:
+                    if target_string in file_name:
+                        sorted_files.append(file_name)
+                        break
+
+            # Read and resample each TIFF file to 20x20 size
+            for i, file_name in enumerate(sorted_files):
+                with rasterio.open(os.path.join(img_path, file_name)) as data:
+                    source_data = data.read(1)
+                    resampled_data = Resample(
+                        source_data, 
+                        src_transform=data.transform, 
+                        dst_transform=data.transform.scale((20, 20)), 
+                        dst_resolution=(1, 1), 
+                        resampling='nearest'
+                    ).read(1)
+                    stacked_img[i, :, :] = resampled_data
+
+            # Return transposed and casted image
+            return stacked_img.transpose(1, 2, 0).astype(np.float32)
+
+    def __getitem__(self, idx):
+        """
+        Gets image (x,y) pair given index in dataset.
+        :param idx: Index of (image, label) pair in dataset dataframe. (c, h, w)
+        :return: Torch Tensor image, and integer label as a tuple.
+        """
+        selection = self.df.iloc[idx]
+
+        # images = [torch.FloatTensor(rasterio.open(img_path).read()) for img_path in image_paths]
+        images = self.open_image(selection['patch_path'])  # (h, w, c)
+        if self.masked_bands is not None:
+            images[:, :, self.masked_bands] = np.array(self.mean)[self.masked_bands]
+
+        labels = eval(selection['category'])  # List of category strings
+        label_tensor = torch.zeros(len(self.categories))
+
+        # One-hot encode each label in the list
+        for label in labels:
+            label_idx = self.categories.index(label)
+            label_tensor[label_idx] = 1
+        
+        img_as_tensor = self.transform(images)  # (c, h, w)
+        if self.dropped_bands is not None:
+            keep_idxs = [i for i in range(img_as_tensor.shape[0]) if i not in self.dropped_bands]
+            img_as_tensor = img_as_tensor[keep_idxs, :, :]
+
+        sample = {
+            'images': images,
+            'labels': label_tensor,
+            'image_ids': selection['image_id'],
+            'timestamps': selection['timestamp']
+        }
+        return img_as_tensor, label_tensor
+
+    @staticmethod
+    def build_transform(is_train, input_size, mean, std):
+        # train transform
+        interpol_mode = transforms.InterpolationMode.BICUBIC
+
+        t = []
+        if is_train:
+            t.append(SentinelNormalize(mean, std))  # use specific Sentinel normalization to avoid NaN
+            t.append(transforms.ToTensor())
+            t.append(
+                transforms.RandomResizedCrop(input_size, scale=(0.2, 1.0), interpolation=interpol_mode),  # 3 is bicubic
+            )
+            t.append(transforms.RandomHorizontalFlip())
+            return transforms.Compose(t)
+
+        # eval transform
+        if input_size <= 224:
+            crop_pct = 224 / 256
+        else:
+            crop_pct = 1.0
+        size = int(input_size / crop_pct)
+
+        t.append(SentinelNormalize(mean, std))
+        t.append(transforms.ToTensor())
+        t.append(
+            transforms.Resize(size, interpolation=interpol_mode),  # to maintain same ratio w.r.t. 224 images
+        )
+        t.append(transforms.CenterCrop(input_size))
+
+        return transforms.Compose(t)
+
+
 
 class EuroSat(SatelliteDataset):
     mean = [1370.19151926, 1184.3824625, 1120.77120066, 1136.26026392,
@@ -585,6 +768,12 @@ def build_fmow_dataset(is_train: bool, args) -> SatelliteDataset:
         std = SentinelIndividualImageDataset.std
         transform = SentinelIndividualImageDataset.build_transform(is_train, args.input_size, mean, std)
         dataset = SentinelIndividualImageDataset(csv_path, transform, masked_bands=args.masked_bands,
+                                                 dropped_bands=args.dropped_bands)
+    elif args.dataset_type == 'bigearthnet':
+        mean = BigEarthNetImageDataset.mean
+        std = BigEarthNetImageDataset.std
+        transform = BigEarthNetImageDataset.build_transform(is_train, args.input_size, mean, std)
+        dataset = BigEarthNetImageDataset(csv_path, transform, masked_bands=args.masked_bands,
                                                  dropped_bands=args.dropped_bands)
     elif args.dataset_type == 'rgb_temporal_stacked':
         mean = FMoWTemporalStacked.mean
