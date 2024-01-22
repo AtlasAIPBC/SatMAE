@@ -14,6 +14,7 @@ from torchvision import transforms
 from PIL import Image
 import rasterio
 from rasterio import logging
+from rasterio.warp import reproject
 
 log = logging.getLogger()
 log.setLevel(logging.ERROR)
@@ -522,12 +523,14 @@ class SentinelIndividualImageDataset(SatelliteDataset):
 
 class BigEarthNetImageDataset(SatelliteDataset):
     label_types = ['value', 'one-hot']
-    mean = [1370.19151926, 1184.3824625 , 1120.77120066, 1136.26026392,
-            1263.73947144, 1645.40315151, 1846.87040806, 1762.59530783,
-            1972.62420416,  582.72633433,   14.77112979, 1732.16362238, 1247.91870117]
-    std = [633.15169573,  650.2842772 ,  712.12507725,  965.23119807,
-           948.9819932 , 1108.06650639, 1258.36394548, 1233.1492281 ,
-           1364.38688993,  472.37967789,   14.3114637 , 1310.36996126, 1087.6020813]
+    mean = [
+        340.76769064, 429.9430203, 614.21682446, 590.23569706, 950.68368468, 
+        1792.46290469, 2075.46795189, 2218.94553375, 2266.46036911, 
+        2246.0605464, 1594.42694882, 1009.32729131
+    ]
+    std = [554.81258967, 572.41639287, 582.87945694, 675.88746967, 729.89827633, 
+           1096.01480586, 1273.45393088, 1365.45589904, 1356.13789355, 
+           1302.3292881, 1079.19066363, 818.86747235]
 
     def __init__(self,
                  csv_path: str,
@@ -590,7 +593,7 @@ class BigEarthNetImageDataset(SatelliteDataset):
             # Desired order of bands
             desired_order = [
                 'B01', 'B02', 'B03', 'B04', 'B05', 'B06', 
-                'B07', 'B08', 'B09', 'B11', 'B12', 'B8A'
+                'B07', 'B08', 'B8A', 'B09', 'B11', 'B12'
             ]
 
             # Create empty list to store sorted files
@@ -603,7 +606,7 @@ class BigEarthNetImageDataset(SatelliteDataset):
                 dtype = data.read(1).dtype
 
             # Create empty array to store stacked bands
-            stacked_img = np.empty((bands, 20, 20), dtype=dtype)
+            stacked_img = np.empty((bands, 60, 60), dtype=dtype)
 
             # Sort files based on desired band order
             for file_name in tif_files:
@@ -611,19 +614,20 @@ class BigEarthNetImageDataset(SatelliteDataset):
                     if target_string in file_name:
                         sorted_files.append(file_name)
                         break
-
             # Read and resample each TIFF file to 20x20 size
             for i, file_name in enumerate(sorted_files):
                 with rasterio.open(os.path.join(img_path, file_name)) as data:
-                    source_data = data.read(1)
-                    resampled_data = Resample(
-                        source_data, 
+                    resampled_data = reproject(
+                        data.read(1), 
                         src_transform=data.transform, 
-                        dst_transform=data.transform.scale((20, 20)), 
-                        dst_resolution=(1, 1), 
-                        resampling='nearest'
-                    ).read(1)
-                    stacked_img[i, :, :] = resampled_data
+                        src_crs = data.crs,
+                        dst_crs = data.crs,
+                        #dst_transform=data.transform * data.transform.scale(data.width / 20, data.height / 20),
+                        dst_resolution=(20, 20), 
+                        resampling=rasterio.enums.Resampling.nearest
+                    )
+                    stacked_img[i, :, :] = resampled_data[0]
+
 
             # Return transposed and casted image
             return stacked_img.transpose(1, 2, 0).astype(np.float32)
@@ -657,7 +661,6 @@ class BigEarthNetImageDataset(SatelliteDataset):
         sample = {
             'images': images,
             'labels': label_tensor,
-            'image_ids': selection['image_id'],
             'timestamps': selection['timestamp']
         }
         return img_as_tensor, label_tensor

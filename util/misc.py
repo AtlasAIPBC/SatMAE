@@ -369,7 +369,7 @@ def load_model(args, model_without_ddp, optimizer, loss_scaler):
     if args.resume:
         if args.resume.startswith('https'):
             checkpoint = torch.hub.load_state_dict_from_url(
-                args.resume, map_location='cpu', check_hash=False)
+                args.resume, check_hash=False)
         else:
             checkpoint = torch.load(args.resume)
             #checkpoint = torch.load(args.resume, map_location='cpu')

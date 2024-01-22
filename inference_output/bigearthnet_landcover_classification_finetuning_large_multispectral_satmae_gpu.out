@@ -1,0 +1,674 @@
+/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: libtorch_cuda_cu.so: cannot open shared object file: No such file or directory
+  warn(f"Failed to load image Python extension: {e}")
+Not using distributed mode
+[13:05:29.031309] job dir: /home/ada/satmae/SatMAE
+[13:05:29.031420] Namespace(aa='rand-m9-mstd0.5-inc1',
+accum_iter=16,
+batch_size=6,
+blr=0.0002,
+clip_grad=None,
+color_jitter=None,
+cutmix=1.0,
+cutmix_minmax=None,
+dataset_type='bigearthnet',
+device='cuda',
+dist_eval=False,
+dist_on_itp=False,
+dist_url='env://',
+distributed=False,
+drop_path=0.2,
+dropped_bands=None,
+epochs=10,
+eval=False,
+finetune='/home/ada/satmae/multispectral/checkpoints/finetune-vit-large-e7.pth',
+global_pool=True,
+grouped_bands=[],
+input_size=96,
+layer_decay=0.75,
+local_rank=0,
+log_dir='/home/ada/satmae/other_data/bigearthnet/evaluation/multispectral',
+lr=0.001,
+masked_bands=None,
+min_lr=1e-06,
+mixup=0.8,
+mixup_mode='batch',
+mixup_prob=1.0,
+mixup_switch_prob=0.5,
+model='vit_large_patch16',
+model_type='group_c',
+nb_classes=19,
+num_workers=16,
+output_dir='/home/ada/satmae/other_data/bigearthnet/evaluation/multispectral',
+patch_size=8,
+pin_mem=True,
+recount=1,
+remode='pixel',
+reprob=0.25,
+resplit=False,
+resume='',
+save_every=1,
+seed=0,
+smoothing=0.1,
+start_epoch=0,
+test_path='/home/ada/satmae/other_data/bigearthnet/val_multi_band.csv',
+train_path='/home/ada/satmae/other_data/bigearthnet/train_multi_band.csv',
+wandb=None,
+warmup_epochs=5,
+weight_decay=0.05,
+world_size=1)
+[13:05:30.742262] <util.datasets.BigEarthNetImageDataset object at 0x7fe6f8283f90>
+[13:05:31.449645] <util.datasets.BigEarthNetImageDataset object at 0x7fe6f833b710>
+[13:05:31.449779] Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x7fe6f833bd90>
+2024-01-22 13:05:31.453463: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-01-22 13:05:32.333317: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2024-01-22 13:05:32.333361: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2024-01-22 13:05:33.119733: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2024-01-22 13:05:33.119845: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2024-01-22 13:05:33.119859: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+[13:05:33.737992] Mixup is activated!
+[13:05:33.738057] Grouping bands [[0, 1, 2, 6], [3, 4, 5, 7], [8, 9]]
+[13:05:46.085136] Load pre-trained checkpoint from: /home/ada/satmae/multispectral/checkpoints/finetune-vit-large-e7.pth
+[13:05:46.086959] Removing key head.weight from pretrained checkpoint
+[13:05:46.087007] Removing key head.bias from pretrained checkpoint
+[13:05:46.385016] _IncompatibleKeys(missing_keys=['head.weight', 'head.bias'], unexpected_keys=[])
+[13:05:46.385098] {'head.bias', 'head.weight'}
+[13:05:46.683849] Model = GroupChannelsVisionTransformer(
+  (patch_embed): ModuleList(
+    (0): PatchEmbed(
+      (proj): Conv2d(4, 1024, kernel_size=(8, 8), stride=(8, 8))
+    )
+    (1): PatchEmbed(
+      (proj): Conv2d(4, 1024, kernel_size=(8, 8), stride=(8, 8))
+    )
+    (2): PatchEmbed(
+      (proj): Conv2d(2, 1024, kernel_size=(8, 8), stride=(8, 8))
+    )
+  )
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (blocks): ModuleList(
+    (0): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (1): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (2): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (3): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (4): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (5): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (6): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (7): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (8): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (9): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (10): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (11): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (12): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (13): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (14): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (15): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (16): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (17): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (18): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (19): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (20): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (21): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (22): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (23): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (head): Linear(in_features=1024, out_features=19, bias=True)
+  (fc_norm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+)
+[13:05:46.683933] number of params (M): 303.10
+[13:05:46.683956] base lr: 2.67e-03
+[13:05:46.683970] actual lr: 1.00e-03
+[13:05:46.683983] accumulate grad iterations: 16
+[13:05:46.683995] effective batch size: 96
+[13:05:46.688222] criterion = MultiLabelSoftMarginLoss()
+[13:05:46.688264] Start training for 10 epochs
+[13:05:46.689399] log_dir: /home/ada/satmae/other_data/bigearthnet/evaluation/multispectral
+[13:05:49.386436] Epoch: [0]  [    0/44949]  eta: 1 day, 9:39:31  lr: 0.000000  loss: 0.6932 (0.6932)  time: 2.6957  data: 1.7040  max mem: 10001
+[13:06:05.794577] Epoch: [0]  [   20/44949]  eta: 11:21:08  lr: 0.000000  loss: 0.6932 (0.6932)  time: 0.8203  data: 0.0003  max mem: 13456
+[13:06:22.587200] Epoch: [0]  [   40/44949]  eta: 10:55:15  lr: 0.000000  loss: 0.6932 (0.6932)  time: 0.8396  data: 0.0002  max mem: 13456
+[13:06:39.418789] Epoch: [0]  [   60/44949]  eta: 10:46:38  lr: 0.000000  loss: 0.6932 (0.6932)  time: 0.8415  data: 0.0002  max mem: 13456
+[13:06:56.099074] Epoch: [0]  [   80/44949]  eta: 10:40:44  lr: 0.000000  loss: 0.6931 (0.6932)  time: 0.8339  data: 0.0002  max mem: 13456
+[13:07:12.585182] Epoch: [0]  [  100/44949]  eta: 10:35:37  lr: 0.000000  loss: 0.6931 (0.6932)  time: 0.8242  data: 0.0003  max mem: 13456
+[13:07:29.147625] Epoch: [0]  [  120/44949]  eta: 10:32:35  lr: 0.000000  loss: 0.6930 (0.6931)  time: 0.8280  data: 0.0003  max mem: 13456
+[13:07:45.804768] Epoch: [0]  [  140/44949]  eta: 10:30:49  lr: 0.000001  loss: 0.6930 (0.6931)  time: 0.8328  data: 0.0003  max mem: 13456
+[13:08:02.594178] Epoch: [0]  [  160/44949]  eta: 10:30:03  lr: 0.000001  loss: 0.6929 (0.6931)  time: 0.8394  data: 0.0003  max mem: 13456
+[13:08:19.210250] Epoch: [0]  [  180/44949]  eta: 10:28:40  lr: 0.000001  loss: 0.6928 (0.6931)  time: 0.8307  data: 0.0003  max mem: 13456
+[13:08:35.819483] Epoch: [0]  [  200/44949]  eta: 10:27:29  lr: 0.000001  loss: 0.6926 (0.6930)  time: 0.8304  data: 0.0003  max mem: 13456
+[13:08:52.467442] Epoch: [0]  [  220/44949]  eta: 10:26:36  lr: 0.000001  loss: 0.6925 (0.6930)  time: 0.8323  data: 0.0003  max mem: 13456
+[13:09:09.285815] Epoch: [0]  [  240/44949]  eta: 10:26:20  lr: 0.000001  loss: 0.6923 (0.6929)  time: 0.8408  data: 0.0003  max mem: 13456
+[13:09:26.004244] Epoch: [0]  [  260/44949]  eta: 10:25:47  lr: 0.000001  loss: 0.6921 (0.6929)  time: 0.8358  data: 0.0003  max mem: 13456
+[13:09:42.722471] Epoch: [0]  [  280/44949]  eta: 10:25:16  lr: 0.000001  loss: 0.6920 (0.6928)  time: 0.8358  data: 0.0003  max mem: 13456
+[13:09:59.415272] Epoch: [0]  [  300/44949]  eta: 10:24:44  lr: 0.000001  loss: 0.6917 (0.6927)  time: 0.8346  data: 0.0003  max mem: 13456
+[13:10:16.264314] Epoch: [0]  [  320/44949]  eta: 10:24:35  lr: 0.000001  loss: 0.6915 (0.6926)  time: 0.8424  data: 0.0003  max mem: 13456
+[13:10:32.941450] Epoch: [0]  [  340/44949]  eta: 10:24:03  lr: 0.000001  loss: 0.6914 (0.6926)  time: 0.8338  data: 0.0003  max mem: 13456
+[13:10:49.633965] Epoch: [0]  [  360/44949]  eta: 10:23:34  lr: 0.000002  loss: 0.6910 (0.6925)  time: 0.8345  data: 0.0003  max mem: 13456
+[13:11:06.357435] Epoch: [0]  [  380/44949]  eta: 10:23:10  lr: 0.000002  loss: 0.6908 (0.6924)  time: 0.8361  data: 0.0003  max mem: 13456
+[13:11:23.224732] Epoch: [0]  [  400/44949]  eta: 10:23:03  lr: 0.000002  loss: 0.6906 (0.6923)  time: 0.8433  data: 0.0003  max mem: 13456
+[13:11:39.955301] Epoch: [0]  [  420/44949]  eta: 10:22:41  lr: 0.000002  loss: 0.6902 (0.6922)  time: 0.8365  data: 0.0003  max mem: 13456
+[13:11:56.710975] Epoch: [0]  [  440/44949]  eta: 10:22:21  lr: 0.000002  loss: 0.6898 (0.6921)  time: 0.8377  data: 0.0003  max mem: 13456
+[13:12:13.476125] Epoch: [0]  [  460/44949]  eta: 10:22:03  lr: 0.000002  loss: 0.6896 (0.6920)  time: 0.8382  data: 0.0003  max mem: 13456
+[13:12:30.394082] Epoch: [0]  [  480/44949]  eta: 10:21:59  lr: 0.000002  loss: 0.6894 (0.6919)  time: 0.8458  data: 0.0003  max mem: 13456
+[13:12:47.195419] Epoch: [0]  [  500/44949]  eta: 10:21:43  lr: 0.000002  loss: 0.6887 (0.6918)  time: 0.8400  data: 0.0003  max mem: 13456
+[13:13:03.994743] Epoch: [0]  [  520/44949]  eta: 10:21:28  lr: 0.000002  loss: 0.6885 (0.6916)  time: 0.8399  data: 0.0002  max mem: 13456
+[13:13:20.783702] Epoch: [0]  [  540/44949]  eta: 10:21:11  lr: 0.000002  loss: 0.6882 (0.6915)  time: 0.8394  data: 0.0003  max mem: 13456
+[13:13:37.728270] Epoch: [0]  [  560/44949]  eta: 10:21:07  lr: 0.000002  loss: 0.6872 (0.6914)  time: 0.8472  data: 0.0003  max mem: 13456
+[13:13:54.544680] Epoch: [0]  [  580/44949]  eta: 10:20:52  lr: 0.000003  loss: 0.6873 (0.6912)  time: 0.8408  data: 0.0003  max mem: 13456
+[13:14:11.353261] Epoch: [0]  [  600/44949]  eta: 10:20:36  lr: 0.000003  loss: 0.6868 (0.6911)  time: 0.8404  data: 0.0003  max mem: 13456
+[13:14:28.180604] Epoch: [0]  [  620/44949]  eta: 10:20:22  lr: 0.000003  loss: 0.6862 (0.6909)  time: 0.8413  data: 0.0003  max mem: 13456
+[13:14:45.151233] Epoch: [0]  [  640/44949]  eta: 10:20:17  lr: 0.000003  loss: 0.6857 (0.6908)  time: 0.8485  data: 0.0003  max mem: 13456
+[13:15:01.984948] Epoch: [0]  [  660/44949]  eta: 10:20:02  lr: 0.000003  loss: 0.6851 (0.6906)  time: 0.8416  data: 0.0003  max mem: 13456
+[13:15:18.817474] Epoch: [0]  [  680/44949]  eta: 10:19:48  lr: 0.000003  loss: 0.6844 (0.6904)  time: 0.8415  data: 0.0003  max mem: 13456
+[13:15:35.644167] Epoch: [0]  [  700/44949]  eta: 10:19:32  lr: 0.000003  loss: 0.6848 (0.6903)  time: 0.8412  data: 0.0003  max mem: 13456
+[13:15:52.634354] Epoch: [0]  [  720/44949]  eta: 10:19:27  lr: 0.000003  loss: 0.6834 (0.6901)  time: 0.8494  data: 0.0003  max mem: 13456
+[13:16:09.475744] Epoch: [0]  [  740/44949]  eta: 10:19:12  lr: 0.000003  loss: 0.6828 (0.6899)  time: 0.8420  data: 0.0003  max mem: 13456
+[13:16:26.317779] Epoch: [0]  [  760/44949]  eta: 10:18:57  lr: 0.000003  loss: 0.6815 (0.6897)  time: 0.8420  data: 0.0003  max mem: 13456
+[13:16:43.169857] Epoch: [0]  [  780/44949]  eta: 10:18:43  lr: 0.000003  loss: 0.6820 (0.6895)  time: 0.8425  data: 0.0004  max mem: 13456
+[13:17:00.165823] Epoch: [0]  [  800/44949]  eta: 10:18:36  lr: 0.000004  loss: 0.6804 (0.6892)  time: 0.8497  data: 0.0003  max mem: 13456
+[13:17:16.995619] Epoch: [0]  [  820/44949]  eta: 10:18:20  lr: 0.000004  loss: 0.6808 (0.6890)  time: 0.8414  data: 0.0003  max mem: 13456
+[13:17:33.838431] Epoch: [0]  [  840/44949]  eta: 10:18:05  lr: 0.000004  loss: 0.6795 (0.6888)  time: 0.8421  data: 0.0003  max mem: 13456
+[13:17:50.674463] Epoch: [0]  [  860/44949]  eta: 10:17:49  lr: 0.000004  loss: 0.6789 (0.6886)  time: 0.8417  data: 0.0003  max mem: 13456
+[13:18:07.649190] Epoch: [0]  [  880/44949]  eta: 10:17:40  lr: 0.000004  loss: 0.6776 (0.6883)  time: 0.8486  data: 0.0003  max mem: 13456
+[13:18:24.469100] Epoch: [0]  [  900/44949]  eta: 10:17:23  lr: 0.000004  loss: 0.6766 (0.6881)  time: 0.8409  data: 0.0003  max mem: 13456
+[13:18:41.287771] Epoch: [0]  [  920/44949]  eta: 10:17:06  lr: 0.000004  loss: 0.6758 (0.6878)  time: 0.8409  data: 0.0003  max mem: 13456
+[13:18:58.093777] Epoch: [0]  [  940/44949]  eta: 10:16:49  lr: 0.000004  loss: 0.6747 (0.6875)  time: 0.8402  data: 0.0003  max mem: 13456
+[13:19:15.062308] Epoch: [0]  [  960/44949]  eta: 10:16:39  lr: 0.000004  loss: 0.6746 (0.6872)  time: 0.8484  data: 0.0003  max mem: 13456
+[13:19:31.897652] Epoch: [0]  [  980/44949]  eta: 10:16:22  lr: 0.000004  loss: 0.6738 (0.6870)  time: 0.8417  data: 0.0003  max mem: 13456
+[13:19:48.746702] Epoch: [0]  [ 1000/44949]  eta: 10:16:07  lr: 0.000004  loss: 0.6730 (0.6867)  time: 0.8424  data: 0.0003  max mem: 13456
+[13:20:05.602348] Epoch: [0]  [ 1020/44949]  eta: 10:15:51  lr: 0.000004  loss: 0.6712 (0.6864)  time: 0.8427  data: 0.0003  max mem: 13456
+[13:20:22.600108] Epoch: [0]  [ 1040/44949]  eta: 10:15:42  lr: 0.000005  loss: 0.6696 (0.6861)  time: 0.8498  data: 0.0003  max mem: 13456
+[13:20:39.465440] Epoch: [0]  [ 1060/44949]  eta: 10:15:26  lr: 0.000005  loss: 0.6692 (0.6857)  time: 0.8432  data: 0.0003  max mem: 13456
+[13:20:56.339842] Epoch: [0]  [ 1080/44949]  eta: 10:15:11  lr: 0.000005  loss: 0.6679 (0.6854)  time: 0.8436  data: 0.0003  max mem: 13456
+[13:21:13.213122] Epoch: [0]  [ 1100/44949]  eta: 10:14:56  lr: 0.000005  loss: 0.6663 (0.6851)  time: 0.8436  data: 0.0003  max mem: 13456
+[13:21:30.229970] Epoch: [0]  [ 1120/44949]  eta: 10:14:47  lr: 0.000005  loss: 0.6647 (0.6847)  time: 0.8508  data: 0.0003  max mem: 13456
+[13:21:47.111217] Epoch: [0]  [ 1140/44949]  eta: 10:14:32  lr: 0.000005  loss: 0.6627 (0.6843)  time: 0.8440  data: 0.0003  max mem: 13456
+[13:22:03.991872] Epoch: [0]  [ 1160/44949]  eta: 10:14:16  lr: 0.000005  loss: 0.6619 (0.6839)  time: 0.8439  data: 0.0003  max mem: 13456
+[13:22:20.884552] Epoch: [0]  [ 1180/44949]  eta: 10:14:02  lr: 0.000005  loss: 0.6606 (0.6836)  time: 0.8445  data: 0.0003  max mem: 13456
+[13:22:37.933120] Epoch: [0]  [ 1200/44949]  eta: 10:13:53  lr: 0.000005  loss: 0.6613 (0.6832)  time: 0.8523  data: 0.0003  max mem: 13456
+[13:22:54.846754] Epoch: [0]  [ 1220/44949]  eta: 10:13:38  lr: 0.000005  loss: 0.6569 (0.6828)  time: 0.8456  data: 0.0003  max mem: 13456
+[13:23:11.758876] Epoch: [0]  [ 1240/44949]  eta: 10:13:24  lr: 0.000005  loss: 0.6556 (0.6823)  time: 0.8455  data: 0.0004  max mem: 13456
+[13:23:28.656642] Epoch: [0]  [ 1260/44949]  eta: 10:13:09  lr: 0.000006  loss: 0.6530 (0.6819)  time: 0.8448  data: 0.0003  max mem: 13456
+[13:23:45.719496] Epoch: [0]  [ 1280/44949]  eta: 10:13:00  lr: 0.000006  loss: 0.6500 (0.6814)  time: 0.8530  data: 0.0003  max mem: 13456
+[13:24:02.622962] Epoch: [0]  [ 1300/44949]  eta: 10:12:45  lr: 0.000006  loss: 0.6510 (0.6809)  time: 0.8451  data: 0.0003  max mem: 13456
+[13:24:19.531826] Epoch: [0]  [ 1320/44949]  eta: 10:12:30  lr: 0.000006  loss: 0.6499 (0.6805)  time: 0.8454  data: 0.0003  max mem: 13456
+[13:24:36.446627] Epoch: [0]  [ 1340/44949]  eta: 10:12:15  lr: 0.000006  loss: 0.6476 (0.6800)  time: 0.8457  data: 0.0003  max mem: 13456
+[13:24:53.483217] Epoch: [0]  [ 1360/44949]  eta: 10:12:04  lr: 0.000006  loss: 0.6450 (0.6795)  time: 0.8517  data: 0.0003  max mem: 13456
+[13:25:10.406317] Epoch: [0]  [ 1380/44949]  eta: 10:11:50  lr: 0.000006  loss: 0.6407 (0.6789)  time: 0.8461  data: 0.0003  max mem: 13456
+[13:25:27.301509] Epoch: [0]  [ 1400/44949]  eta: 10:11:34  lr: 0.000006  loss: 0.6428 (0.6784)  time: 0.8447  data: 0.0003  max mem: 13456
+[13:25:44.196710] Epoch: [0]  [ 1420/44949]  eta: 10:11:19  lr: 0.000006  loss: 0.6383 (0.6779)  time: 0.8447  data: 0.0003  max mem: 13456
+[13:26:01.252777] Epoch: [0]  [ 1440/44949]  eta: 10:11:08  lr: 0.000006  loss: 0.6367 (0.6773)  time: 0.8526  data: 0.0003  max mem: 13456
+[13:26:18.171113] Epoch: [0]  [ 1460/44949]  eta: 10:10:53  lr: 0.000006  loss: 0.6358 (0.6768)  time: 0.8458  data: 0.0003  max mem: 13456
+[13:26:35.075079] Epoch: [0]  [ 1480/44949]  eta: 10:10:37  lr: 0.000007  loss: 0.6345 (0.6762)  time: 0.8451  data: 0.0003  max mem: 13456
+[13:26:51.976797] Epoch: [0]  [ 1500/44949]  eta: 10:10:22  lr: 0.000007  loss: 0.6320 (0.6756)  time: 0.8450  data: 0.0003  max mem: 13456
+[13:27:09.029730] Epoch: [0]  [ 1520/44949]  eta: 10:10:10  lr: 0.000007  loss: 0.6281 (0.6750)  time: 0.8526  data: 0.0003  max mem: 13456
+[13:27:25.934236] Epoch: [0]  [ 1540/44949]  eta: 10:09:55  lr: 0.000007  loss: 0.6257 (0.6744)  time: 0.8451  data: 0.0003  max mem: 13456
+[13:27:42.835729] Epoch: [0]  [ 1560/44949]  eta: 10:09:39  lr: 0.000007  loss: 0.6241 (0.6737)  time: 0.8450  data: 0.0003  max mem: 13456
+[13:27:59.741994] Epoch: [0]  [ 1580/44949]  eta: 10:09:23  lr: 0.000007  loss: 0.6224 (0.6731)  time: 0.8452  data: 0.0003  max mem: 13456
+[13:28:16.774217] Epoch: [0]  [ 1600/44949]  eta: 10:09:11  lr: 0.000007  loss: 0.6167 (0.6724)  time: 0.8515  data: 0.0003  max mem: 13456
+[13:28:33.681120] Epoch: [0]  [ 1620/44949]  eta: 10:08:55  lr: 0.000007  loss: 0.6185 (0.6718)  time: 0.8453  data: 0.0003  max mem: 13456
+[13:28:50.567226] Epoch: [0]  [ 1640/44949]  eta: 10:08:39  lr: 0.000007  loss: 0.6121 (0.6711)  time: 0.8442  data: 0.0003  max mem: 13456
+[13:29:07.431634] Epoch: [0]  [ 1660/44949]  eta: 10:08:22  lr: 0.000007  loss: 0.6132 (0.6704)  time: 0.8431  data: 0.0003  max mem: 13456
+[13:29:24.431086] Epoch: [0]  [ 1680/44949]  eta: 10:08:09  lr: 0.000007  loss: 0.6117 (0.6697)  time: 0.8499  data: 0.0003  max mem: 13456
+[13:29:41.322354] Epoch: [0]  [ 1700/44949]  eta: 10:07:52  lr: 0.000008  loss: 0.6052 (0.6689)  time: 0.8445  data: 0.0003  max mem: 13456
+[13:29:58.197935] Epoch: [0]  [ 1720/44949]  eta: 10:07:36  lr: 0.000008  loss: 0.6058 (0.6682)  time: 0.8437  data: 0.0003  max mem: 13456
+[13:30:15.089117] Epoch: [0]  [ 1740/44949]  eta: 10:07:19  lr: 0.000008  loss: 0.6020 (0.6674)  time: 0.8445  data: 0.0003  max mem: 13456
+[13:30:32.113838] Epoch: [0]  [ 1760/44949]  eta: 10:07:06  lr: 0.000008  loss: 0.5945 (0.6666)  time: 0.8512  data: 0.0003  max mem: 13456
+[13:30:48.996654] Epoch: [0]  [ 1780/44949]  eta: 10:06:50  lr: 0.000008  loss: 0.5935 (0.6658)  time: 0.8441  data: 0.0003  max mem: 13456
+[13:31:05.891815] Epoch: [0]  [ 1800/44949]  eta: 10:06:33  lr: 0.000008  loss: 0.5946 (0.6650)  time: 0.8447  data: 0.0003  max mem: 13456
+[13:31:22.780385] Epoch: [0]  [ 1820/44949]  eta: 10:06:17  lr: 0.000008  loss: 0.5836 (0.6642)  time: 0.8443  data: 0.0003  max mem: 13456
+[13:31:39.815513] Epoch: [0]  [ 1840/44949]  eta: 10:06:04  lr: 0.000008  loss: 0.5875 (0.6634)  time: 0.8517  data: 0.0003  max mem: 13456
+[13:31:56.702149] Epoch: [0]  [ 1860/44949]  eta: 10:05:47  lr: 0.000008  loss: 0.5852 (0.6625)  time: 0.8442  data: 0.0003  max mem: 13456
+[13:32:13.600499] Epoch: [0]  [ 1880/44949]  eta: 10:05:31  lr: 0.000008  loss: 0.5785 (0.6617)  time: 0.8448  data: 0.0003  max mem: 13456
+[13:32:30.498056] Epoch: [0]  [ 1900/44949]  eta: 10:05:15  lr: 0.000008  loss: 0.5823 (0.6608)  time: 0.8448  data: 0.0003  max mem: 13456
+[13:32:47.522280] Epoch: [0]  [ 1920/44949]  eta: 10:05:01  lr: 0.000009  loss: 0.5767 (0.6600)  time: 0.8511  data: 0.0003  max mem: 13456
+[13:33:04.410841] Epoch: [0]  [ 1940/44949]  eta: 10:04:45  lr: 0.000009  loss: 0.5730 (0.6591)  time: 0.8443  data: 0.0003  max mem: 13456
+[13:33:21.292260] Epoch: [0]  [ 1960/44949]  eta: 10:04:28  lr: 0.000009  loss: 0.5709 (0.6582)  time: 0.8440  data: 0.0003  max mem: 13456
+[13:33:38.185092] Epoch: [0]  [ 1980/44949]  eta: 10:04:12  lr: 0.000009  loss: 0.5669 (0.6572)  time: 0.8445  data: 0.0003  max mem: 13456
+[13:33:55.226909] Epoch: [0]  [ 2000/44949]  eta: 10:03:58  lr: 0.000009  loss: 0.5644 (0.6563)  time: 0.8520  data: 0.0003  max mem: 13456
+[13:34:12.129865] Epoch: [0]  [ 2020/44949]  eta: 10:03:42  lr: 0.000009  loss: 0.5591 (0.6554)  time: 0.8451  data: 0.0003  max mem: 13456
+[13:34:29.013156] Epoch: [0]  [ 2040/44949]  eta: 10:03:25  lr: 0.000009  loss: 0.5594 (0.6544)  time: 0.8441  data: 0.0003  max mem: 13456
+[13:34:45.919287] Epoch: [0]  [ 2060/44949]  eta: 10:03:09  lr: 0.000009  loss: 0.5570 (0.6535)  time: 0.8452  data: 0.0003  max mem: 13456
+[13:35:02.960755] Epoch: [0]  [ 2080/44949]  eta: 10:02:55  lr: 0.000009  loss: 0.5481 (0.6525)  time: 0.8520  data: 0.0003  max mem: 13456
+[13:35:19.859167] Epoch: [0]  [ 2100/44949]  eta: 10:02:39  lr: 0.000009  loss: 0.5501 (0.6515)  time: 0.8448  data: 0.0003  max mem: 13456
+[13:35:36.774839] Epoch: [0]  [ 2120/44949]  eta: 10:02:23  lr: 0.000009  loss: 0.5521 (0.6506)  time: 0.8457  data: 0.0003  max mem: 13456
+[13:35:53.689055] Epoch: [0]  [ 2140/44949]  eta: 10:02:07  lr: 0.000009  loss: 0.5479 (0.6496)  time: 0.8456  data: 0.0003  max mem: 13456
+[13:36:10.735144] Epoch: [0]  [ 2160/44949]  eta: 10:01:53  lr: 0.000010  loss: 0.5443 (0.6486)  time: 0.8522  data: 0.0003  max mem: 13456
+[13:36:27.663462] Epoch: [0]  [ 2180/44949]  eta: 10:01:37  lr: 0.000010  loss: 0.5332 (0.6476)  time: 0.8463  data: 0.0003  max mem: 13456
+[13:36:44.556418] Epoch: [0]  [ 2200/44949]  eta: 10:01:20  lr: 0.000010  loss: 0.5382 (0.6466)  time: 0.8446  data: 0.0003  max mem: 13456
+[13:37:01.455009] Epoch: [0]  [ 2220/44949]  eta: 10:01:04  lr: 0.000010  loss: 0.5270 (0.6455)  time: 0.8448  data: 0.0003  max mem: 13456
+[13:37:18.475209] Epoch: [0]  [ 2240/44949]  eta: 10:00:50  lr: 0.000010  loss: 0.5276 (0.6445)  time: 0.8509  data: 0.0003  max mem: 13456
+[13:37:35.366948] Epoch: [0]  [ 2260/44949]  eta: 10:00:33  lr: 0.000010  loss: 0.5199 (0.6434)  time: 0.8445  data: 0.0003  max mem: 13456
+[13:37:52.225598] Epoch: [0]  [ 2280/44949]  eta: 10:00:15  lr: 0.000010  loss: 0.5215 (0.6424)  time: 0.8428  data: 0.0003  max mem: 13456
+[13:38:09.081371] Epoch: [0]  [ 2300/44949]  eta: 9:59:58  lr: 0.000010  loss: 0.5156 (0.6413)  time: 0.8427  data: 0.0003  max mem: 13456
+[13:38:26.081165] Epoch: [0]  [ 2320/44949]  eta: 9:59:43  lr: 0.000010  loss: 0.5219 (0.6402)  time: 0.8499  data: 0.0003  max mem: 13456
+[13:38:42.940745] Epoch: [0]  [ 2340/44949]  eta: 9:59:26  lr: 0.000010  loss: 0.5094 (0.6392)  time: 0.8429  data: 0.0003  max mem: 13456
+[13:38:59.792815] Epoch: [0]  [ 2360/44949]  eta: 9:59:09  lr: 0.000010  loss: 0.5150 (0.6381)  time: 0.8425  data: 0.0003  max mem: 13456
+[13:39:16.640468] Epoch: [0]  [ 2380/44949]  eta: 9:58:51  lr: 0.000011  loss: 0.5062 (0.6370)  time: 0.8423  data: 0.0003  max mem: 13456
+[13:39:33.629739] Epoch: [0]  [ 2400/44949]  eta: 9:58:36  lr: 0.000011  loss: 0.5129 (0.6360)  time: 0.8494  data: 0.0003  max mem: 13456
+[13:39:50.483324] Epoch: [0]  [ 2420/44949]  eta: 9:58:19  lr: 0.000011  loss: 0.5024 (0.6349)  time: 0.8426  data: 0.0003  max mem: 13456
+[13:40:07.322611] Epoch: [0]  [ 2440/44949]  eta: 9:58:01  lr: 0.000011  loss: 0.5063 (0.6338)  time: 0.8419  data: 0.0003  max mem: 13456
+[13:40:24.147904] Epoch: [0]  [ 2460/44949]  eta: 9:57:43  lr: 0.000011  loss: 0.4904 (0.6327)  time: 0.8412  data: 0.0003  max mem: 13456
+[13:40:41.121254] Epoch: [0]  [ 2480/44949]  eta: 9:57:28  lr: 0.000011  loss: 0.4961 (0.6316)  time: 0.8486  data: 0.0003  max mem: 13456
+[13:40:57.963252] Epoch: [0]  [ 2500/44949]  eta: 9:57:10  lr: 0.000011  loss: 0.4917 (0.6305)  time: 0.8420  data: 0.0003  max mem: 13456
+[13:41:14.812325] Epoch: [0]  [ 2520/44949]  eta: 9:56:53  lr: 0.000011  loss: 0.4810 (0.6294)  time: 0.8424  data: 0.0003  max mem: 13456
+[13:41:31.677252] Epoch: [0]  [ 2540/44949]  eta: 9:56:36  lr: 0.000011  loss: 0.4846 (0.6282)  time: 0.8432  data: 0.0003  max mem: 13456
+/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/launch.py:186: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  FutureWarning,
+WARNING:torch.distributed.elastic.agent.server.api:Received 1 death signal, shutting down workers
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 127021 closing signal SIGHUP
+Traceback (most recent call last):
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/launch.py", line 193, in <module>
+    main()
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/launch.py", line 189, in main
+    launch(args)
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/launch.py", line 174, in launch
+    run(args)
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/run.py", line 718, in run
+    )(*cmd_args)
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/launcher/api.py", line 131, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/launcher/api.py", line 236, in launch_agent
+    result = agent.run()
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/elastic/metrics/api.py", line 125, in wrapper
+    result = f(*args, **kwargs)
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py", line 709, in run
+    result = self._invoke_run(role)
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/elastic/agent/server/api.py", line 850, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 60, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 127016 got signal: 1

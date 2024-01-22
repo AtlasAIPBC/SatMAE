@@ -127,7 +127,7 @@ def get_args_parser():
                         help='Train .csv path')
     parser.add_argument('--test_path', default='/home/val_62classes.csv', type=str,
                         help='Test .csv path')
-    parser.add_argument('--dataset_type', default='rgb', choices=['rgb', 'temporal', 'sentinel', 'euro_sat', 'naip'],
+    parser.add_argument('--dataset_type', default='rgb', choices=['rgb', 'temporal', 'sentinel', 'euro_sat', 'naip', 'bigearthnet'],
                         help='Whether to use fmow rgb, sentinel, or other dataset.')
     parser.add_argument('--masked_bands', default=None, nargs='+', type=int,
                         help='Sequence of band indices to mask (with mean val) in sentinel dataset')
@@ -284,7 +284,7 @@ def main(args):
         )
 
     if args.finetune and not args.eval:
-        checkpoint = torch.load(args.finetune, map_location='cpu')
+        checkpoint = torch.load(args.finetune)
 
         print("Load pre-trained checkpoint from: %s" % args.finetune)
         checkpoint_model = checkpoint['model']
@@ -369,13 +369,14 @@ def main(args):
 
     if mixup_fn is not None:
         # smoothing is handled with mixup label transform
-        criterion = SoftTargetCrossEntropy()
+        # criterion = SoftTargetCrossEntropy()
+        criterion = torch.nn.MultiLabelSoftMarginLoss()
     elif args.smoothing > 0.:
-        criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+        # criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+        criterion = torch.nn.MultiLabelSoftMarginLoss()
     else:
         # criterion = torch.nn.CrossEntropyLoss()
         criterion = torch.nn.MultiLabelSoftMarginLoss()
-
     print("criterion = %s" % str(criterion))
 
     misc.load_model(args=args, model_without_ddp=model_without_ddp, optimizer=optimizer, loss_scaler=loss_scaler)
