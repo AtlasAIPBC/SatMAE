@@ -127,6 +127,7 @@ def get_args_parser():
                         help='Train .csv path')
     parser.add_argument('--test_path', default='/home/val_62classes.csv', type=str,
                         help='Test .csv path')
+    # added bigearthnet in the choices
     parser.add_argument('--dataset_type', default='rgb', choices=['rgb', 'temporal', 'sentinel', 'euro_sat', 'naip', 'bigearthnet'],
                         help='Whether to use fmow rgb, sentinel, or other dataset.')
     parser.add_argument('--masked_bands', default=None, nargs='+', type=int,
@@ -260,7 +261,6 @@ def main(args):
     if args.model_type == 'group_c':
         # Workaround because action append will add to default list
         if len(args.grouped_bands) == 0:
-            #args.grouped_bands = [[3, 2, 1, 7], [4, 5, 6, 8], [11, 12]]
             args.grouped_bands = [[0, 1, 2, 6], [3, 4, 5, 7], [8, 9]]
         print(f"Grouping bands {args.grouped_bands}")
         model = models_vit_group_channels.__dict__[args.model](
@@ -284,6 +284,8 @@ def main(args):
         )
 
     if args.finetune and not args.eval:
+        # needs to be adapted for cpu cases >> 
+        # checkpoint = torch.load(args.finetune, map_location='cpu')
         checkpoint = torch.load(args.finetune)
 
         print("Load pre-trained checkpoint from: %s" % args.finetune)
@@ -305,6 +307,7 @@ def main(args):
 
 
         # TODO: Do something smarter?
+        # handles specific channel mismatches in patch_embed.proj.weight by partially copying data
         if 'patch_embed.proj.weight' in checkpoint_model and 'patch_embed.proj.weight' in state_dict:
             ckpt_patch_embed_weight = checkpoint_model['patch_embed.proj.weight']
             model_patch_embed_weight = state_dict['patch_embed.proj.weight']
@@ -312,6 +315,7 @@ def main(args):
                 print('Using 3 channels of ckpt patch_embed')
                 model.patch_embed.proj.weight.data[:, :3, :, :] = ckpt_patch_embed_weight.data[:, :3, :, :]
     
+        # removes keys with shape mismatch
         for k in ['pos_embed', 'patch_embed.proj.bias', 'head.weight', 'head.bias']:
             if k in checkpoint_model and checkpoint_model[k].shape != state_dict[k].shape:
                 print(f"Removing key {k} from pretrained checkpoint")
@@ -367,6 +371,9 @@ def main(args):
     optimizer = torch.optim.AdamW(param_groups, lr=args.lr)
     loss_scaler = NativeScaler()
 
+    # this section needs to be adapted for both single & multi label
+    # classification >> currently everything set for multilabel
+    # uncomment commented criterion lines for singlelable
     if mixup_fn is not None:
         # smoothing is handled with mixup label transform
         # criterion = SoftTargetCrossEntropy()
