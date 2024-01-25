@@ -40,6 +40,7 @@ CATEGORIES = ["airport", "airport_hangar", "airport_terminal", "amusement_park",
               "tower", "tunnel_opening", "waste_disposal", "water_treatment_facility",
               "wind_farm", "zoo"]
 
+# bigearthnet19 labels
 CATEGORIES_big = [
     'Urban fabric', 'Industrial or commercial units', 'Arable land', 'Permanent crops', 
     'Pastures', 'Complex cultivation patterns', 
@@ -246,7 +247,7 @@ class CustomDatasetFromImagesTemporal(SatelliteDataset):
         std = [0.28774282336235046, 0.27541765570640564, 0.2764017581939697]
         self.normalization = transforms.Normalize(mean, std)
         self.totensor = transforms.ToTensor()
-        self.scale = transforms.Resize(224)
+        self.scale = transforms.Resize(224) # Scale to Resize. Scale's deprecated
 
     def __getitem__(self, index):
         # Get image name from the pandas df
@@ -521,6 +522,8 @@ class SentinelIndividualImageDataset(SatelliteDataset):
 
         return transforms.Compose(t)
 
+# add dataloader for bigeartnet
+# method of stacking should be revisited
 class BigEarthNetImageDataset(SatelliteDataset):
     label_types = ['value', 'one-hot']
     mean = [
@@ -772,6 +775,7 @@ def build_fmow_dataset(is_train: bool, args) -> SatelliteDataset:
         transform = SentinelIndividualImageDataset.build_transform(is_train, args.input_size, mean, std)
         dataset = SentinelIndividualImageDataset(csv_path, transform, masked_bands=args.masked_bands,
                                                  dropped_bands=args.dropped_bands)
+    # add bigearthnet
     elif args.dataset_type == 'bigearthnet':
         mean = BigEarthNetImageDataset.mean
         std = BigEarthNetImageDataset.std
