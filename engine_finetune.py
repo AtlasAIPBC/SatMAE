@@ -49,28 +49,15 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
         samples = samples.to(device, non_blocking=True)
         targets = targets.to(device, non_blocking=True)
 
+        # uncomment the 2 lines below for single label cases
 #        if mixup_fn is not None:
  #            samples, targets = mixup_fn(samples, targets)
 
-        # with torch.no_grad():
         with torch.cuda.amp.autocast():
             outputs = model(samples)
-            #targets = torch.tensor(targets, device="cuda" if torch.cuda.is_available() else "cpu", dtype=torch.float, requires_grad=True)
-            #outputs = torch.tensor(outputs, device="cuda" if torch.cuda.is_available() else "cpu", dtype=torch.float, requires_grad=True)
             loss = criterion(outputs, targets)
 
         loss_value = loss.item()
-       # print("-------------------------------------------")
-        #print("-------------------------------------------")
-        #print("this is loss shape: ", loss.shape)
-        #print("this is a loss value:")
-        #print(loss_value)
-        #print("this is the loss")
-        #print(loss)
-        #print("-------------------------------------------")
-        #print("-------------------------------------------")
-        #print(outputs)
-        #print(targets)
 
         if not math.isfinite(loss_value):
             print("Loss is {}, stopping training".format(loss_value))
@@ -84,7 +71,7 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
             optimizer.zero_grad()
 
         torch.cuda.synchronize()
-        # torch.no_grad()
+
 
         metric_logger.update(loss=loss_value)
         min_lr = 10.
@@ -149,7 +136,7 @@ def train_one_epoch_temporal(model: torch.nn.Module, criterion: torch.nn.Module,
             samples, targets = mixup_fn(samples, targets)
 
         with torch.cuda.amp.autocast():
-        # with torch.no_grad():
+
             outputs = model(samples, timestamps)
             loss = criterion(outputs, targets)
 
@@ -202,7 +189,7 @@ def train_one_epoch_temporal(model: torch.nn.Module, criterion: torch.nn.Module,
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
-
+# mAP calculator >> added for multilabel scoring
 def mean_average_precision(targets, outputs):
     """
     Calculates mean average precision (mAP) for multi-label classification.
@@ -254,6 +241,8 @@ def mean_average_precision(targets, outputs):
 
 @torch.no_grad()
 def evaluate(data_loader, model, device):
+    # needs to be adapted for both single and multilabel
+    # single label commented out >> crossentropy
     # criterion = torch.nn.CrossEntropyLoss()
     criterion = torch.nn.MultiLabelSoftMarginLoss()
 
@@ -264,10 +253,12 @@ def evaluate(data_loader, model, device):
     # switch to evaluation mode
     model.eval()
 
+
+    # all changes from here and below are related to metrics/acuracy and metric logger
+    # for single label vs multilabel
     for batch in metric_logger.log_every(data_loader, 10, header):
         images = batch[0]
         target = batch[-1]
-        # print('images and targets')
         images = images.to(device, non_blocking=True)
         target = target.to(device, non_blocking=True)
 
@@ -275,17 +266,8 @@ def evaluate(data_loader, model, device):
         # compute output
         with torch.cuda.amp.autocast():
             output = model(images)
-            n_labels = 19
-            # multi_hot_targets = torch.stack([target == i for i in range(n_labels)])
-            # loss = criterion(output, multi_hot_targets)
             loss = criterion(output, target)
 
-        # is_multilabel = output.shape[-1] > 1
-        # # Calculate accuracy based on multi-label setting
-        # if is_multilabel:
-        #     acc1, acc5 = accuracy(output, target, topk=(1, 5), is_multilabel=True)
-        # else:
-        #     acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
 #        acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
@@ -355,13 +337,9 @@ def evaluate_temporal(data_loader, model, device):
 
                 output = F.one_hot(maxarg.reshape(-1), num_classes=1000).float()
                 output = output.reshape(sp).mean(dim=1, keepdims=False)
-                # print(output.shape)
                 
                 target = target.reshape(batch_size, 9)[:, 0]
-            # print(target.shape)
-            n_labels = 19
-            # multi_hot_targets = torch.stack([target == i for i in range(n_labels)])
-            # loss = criterion(output, multi_hot_targets)
+
             loss = criterion(output, target)
 
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
