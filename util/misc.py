@@ -243,7 +243,8 @@ def save_on_master(*args, **kwargs):
 #     torch.distributed.barrier()
 #     setup_for_distributed(args.rank == 0)
 
-
+# focuses on GPU usage and offers a basic setup for non-distributed or CPU-only execution
+# original code provided comprehensive distributed setup for different environments
 def init_distributed_mode(args, use_gpu=True):
     if use_gpu:
         print('Not using distributed mode')
@@ -368,9 +369,12 @@ def save_model(args, epoch, model, model_without_ddp, optimizer, loss_scaler):
 def load_model(args, model_without_ddp, optimizer, loss_scaler):
     if args.resume:
         if args.resume.startswith('https'):
+            # check hash changed to False >> issues w/ some ckpts
+            # originally set to True
             checkpoint = torch.hub.load_state_dict_from_url(
                 args.resume, check_hash=False)
         else:
+            # needs to be refactored to handle both cpu/gpu
             checkpoint = torch.load(args.resume)
             #checkpoint = torch.load(args.resume, map_location='cpu')
             # del checkpoint['model']['head.weight']
