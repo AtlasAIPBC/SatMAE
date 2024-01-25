@@ -202,6 +202,56 @@ def train_one_epoch_temporal(model: torch.nn.Module, criterion: torch.nn.Module,
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
+
+def mean_average_precision(targets, outputs):
+    """
+    Calculates mean average precision (mAP) for multi-label classification.
+
+    Args:
+        targets: A tensor of one-hot encoded true class labels (multiple 1s allowed).
+        outputs: A tensor of predicted probabilities for each class.
+
+    Returns:
+        The mean average precision (mAP) across all classes.
+    """
+
+    with torch.no_grad():
+        num_classes = targets.shape[1]
+        average_precisions = []
+
+        for class_idx in range(num_classes):
+            # Get relevant indices for the current class
+            relevant_idxs = (targets[:, class_idx] == 1)
+
+            # Calculate TP, FP, and FN considering only relevant examples
+            tp = (outputs[relevant_idxs, class_idx] > 0.5).sum().float()  # Threshold for positive prediction
+            fp = (outputs[~relevant_idxs, class_idx] > 0.5).sum().float()
+            fn = (outputs[relevant_idxs, class_idx] <= 0.5).sum().float()
+
+            # Sort predictions by confidence (descending), but only for relevant examples
+            _, indices = torch.sort(outputs[relevant_idxs, class_idx], descending=True)
+
+            # Calculate precision and recall at each threshold
+            precisions = torch.zeros_like(outputs[relevant_idxs, class_idx])
+            recalls = torch.zeros_like(outputs[relevant_idxs, class_idx])
+            accumulated_tp = 0
+
+            for i, idx in enumerate(indices):
+                accumulated_tp += 1
+                precisions[i] = accumulated_tp / (i + 1)
+                recalls[i] = accumulated_tp / (tp + fn)
+
+            # Calculate average precision for the class
+            average_precision = torch.trapz(precisions, recalls)
+            average_precisions.append(average_precision)
+
+        # Calculate mean average precision across all classes
+        mAP = torch.mean(torch.tensor(average_precisions))
+
+    return mAP
+
+
+
 @torch.no_grad()
 def evaluate(data_loader, model, device):
     # criterion = torch.nn.CrossEntropyLoss()
@@ -230,25 +280,31 @@ def evaluate(data_loader, model, device):
             # loss = criterion(output, multi_hot_targets)
             loss = criterion(output, target)
 
+        # is_multilabel = output.shape[-1] > 1
+        # # Calculate accuracy based on multi-label setting
+        # if is_multilabel:
+        #     acc1, acc5 = accuracy(output, target, topk=(1, 5), is_multilabel=True)
+        # else:
+        #     acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
-        is_multilabel = output.shape[-1] > 1
-        # Calculate accuracy based on multi-label setting
-        if is_multilabel:
-            acc1, acc5 = accuracy(output, target, topk=(1, 5), is_multilabel=True)
-        else:
-            acc1, acc5 = accuracy(output, target, topk=(1, 5))
+#        acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
-        # acc1, acc5 = accuracy(output, target, topk=(1, 5))
-        # print(acc1, acc5, flush=True)
 
+        mpa = mean_average_precision(target, output)
+        #print("mAP", mpa)
         batch_size = images.shape[0]
         metric_logger.update(loss=loss.item())
-        metric_logger.meters['acc1'].update(acc1.item(), n=batch_size)
-        metric_logger.meters['acc5'].update(acc5.item(), n=batch_size)
+        metric_logger.meters['mAP'].update(mpa.item(), n=batch_size)
+        # metric_logger.meters['acc1'].update(acc1.item(), n=batch_size)
+        # metric_logger.meters['acc5'].update(acc5.item(), n=batch_size)
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
-    print('* Acc@1 {top1.global_avg:.3f} Acc@5 {top5.global_avg:.3f} loss {losses.global_avg:.3f}'
-          .format(top1=metric_logger.acc1, top5=metric_logger.acc5, losses=metric_logger.loss))
+
+    print('* mAP {mAP.global_avg:.3f} loss {losses.global_avg:.3f}'
+        .format(mAP=metric_logger.meters['mAP'], losses=metric_logger.loss))
+
+    # print('* Acc@1 {top1.global_avg:.3f} Acc@5 {top5.global_avg:.3f} loss {losses.global_avg:.3f}'
+    #       .format(top1=metric_logger.acc1, top5=metric_logger.acc5, losses=metric_logger.loss))
 
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
