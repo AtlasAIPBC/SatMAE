@@ -50,9 +50,8 @@ def train_one_epoch(model: torch.nn.Module, criterion: torch.nn.Module,
         targets = targets.to(device, non_blocking=True)
 
         # uncomment the 2 lines below for single label cases
-        # comment for multilabel
-        if mixup_fn is not None:
-            samples, targets = mixup_fn(samples, targets)
+#        if mixup_fn is not None:
+ #            samples, targets = mixup_fn(samples, targets)
 
         with torch.cuda.amp.autocast():
             outputs = model(samples)
@@ -244,8 +243,8 @@ def mean_average_precision(targets, outputs):
 def evaluate(data_loader, model, device):
     # needs to be adapted for both single and multilabel
     # single label commented out >> crossentropy
-    criterion = torch.nn.CrossEntropyLoss()
-    # criterion = torch.nn.MultiLabelSoftMarginLoss()
+    # criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.MultiLabelSoftMarginLoss()
 
 
     metric_logger = misc.MetricLogger(delimiter="  ")
@@ -269,32 +268,33 @@ def evaluate(data_loader, model, device):
             output = model(images)
             loss = criterion(output, target)
 
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
+
+#        acc1, acc5 = accuracy(output, target, topk=(1, 5))
 
 
-        #mpa = mean_average_precision(target, output)
+        mpa = mean_average_precision(target, output)
         #print("mAP", mpa)
         batch_size = images.shape[0]
         metric_logger.update(loss=loss.item())
-        # metric_logger.meters['mAP'].update(mpa.item(), n=batch_size)
-        metric_logger.meters['acc1'].update(acc1.item(), n=batch_size)
-        metric_logger.meters['acc5'].update(acc5.item(), n=batch_size)
+        metric_logger.meters['mAP'].update(mpa.item(), n=batch_size)
+        # metric_logger.meters['acc1'].update(acc1.item(), n=batch_size)
+        # metric_logger.meters['acc5'].update(acc5.item(), n=batch_size)
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
 
-    # print('* mAP {mAP.global_avg:.3f} loss {losses.global_avg:.3f}'
-    #     .format(mAP=metric_logger.meters['mAP'], losses=metric_logger.loss))
+    print('* mAP {mAP.global_avg:.3f} loss {losses.global_avg:.3f}'
+        .format(mAP=metric_logger.meters['mAP'], losses=metric_logger.loss))
 
-    print('* Acc@1 {top1.global_avg:.3f} Acc@5 {top5.global_avg:.3f} loss {losses.global_avg:.3f}'
-          .format(top1=metric_logger.acc1, top5=metric_logger.acc5, losses=metric_logger.loss))
+    # print('* Acc@1 {top1.global_avg:.3f} Acc@5 {top5.global_avg:.3f} loss {losses.global_avg:.3f}'
+    #       .format(top1=metric_logger.acc1, top5=metric_logger.acc5, losses=metric_logger.loss))
 
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
 @torch.no_grad()
 def evaluate_temporal(data_loader, model, device):
-    criterion = torch.nn.CrossEntropyLoss()
-    # criterion = torch.nn.MultiLabelSoftMarginLoss()
+    # criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.MultiLabelSoftMarginLoss()
 
 
     metric_logger = misc.MetricLogger(delimiter="  ")

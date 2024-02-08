@@ -1,0 +1,788 @@
+/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torchvision/io/image.py:13: UserWarning: Failed to load image Python extension: libtorch_cuda_cu.so: cannot open shared object file: No such file or directory
+  warn(f"Failed to load image Python extension: {e}")
+Not using distributed mode
+[09:26:30.574739] job dir: /home/ada/satmae/SatMAE
+[09:26:30.574836] Namespace(aa='rand-m9-mstd0.5-inc1',
+accum_iter=4,
+batch_size=16,
+blr=0.001,
+clip_grad=None,
+color_jitter=None,
+cutmix=1.0,
+cutmix_minmax=None,
+dataset_type='naip',
+device='cuda',
+dist_eval=True,
+dist_on_itp=False,
+dist_url='env://',
+distributed=False,
+drop_path=0.2,
+dropped_bands=None,
+epochs=20,
+eval=False,
+finetune='/home/ada/satmae/temporal/fmow_pretrain.pth',
+global_pool=True,
+grouped_bands=[],
+input_size=224,
+layer_decay=0.75,
+local_rank=0,
+log_dir='/home/ada/satmae/other_data/naip/evaluation',
+lr=None,
+masked_bands=None,
+min_lr=1e-06,
+mixup=0.8,
+mixup_mode='batch',
+mixup_prob=1.0,
+mixup_switch_prob=0.5,
+model='vit_large_patch16',
+model_type=None,
+nb_classes=62,
+num_workers=8,
+output_dir='/home/ada/satmae/other_data/naip/evaluation',
+patch_size=16,
+pin_mem=True,
+recount=1,
+remode='pixel',
+reprob=0.25,
+resplit=False,
+resume='',
+save_every=1,
+seed=0,
+smoothing=0.1,
+start_epoch=0,
+test_path='/home/val_62classes.csv',
+train_path='/home/train_62classes.csv',
+wandb=None,
+warmup_epochs=5,
+weight_decay=0.05,
+world_size=1)
+[09:26:30.576731] ==> Prepping data...
+[09:26:30.578122] <util.naip_loader.NAIP object at 0x7f217b0ef210>
+[09:26:30.578162] <util.naip_loader.NAIP object at 0x7f217b0ef0d0>
+[09:26:30.578197] Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x7f21f52c48d0>
+2024-02-07 09:26:30.579892: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-02-07 09:26:31.402875: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2024-02-07 09:26:31.402921: I tensorflow/compiler/xla/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+2024-02-07 09:26:32.130139: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2024-02-07 09:26:32.130229: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2024-02-07 09:26:32.130240: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+[09:26:32.694792] Mixup is activated!
+[09:26:44.743825] Load pre-trained checkpoint from: /home/ada/satmae/temporal/fmow_pretrain.pth
+[09:26:45.040441] _IncompatibleKeys(missing_keys=['head.weight', 'head.bias', 'fc_norm.weight', 'fc_norm.bias'], unexpected_keys=['mask_token', 'decoder_pos_embed', 'norm.weight', 'norm.bias', 'decoder_embed.weight', 'decoder_embed.bias', 'decoder_blocks.0.norm1.weight', 'decoder_blocks.0.norm1.bias', 'decoder_blocks.0.attn.qkv.weight', 'decoder_blocks.0.attn.qkv.bias', 'decoder_blocks.0.attn.proj.weight', 'decoder_blocks.0.attn.proj.bias', 'decoder_blocks.0.norm2.weight', 'decoder_blocks.0.norm2.bias', 'decoder_blocks.0.mlp.fc1.weight', 'decoder_blocks.0.mlp.fc1.bias', 'decoder_blocks.0.mlp.fc2.weight', 'decoder_blocks.0.mlp.fc2.bias', 'decoder_blocks.1.norm1.weight', 'decoder_blocks.1.norm1.bias', 'decoder_blocks.1.attn.qkv.weight', 'decoder_blocks.1.attn.qkv.bias', 'decoder_blocks.1.attn.proj.weight', 'decoder_blocks.1.attn.proj.bias', 'decoder_blocks.1.norm2.weight', 'decoder_blocks.1.norm2.bias', 'decoder_blocks.1.mlp.fc1.weight', 'decoder_blocks.1.mlp.fc1.bias', 'decoder_blocks.1.mlp.fc2.weight', 'decoder_blocks.1.mlp.fc2.bias', 'decoder_blocks.2.norm1.weight', 'decoder_blocks.2.norm1.bias', 'decoder_blocks.2.attn.qkv.weight', 'decoder_blocks.2.attn.qkv.bias', 'decoder_blocks.2.attn.proj.weight', 'decoder_blocks.2.attn.proj.bias', 'decoder_blocks.2.norm2.weight', 'decoder_blocks.2.norm2.bias', 'decoder_blocks.2.mlp.fc1.weight', 'decoder_blocks.2.mlp.fc1.bias', 'decoder_blocks.2.mlp.fc2.weight', 'decoder_blocks.2.mlp.fc2.bias', 'decoder_blocks.3.norm1.weight', 'decoder_blocks.3.norm1.bias', 'decoder_blocks.3.attn.qkv.weight', 'decoder_blocks.3.attn.qkv.bias', 'decoder_blocks.3.attn.proj.weight', 'decoder_blocks.3.attn.proj.bias', 'decoder_blocks.3.norm2.weight', 'decoder_blocks.3.norm2.bias', 'decoder_blocks.3.mlp.fc1.weight', 'decoder_blocks.3.mlp.fc1.bias', 'decoder_blocks.3.mlp.fc2.weight', 'decoder_blocks.3.mlp.fc2.bias', 'decoder_blocks.4.norm1.weight', 'decoder_blocks.4.norm1.bias', 'decoder_blocks.4.attn.qkv.weight', 'decoder_blocks.4.attn.qkv.bias', 'decoder_blocks.4.attn.proj.weight', 'decoder_blocks.4.attn.proj.bias', 'decoder_blocks.4.norm2.weight', 'decoder_blocks.4.norm2.bias', 'decoder_blocks.4.mlp.fc1.weight', 'decoder_blocks.4.mlp.fc1.bias', 'decoder_blocks.4.mlp.fc2.weight', 'decoder_blocks.4.mlp.fc2.bias', 'decoder_blocks.5.norm1.weight', 'decoder_blocks.5.norm1.bias', 'decoder_blocks.5.attn.qkv.weight', 'decoder_blocks.5.attn.qkv.bias', 'decoder_blocks.5.attn.proj.weight', 'decoder_blocks.5.attn.proj.bias', 'decoder_blocks.5.norm2.weight', 'decoder_blocks.5.norm2.bias', 'decoder_blocks.5.mlp.fc1.weight', 'decoder_blocks.5.mlp.fc1.bias', 'decoder_blocks.5.mlp.fc2.weight', 'decoder_blocks.5.mlp.fc2.bias', 'decoder_blocks.6.norm1.weight', 'decoder_blocks.6.norm1.bias', 'decoder_blocks.6.attn.qkv.weight', 'decoder_blocks.6.attn.qkv.bias', 'decoder_blocks.6.attn.proj.weight', 'decoder_blocks.6.attn.proj.bias', 'decoder_blocks.6.norm2.weight', 'decoder_blocks.6.norm2.bias', 'decoder_blocks.6.mlp.fc1.weight', 'decoder_blocks.6.mlp.fc1.bias', 'decoder_blocks.6.mlp.fc2.weight', 'decoder_blocks.6.mlp.fc2.bias', 'decoder_blocks.7.norm1.weight', 'decoder_blocks.7.norm1.bias', 'decoder_blocks.7.attn.qkv.weight', 'decoder_blocks.7.attn.qkv.bias', 'decoder_blocks.7.attn.proj.weight', 'decoder_blocks.7.attn.proj.bias', 'decoder_blocks.7.norm2.weight', 'decoder_blocks.7.norm2.bias', 'decoder_blocks.7.mlp.fc1.weight', 'decoder_blocks.7.mlp.fc1.bias', 'decoder_blocks.7.mlp.fc2.weight', 'decoder_blocks.7.mlp.fc2.bias', 'decoder_norm.weight', 'decoder_norm.bias', 'decoder_pred.weight', 'decoder_pred.bias'])
+[09:26:45.040555] {'fc_norm.bias', 'head.bias', 'head.weight', 'fc_norm.weight'}
+[09:26:45.335223] Model = VisionTransformer(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(3, 1024, kernel_size=(16, 16), stride=(16, 16))
+  )
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (blocks): ModuleList(
+    (0): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): Identity()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (1): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (2): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (3): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (4): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (5): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (6): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (7): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (8): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (9): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (10): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (11): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (12): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (13): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (14): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (15): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (16): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (17): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (18): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (19): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (20): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (21): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (22): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+    (23): Block(
+      (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=1024, out_features=3072, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=1024, out_features=1024, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (drop_path): DropPath()
+      (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+        (act): GELU()
+        (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+        (drop): Dropout(p=0.0, inplace=False)
+      )
+    )
+  )
+  (head): Linear(in_features=1024, out_features=28, bias=True)
+  (fc_norm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+)
+[09:26:45.335300] number of params (M): 303.33
+[09:26:45.335323] base lr: 1.00e-03
+[09:26:45.335337] actual lr: 2.50e-04
+[09:26:45.335350] accumulate grad iterations: 4
+[09:26:45.335362] effective batch size: 64
+[09:26:45.339678] criterion = SoftTargetCrossEntropy()
+[09:26:45.339715] Start training for 20 epochs
+[09:26:45.340796] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:26:46.468324] Epoch: [0]  [ 0/43]  eta: 0:00:48  lr: 0.000000  loss: 3.3319 (3.3319)  time: 1.1266  data: 0.3397  max mem: 9606
+[09:26:58.532363] Epoch: [0]  [20/43]  eta: 0:00:14  lr: 0.000023  loss: 3.3314 (3.3310)  time: 0.6031  data: 0.0003  max mem: 13092
+[09:27:11.545943] Epoch: [0]  [40/43]  eta: 0:00:01  lr: 0.000047  loss: 3.3173 (3.3246)  time: 0.6506  data: 0.0002  max mem: 13092
+[09:27:12.833728] Epoch: [0]  [42/43]  eta: 0:00:00  lr: 0.000047  loss: 3.3154 (3.3237)  time: 0.6548  data: 0.0002  max mem: 13092
+[09:27:12.876176] Epoch: [0] Total time: 0:00:27 (0.6404 s / it)
+[09:27:12.876277] Averaged stats: lr: 0.000047  loss: 3.3154 (3.3237)
+[09:27:27.616324] Test:  [ 0/19]  eta: 0:00:10  loss: 3.2909 (3.2909)  acc1: 56.2500 (56.2500)  acc5: 87.5000 (87.5000)  time: 0.5639  data: 0.3068  max mem: 13092
+[09:27:29.778399] Test:  [10/19]  eta: 0:00:02  loss: 3.2946 (3.2947)  acc1: 56.2500 (53.4091)  acc5: 81.2500 (82.9545)  time: 0.2477  data: 0.0280  max mem: 13092
+[09:27:31.592038] Test:  [18/19]  eta: 0:00:00  loss: 3.2952 (3.2949)  acc1: 50.0000 (52.0000)  acc5: 81.2500 (81.6667)  time: 0.2388  data: 0.0163  max mem: 13092
+[09:27:31.641327] Test: Total time: 0:00:04 (0.2416 s / it)
+[09:27:31.641494] * Acc@1 52.000 Acc@5 81.667 loss 3.295
+[09:27:31.641644] Accuracy of the network on the 300 test images: 52.0%
+[09:27:31.641666] Max accuracy: 52.00%
+[09:27:31.646327] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:27:32.481961] Epoch: [1]  [ 0/43]  eta: 0:00:35  lr: 0.000050  loss: 3.3076 (3.3076)  time: 0.8343  data: 0.2760  max mem: 13092
+[09:27:45.289886] Epoch: [1]  [20/43]  eta: 0:00:14  lr: 0.000073  loss: 3.2772 (3.2767)  time: 0.6403  data: 0.0003  max mem: 13092
+[09:27:58.410568] Epoch: [1]  [40/43]  eta: 0:00:01  lr: 0.000097  loss: 3.1929 (3.2307)  time: 0.6560  data: 0.0002  max mem: 13092
+[09:27:59.650674] Epoch: [1]  [42/43]  eta: 0:00:00  lr: 0.000097  loss: 3.1830 (3.2237)  time: 0.6553  data: 0.0002  max mem: 13092
+[09:27:59.704780] Epoch: [1] Total time: 0:00:28 (0.6525 s / it)
+[09:27:59.704871] Averaged stats: lr: 0.000097  loss: 3.1830 (3.2237)
+[09:28:05.864263] Test:  [ 0/19]  eta: 0:00:10  loss: 2.9045 (2.9045)  acc1: 31.2500 (31.2500)  acc5: 87.5000 (87.5000)  time: 0.5384  data: 0.3008  max mem: 13092
+[09:28:08.034799] Test:  [10/19]  eta: 0:00:02  loss: 2.9553 (2.9588)  acc1: 43.7500 (42.6136)  acc5: 81.2500 (82.9545)  time: 0.2462  data: 0.0275  max mem: 13092
+[09:28:09.725710] Test:  [18/19]  eta: 0:00:00  loss: 2.9562 (2.9581)  acc1: 37.5000 (39.3333)  acc5: 81.2500 (81.6667)  time: 0.2315  data: 0.0160  max mem: 13092
+[09:28:09.779815] Test: Total time: 0:00:04 (0.2345 s / it)
+[09:28:09.779898] * Acc@1 39.333 Acc@5 81.667 loss 2.958
+[09:28:09.780060] Accuracy of the network on the 300 test images: 39.3%
+[09:28:09.780082] Max accuracy: 52.00%
+[09:28:09.785009] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:28:10.663694] Epoch: [2]  [ 0/43]  eta: 0:00:37  lr: 0.000100  loss: 3.1264 (3.1264)  time: 0.8777  data: 0.3130  max mem: 13092
+[09:28:23.422792] Epoch: [2]  [20/43]  eta: 0:00:14  lr: 0.000123  loss: 2.9039 (2.8887)  time: 0.6379  data: 0.0003  max mem: 13092
+[09:28:36.352298] Epoch: [2]  [40/43]  eta: 0:00:01  lr: 0.000147  loss: 2.5655 (2.7380)  time: 0.6464  data: 0.0002  max mem: 13092
+[09:28:37.589836] Epoch: [2]  [42/43]  eta: 0:00:00  lr: 0.000147  loss: 2.5655 (2.7301)  time: 0.6471  data: 0.0002  max mem: 13092
+[09:28:37.639790] Epoch: [2] Total time: 0:00:27 (0.6478 s / it)
+[09:28:37.639879] Averaged stats: lr: 0.000147  loss: 2.5655 (2.7301)
+[09:28:43.766237] Test:  [ 0/19]  eta: 0:00:10  loss: 2.0323 (2.0323)  acc1: 31.2500 (31.2500)  acc5: 87.5000 (87.5000)  time: 0.5635  data: 0.3150  max mem: 13092
+[09:28:45.954701] Test:  [10/19]  eta: 0:00:02  loss: 2.1417 (2.1544)  acc1: 43.7500 (41.4773)  acc5: 81.2500 (82.9545)  time: 0.2501  data: 0.0287  max mem: 13092
+[09:28:47.659963] Test:  [18/19]  eta: 0:00:00  loss: 2.2094 (2.1790)  acc1: 31.2500 (36.6667)  acc5: 81.2500 (81.6667)  time: 0.2345  data: 0.0167  max mem: 13092
+[09:28:47.709460] Test: Total time: 0:00:04 (0.2373 s / it)
+[09:28:47.709550] * Acc@1 36.667 Acc@5 81.667 loss 2.179
+[09:28:47.709699] Accuracy of the network on the 300 test images: 36.7%
+[09:28:47.709721] Max accuracy: 52.00%
+[09:28:47.714414] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:28:48.575621] Epoch: [3]  [ 0/43]  eta: 0:00:36  lr: 0.000150  loss: 2.7165 (2.7165)  time: 0.8603  data: 0.2913  max mem: 13092
+[09:29:01.469971] Epoch: [3]  [20/43]  eta: 0:00:15  lr: 0.000173  loss: 2.3306 (2.3442)  time: 0.6447  data: 0.0002  max mem: 13092
+[09:29:14.503572] Epoch: [3]  [40/43]  eta: 0:00:01  lr: 0.000197  loss: 2.4084 (2.3847)  time: 0.6516  data: 0.0002  max mem: 13092
+[09:29:15.745173] Epoch: [3]  [42/43]  eta: 0:00:00  lr: 0.000197  loss: 2.4595 (2.3934)  time: 0.6514  data: 0.0002  max mem: 13092
+[09:29:15.797344] Epoch: [3] Total time: 0:00:28 (0.6531 s / it)
+[09:29:15.797738] Averaged stats: lr: 0.000197  loss: 2.4595 (2.3934)
+[09:29:21.941864] Test:  [ 0/19]  eta: 0:00:10  loss: 1.9935 (1.9935)  acc1: 31.2500 (31.2500)  acc5: 87.5000 (87.5000)  time: 0.5509  data: 0.3131  max mem: 13092
+[09:29:24.126490] Test:  [10/19]  eta: 0:00:02  loss: 1.9935 (2.0048)  acc1: 43.7500 (41.4773)  acc5: 81.2500 (82.9545)  time: 0.2486  data: 0.0286  max mem: 13092
+[09:29:25.832415] Test:  [18/19]  eta: 0:00:00  loss: 2.0469 (2.0706)  acc1: 31.2500 (36.6667)  acc5: 81.2500 (81.6667)  time: 0.2337  data: 0.0166  max mem: 13092
+[09:29:25.880765] Test: Total time: 0:00:04 (0.2364 s / it)
+[09:29:25.880940] * Acc@1 36.667 Acc@5 81.667 loss 2.071
+[09:29:25.881094] Accuracy of the network on the 300 test images: 36.7%
+[09:29:25.881114] Max accuracy: 52.00%
+[09:29:25.885750] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:29:26.738623] Epoch: [4]  [ 0/43]  eta: 0:00:36  lr: 0.000200  loss: 2.9391 (2.9391)  time: 0.8519  data: 0.2848  max mem: 13092
+[09:29:39.609409] Epoch: [4]  [20/43]  eta: 0:00:15  lr: 0.000223  loss: 2.2910 (2.3145)  time: 0.6435  data: 0.0002  max mem: 13092
+[09:29:52.578022] Epoch: [4]  [40/43]  eta: 0:00:01  lr: 0.000247  loss: 2.3631 (2.3354)  time: 0.6484  data: 0.0002  max mem: 13092
+[09:29:53.817735] Epoch: [4]  [42/43]  eta: 0:00:00  lr: 0.000247  loss: 2.3792 (2.3414)  time: 0.6488  data: 0.0002  max mem: 13092
+[09:29:53.871627] Epoch: [4] Total time: 0:00:27 (0.6508 s / it)
+[09:29:53.871720] Averaged stats: lr: 0.000247  loss: 2.3792 (2.3414)
+[09:30:00.011437] Test:  [ 0/19]  eta: 0:00:10  loss: 1.9622 (1.9622)  acc1: 31.2500 (31.2500)  acc5: 87.5000 (87.5000)  time: 0.5496  data: 0.2940  max mem: 13092
+[09:30:02.191893] Test:  [10/19]  eta: 0:00:02  loss: 1.9622 (1.9628)  acc1: 43.7500 (41.4773)  acc5: 81.2500 (82.9545)  time: 0.2481  data: 0.0269  max mem: 13092
+[09:30:03.893254] Test:  [18/19]  eta: 0:00:00  loss: 2.0613 (2.0111)  acc1: 31.2500 (36.6667)  acc5: 81.2500 (81.6667)  time: 0.2331  data: 0.0156  max mem: 13092
+[09:30:03.936358] Test: Total time: 0:00:04 (0.2356 s / it)
+[09:30:03.936436] * Acc@1 36.667 Acc@5 81.667 loss 2.011
+[09:30:03.936588] Accuracy of the network on the 300 test images: 36.7%
+[09:30:03.936610] Max accuracy: 52.00%
+[09:30:03.941491] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:30:04.804792] Epoch: [5]  [ 0/43]  eta: 0:00:37  lr: 0.000250  loss: 2.7040 (2.7040)  time: 0.8624  data: 0.2903  max mem: 13092
+[09:30:17.631058] Epoch: [5]  [20/43]  eta: 0:00:14  lr: 0.000249  loss: 2.2606 (2.2689)  time: 0.6413  data: 0.0002  max mem: 13092
+[09:30:30.585779] Epoch: [5]  [40/43]  eta: 0:00:01  lr: 0.000248  loss: 2.2933 (2.2749)  time: 0.6477  data: 0.0002  max mem: 13092
+[09:30:31.824758] Epoch: [5]  [42/43]  eta: 0:00:00  lr: 0.000248  loss: 2.3340 (2.2806)  time: 0.6482  data: 0.0002  max mem: 13092
+[09:30:31.877147] Epoch: [5] Total time: 0:00:27 (0.6497 s / it)
+[09:30:31.877243] Averaged stats: lr: 0.000248  loss: 2.3340 (2.2806)
+[09:30:38.062606] Test:  [ 0/19]  eta: 0:00:10  loss: 1.7124 (1.7124)  acc1: 50.0000 (50.0000)  acc5: 87.5000 (87.5000)  time: 0.5306  data: 0.3002  max mem: 13092
+[09:30:40.240851] Test:  [10/19]  eta: 0:00:02  loss: 1.7124 (1.8151)  acc1: 50.0000 (49.4318)  acc5: 81.2500 (82.9545)  time: 0.2462  data: 0.0274  max mem: 13092
+[09:30:41.943160] Test:  [18/19]  eta: 0:00:00  loss: 1.7968 (1.8410)  acc1: 43.7500 (46.3333)  acc5: 81.2500 (83.0000)  time: 0.2321  data: 0.0159  max mem: 13092
+[09:30:41.993982] Test: Total time: 0:00:04 (0.2349 s / it)
+[09:30:41.994089] * Acc@1 46.333 Acc@5 83.000 loss 1.841
+[09:30:41.994251] Accuracy of the network on the 300 test images: 46.3%
+[09:30:41.994361] Max accuracy: 52.00%
+[09:30:41.999118] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:30:42.860832] Epoch: [6]  [ 0/43]  eta: 0:00:37  lr: 0.000247  loss: 2.7623 (2.7623)  time: 0.8609  data: 0.2909  max mem: 13092
+[09:30:55.737939] Epoch: [6]  [20/43]  eta: 0:00:15  lr: 0.000244  loss: 2.1834 (2.1573)  time: 0.6438  data: 0.0002  max mem: 13092
+[09:31:08.761260] Epoch: [6]  [40/43]  eta: 0:00:01  lr: 0.000240  loss: 2.2035 (2.1637)  time: 0.6511  data: 0.0002  max mem: 13092
+[09:31:10.001227] Epoch: [6]  [42/43]  eta: 0:00:00  lr: 0.000240  loss: 2.2035 (2.1644)  time: 0.6512  data: 0.0002  max mem: 13092
+[09:31:10.054482] Epoch: [6] Total time: 0:00:28 (0.6524 s / it)
+[09:31:10.054577] Averaged stats: lr: 0.000240  loss: 2.2035 (2.1644)
+[09:31:16.295127] Test:  [ 0/19]  eta: 0:00:10  loss: 1.5189 (1.5189)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5654  data: 0.3079  max mem: 13092
+[09:31:18.483685] Test:  [10/19]  eta: 0:00:02  loss: 1.5189 (1.6405)  acc1: 50.0000 (55.1136)  acc5: 81.2500 (82.9545)  time: 0.2503  data: 0.0281  max mem: 13092
+[09:31:20.180746] Test:  [18/19]  eta: 0:00:00  loss: 1.6790 (1.6660)  acc1: 50.0000 (55.6667)  acc5: 87.5000 (84.0000)  time: 0.2341  data: 0.0163  max mem: 13092
+[09:31:20.230751] Test: Total time: 0:00:04 (0.2370 s / it)
+[09:31:20.230828] * Acc@1 55.667 Acc@5 84.000 loss 1.666
+[09:31:20.231034] Accuracy of the network on the 300 test images: 55.7%
+[09:31:20.231060] Max accuracy: 55.67%
+[09:31:20.235797] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:31:21.098572] Epoch: [7]  [ 0/43]  eta: 0:00:37  lr: 0.000239  loss: 2.6550 (2.6550)  time: 0.8619  data: 0.2940  max mem: 13092
+[09:31:34.009421] Epoch: [7]  [20/43]  eta: 0:00:15  lr: 0.000234  loss: 2.1291 (2.1076)  time: 0.6455  data: 0.0002  max mem: 13092
+[09:31:47.053110] Epoch: [7]  [40/43]  eta: 0:00:01  lr: 0.000227  loss: 2.1064 (2.1268)  time: 0.6521  data: 0.0002  max mem: 13092
+[09:31:48.303435] Epoch: [7]  [42/43]  eta: 0:00:00  lr: 0.000227  loss: 2.1751 (2.1312)  time: 0.6523  data: 0.0002  max mem: 13092
+[09:31:48.353173] Epoch: [7] Total time: 0:00:28 (0.6539 s / it)
+[09:31:48.353267] Averaged stats: lr: 0.000227  loss: 2.1751 (2.1312)
+[09:31:54.653764] Test:  [ 0/19]  eta: 0:00:10  loss: 1.4538 (1.4538)  acc1: 62.5000 (62.5000)  acc5: 87.5000 (87.5000)  time: 0.5550  data: 0.3008  max mem: 13092
+[09:31:56.828754] Test:  [10/19]  eta: 0:00:02  loss: 1.4538 (1.4422)  acc1: 62.5000 (60.2273)  acc5: 93.7500 (90.3409)  time: 0.2481  data: 0.0275  max mem: 13092
+[09:31:58.522970] Test:  [18/19]  eta: 0:00:00  loss: 1.4906 (1.4881)  acc1: 56.2500 (58.6667)  acc5: 87.5000 (88.3333)  time: 0.2327  data: 0.0160  max mem: 13092
+[09:31:58.574640] Test: Total time: 0:00:04 (0.2357 s / it)
+[09:31:58.574716] * Acc@1 58.667 Acc@5 88.333 loss 1.488
+[09:31:58.574873] Accuracy of the network on the 300 test images: 58.7%
+[09:31:58.574894] Max accuracy: 58.67%
+[09:31:58.579517] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:31:59.423091] Epoch: [8]  [ 0/43]  eta: 0:00:36  lr: 0.000226  loss: 2.2544 (2.2544)  time: 0.8424  data: 0.2718  max mem: 13092
+[09:32:12.334521] Epoch: [8]  [20/43]  eta: 0:00:15  lr: 0.000219  loss: 2.1086 (2.0206)  time: 0.6455  data: 0.0002  max mem: 13092
+[09:32:25.404872] Epoch: [8]  [40/43]  eta: 0:00:01  lr: 0.000210  loss: 2.0624 (2.0144)  time: 0.6534  data: 0.0002  max mem: 13092
+[09:32:26.654377] Epoch: [8]  [42/43]  eta: 0:00:00  lr: 0.000210  loss: 2.1108 (2.0215)  time: 0.6535  data: 0.0002  max mem: 13092
+[09:32:26.707026] Epoch: [8] Total time: 0:00:28 (0.6541 s / it)
+[09:32:26.707130] Averaged stats: lr: 0.000210  loss: 2.1108 (2.0215)
+[09:32:33.005763] Test:  [ 0/19]  eta: 0:00:10  loss: 1.5174 (1.5174)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5643  data: 0.3090  max mem: 13092
+[09:32:35.197392] Test:  [10/19]  eta: 0:00:02  loss: 1.4953 (1.3235)  acc1: 68.7500 (64.2045)  acc5: 93.7500 (89.7727)  time: 0.2504  data: 0.0282  max mem: 13092
+[09:32:36.904919] Test:  [18/19]  eta: 0:00:00  loss: 1.4953 (1.4145)  acc1: 62.5000 (62.6667)  acc5: 87.5000 (88.0000)  time: 0.2348  data: 0.0164  max mem: 13092
+[09:32:36.953822] Test: Total time: 0:00:04 (0.2376 s / it)
+[09:32:36.953901] * Acc@1 62.667 Acc@5 88.000 loss 1.415
+[09:32:36.954058] Accuracy of the network on the 300 test images: 62.7%
+[09:32:36.954077] Max accuracy: 62.67%
+[09:32:36.958775] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:32:37.838270] Epoch: [9]  [ 0/43]  eta: 0:00:37  lr: 0.000209  loss: 2.2748 (2.2748)  time: 0.8785  data: 0.3032  max mem: 13092
+[09:32:50.751342] Epoch: [9]  [20/43]  eta: 0:00:15  lr: 0.000199  loss: 1.9424 (1.9892)  time: 0.6456  data: 0.0002  max mem: 13092
+[09:33:03.764751] Epoch: [9]  [40/43]  eta: 0:00:01  lr: 0.000189  loss: 1.9432 (2.0005)  time: 0.6506  data: 0.0002  max mem: 13092
+[09:33:05.002977] Epoch: [9]  [42/43]  eta: 0:00:00  lr: 0.000189  loss: 2.0512 (2.0046)  time: 0.6506  data: 0.0002  max mem: 13092
+[09:33:05.056370] Epoch: [9] Total time: 0:00:28 (0.6534 s / it)
+[09:33:05.056465] Averaged stats: lr: 0.000189  loss: 2.0512 (2.0046)
+[09:33:11.447866] Test:  [ 0/19]  eta: 0:00:10  loss: 1.4076 (1.4076)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5447  data: 0.3111  max mem: 13092
+[09:33:13.620392] Test:  [10/19]  eta: 0:00:02  loss: 1.4076 (1.2815)  acc1: 62.5000 (65.9091)  acc5: 93.7500 (90.3409)  time: 0.2469  data: 0.0284  max mem: 13092
+[09:33:15.316788] Test:  [18/19]  eta: 0:00:00  loss: 1.4400 (1.3760)  acc1: 62.5000 (64.0000)  acc5: 87.5000 (88.3333)  time: 0.2322  data: 0.0165  max mem: 13092
+[09:33:15.366459] Test: Total time: 0:00:04 (0.2350 s / it)
+[09:33:15.366538] * Acc@1 64.000 Acc@5 88.333 loss 1.376
+[09:33:15.366682] Accuracy of the network on the 300 test images: 64.0%
+[09:33:15.366701] Max accuracy: 64.00%
+[09:33:15.371599] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:33:16.235478] Epoch: [10]  [ 0/43]  eta: 0:00:37  lr: 0.000188  loss: 2.4217 (2.4217)  time: 0.8630  data: 0.2965  max mem: 13092
+[09:33:29.124836] Epoch: [10]  [20/43]  eta: 0:00:15  lr: 0.000177  loss: 1.9151 (1.9523)  time: 0.6444  data: 0.0002  max mem: 13092
+[09:33:42.211587] Epoch: [10]  [40/43]  eta: 0:00:01  lr: 0.000166  loss: 1.9055 (1.9251)  time: 0.6543  data: 0.0002  max mem: 13092
+[09:33:43.450854] Epoch: [10]  [42/43]  eta: 0:00:00  lr: 0.000166  loss: 1.9509 (1.9265)  time: 0.6540  data: 0.0002  max mem: 13092
+[09:33:43.508750] Epoch: [10] Total time: 0:00:28 (0.6543 s / it)
+[09:33:43.508940] Averaged stats: lr: 0.000166  loss: 1.9509 (1.9265)
+[09:33:49.839441] Test:  [ 0/19]  eta: 0:00:10  loss: 1.3844 (1.3844)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5513  data: 0.3009  max mem: 13092
+[09:33:52.024575] Test:  [10/19]  eta: 0:00:02  loss: 1.3844 (1.2576)  acc1: 62.5000 (65.3409)  acc5: 93.7500 (90.9091)  time: 0.2487  data: 0.0275  max mem: 13092
+[09:33:53.713343] Test:  [18/19]  eta: 0:00:00  loss: 1.3848 (1.3440)  acc1: 62.5000 (64.3333)  acc5: 87.5000 (89.0000)  time: 0.2328  data: 0.0159  max mem: 13092
+[09:33:53.764795] Test: Total time: 0:00:04 (0.2357 s / it)
+[09:33:53.764878] * Acc@1 64.333 Acc@5 89.000 loss 1.344
+[09:33:53.765021] Accuracy of the network on the 300 test images: 64.3%
+[09:33:53.765040] Max accuracy: 64.33%
+[09:33:53.769633] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:33:54.619154] Epoch: [11]  [ 0/43]  eta: 0:00:36  lr: 0.000164  loss: 2.4380 (2.4380)  time: 0.8485  data: 0.2819  max mem: 13092
+[09:34:07.478346] Epoch: [11]  [20/43]  eta: 0:00:15  lr: 0.000152  loss: 1.9270 (1.9146)  time: 0.6429  data: 0.0002  max mem: 13092
+[09:34:20.453971] Epoch: [11]  [40/43]  eta: 0:00:01  lr: 0.000140  loss: 1.8685 (1.9380)  time: 0.6487  data: 0.0002  max mem: 13092
+[09:34:21.695285] Epoch: [11]  [42/43]  eta: 0:00:00  lr: 0.000140  loss: 1.9283 (1.9386)  time: 0.6491  data: 0.0002  max mem: 13092
+[09:34:21.750822] Epoch: [11] Total time: 0:00:27 (0.6507 s / it)
+[09:34:21.750951] Averaged stats: lr: 0.000140  loss: 1.9283 (1.9386)
+[09:34:27.880908] Test:  [ 0/19]  eta: 0:00:10  loss: 1.3195 (1.3195)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5460  data: 0.2982  max mem: 13092
+[09:34:30.058774] Test:  [10/19]  eta: 0:00:02  loss: 1.3195 (1.2370)  acc1: 68.7500 (65.9091)  acc5: 93.7500 (90.3409)  time: 0.2475  data: 0.0272  max mem: 13092
+[09:34:31.751814] Test:  [18/19]  eta: 0:00:00  loss: 1.4027 (1.3187)  acc1: 62.5000 (65.0000)  acc5: 87.5000 (88.3333)  time: 0.2324  data: 0.0158  max mem: 13092
+[09:34:31.796906] Test: Total time: 0:00:04 (0.2349 s / it)
+[09:34:31.796987] * Acc@1 65.000 Acc@5 88.333 loss 1.319
+[09:34:31.797139] Accuracy of the network on the 300 test images: 65.0%
+[09:34:31.797159] Max accuracy: 65.00%
+[09:34:31.801953] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:34:32.650278] Epoch: [12]  [ 0/43]  eta: 0:00:36  lr: 0.000139  loss: 2.4523 (2.4523)  time: 0.8471  data: 0.2764  max mem: 13092
+[09:34:45.513633] Epoch: [12]  [20/43]  eta: 0:00:15  lr: 0.000126  loss: 1.7931 (1.8394)  time: 0.6431  data: 0.0002  max mem: 13092
+[09:34:58.572391] Epoch: [12]  [40/43]  eta: 0:00:01  lr: 0.000114  loss: 1.9561 (1.9102)  time: 0.6529  data: 0.0002  max mem: 13092
+[09:34:59.819240] Epoch: [12]  [42/43]  eta: 0:00:00  lr: 0.000114  loss: 2.0169 (1.9215)  time: 0.6532  data: 0.0002  max mem: 13092
+[09:34:59.873645] Epoch: [12] Total time: 0:00:28 (0.6528 s / it)
+[09:34:59.873750] Averaged stats: lr: 0.000114  loss: 2.0169 (1.9215)
+[09:35:06.101530] Test:  [ 0/19]  eta: 0:00:10  loss: 1.3068 (1.3068)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5421  data: 0.3084  max mem: 13092
+[09:35:08.303458] Test:  [10/19]  eta: 0:00:02  loss: 1.3068 (1.2224)  acc1: 68.7500 (69.8864)  acc5: 93.7500 (92.0455)  time: 0.2494  data: 0.0281  max mem: 13092
+[09:35:10.011815] Test:  [18/19]  eta: 0:00:00  loss: 1.3842 (1.3025)  acc1: 68.7500 (66.6667)  acc5: 93.7500 (90.3333)  time: 0.2342  data: 0.0163  max mem: 13092
+[09:35:10.059109] Test: Total time: 0:00:04 (0.2369 s / it)
+[09:35:10.059193] * Acc@1 66.667 Acc@5 90.333 loss 1.303
+[09:35:10.059344] Accuracy of the network on the 300 test images: 66.7%
+[09:35:10.059364] Max accuracy: 66.67%
+[09:35:10.064065] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:35:10.912044] Epoch: [13]  [ 0/43]  eta: 0:00:36  lr: 0.000112  loss: 2.3489 (2.3489)  time: 0.8469  data: 0.2751  max mem: 13092
+[09:35:23.857819] Epoch: [13]  [20/43]  eta: 0:00:15  lr: 0.000101  loss: 1.9073 (1.9203)  time: 0.6472  data: 0.0002  max mem: 13092
+[09:35:36.900286] Epoch: [13]  [40/43]  eta: 0:00:01  lr: 0.000089  loss: 1.9532 (1.9331)  time: 0.6521  data: 0.0002  max mem: 13092
+[09:35:38.149636] Epoch: [13]  [42/43]  eta: 0:00:00  lr: 0.000089  loss: 1.9532 (1.9306)  time: 0.6525  data: 0.0002  max mem: 13092
+[09:35:38.202156] Epoch: [13] Total time: 0:00:28 (0.6544 s / it)
+[09:35:38.202253] Averaged stats: lr: 0.000089  loss: 1.9532 (1.9306)
+[09:35:44.459035] Test:  [ 0/19]  eta: 0:00:10  loss: 1.2876 (1.2876)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5410  data: 0.3069  max mem: 13092
+[09:35:46.642833] Test:  [10/19]  eta: 0:00:02  loss: 1.2876 (1.2319)  acc1: 68.7500 (66.4773)  acc5: 87.5000 (89.2045)  time: 0.2476  data: 0.0280  max mem: 13092
+[09:35:48.335264] Test:  [18/19]  eta: 0:00:00  loss: 1.3446 (1.3013)  acc1: 68.7500 (66.3333)  acc5: 87.5000 (88.3333)  time: 0.2324  data: 0.0163  max mem: 13092
+[09:35:48.386059] Test: Total time: 0:00:04 (0.2352 s / it)
+[09:35:48.386138] * Acc@1 66.333 Acc@5 88.333 loss 1.301
+[09:35:48.386281] Accuracy of the network on the 300 test images: 66.3%
+[09:35:48.386301] Max accuracy: 66.67%
+[09:35:48.391158] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:35:49.255997] Epoch: [14]  [ 0/43]  eta: 0:00:37  lr: 0.000087  loss: 2.0968 (2.0968)  time: 0.8639  data: 0.2968  max mem: 13092
+[09:36:02.111555] Epoch: [14]  [20/43]  eta: 0:00:15  lr: 0.000076  loss: 1.8838 (1.8871)  time: 0.6427  data: 0.0002  max mem: 13092
+[09:36:15.115197] Epoch: [14]  [40/43]  eta: 0:00:01  lr: 0.000065  loss: 1.9382 (1.8945)  time: 0.6501  data: 0.0002  max mem: 13092
+[09:36:16.362190] Epoch: [14]  [42/43]  eta: 0:00:00  lr: 0.000065  loss: 1.9486 (1.8908)  time: 0.6499  data: 0.0002  max mem: 13092
+[09:36:16.417401] Epoch: [14] Total time: 0:00:28 (0.6518 s / it)
+[09:36:16.417494] Averaged stats: lr: 0.000065  loss: 1.9486 (1.8908)
+[09:36:22.686046] Test:  [ 0/19]  eta: 0:00:10  loss: 1.2880 (1.2880)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5499  data: 0.2973  max mem: 13092
+[09:36:24.865470] Test:  [10/19]  eta: 0:00:02  loss: 1.2880 (1.2346)  acc1: 68.7500 (66.4773)  acc5: 87.5000 (90.3409)  time: 0.2480  data: 0.0272  max mem: 13092
+[09:36:26.563362] Test:  [18/19]  eta: 0:00:00  loss: 1.3323 (1.2961)  acc1: 68.7500 (66.0000)  acc5: 87.5000 (89.3333)  time: 0.2329  data: 0.0158  max mem: 13092
+[09:36:26.607333] Test: Total time: 0:00:04 (0.2354 s / it)
+[09:36:26.607414] * Acc@1 66.000 Acc@5 89.333 loss 1.296
+[09:36:26.607574] Accuracy of the network on the 300 test images: 66.0%
+[09:36:26.607595] Max accuracy: 66.67%
+[09:36:26.612375] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:36:27.492543] Epoch: [15]  [ 0/43]  eta: 0:00:37  lr: 0.000063  loss: 2.4656 (2.4656)  time: 0.8788  data: 0.3070  max mem: 13092
+[09:36:40.432299] Epoch: [15]  [20/43]  eta: 0:00:15  lr: 0.000053  loss: 1.8244 (1.8398)  time: 0.6469  data: 0.0002  max mem: 13092
+[09:36:53.534303] Epoch: [15]  [40/43]  eta: 0:00:01  lr: 0.000044  loss: 1.9443 (1.8866)  time: 0.6550  data: 0.0002  max mem: 13092
+[09:36:54.776293] Epoch: [15]  [42/43]  eta: 0:00:00  lr: 0.000044  loss: 1.9515 (1.8884)  time: 0.6549  data: 0.0002  max mem: 13092
+[09:36:54.831168] Epoch: [15] Total time: 0:00:28 (0.6562 s / it)
+[09:36:54.831270] Averaged stats: lr: 0.000044  loss: 1.9515 (1.8884)
+[09:37:01.195895] Test:  [ 0/19]  eta: 0:00:10  loss: 1.2885 (1.2885)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5744  data: 0.3173  max mem: 13092
+[09:37:03.380868] Test:  [10/19]  eta: 0:00:02  loss: 1.2885 (1.2182)  acc1: 68.7500 (68.1818)  acc5: 93.7500 (90.9091)  time: 0.2507  data: 0.0290  max mem: 13092
+[09:37:05.065041] Test:  [18/19]  eta: 0:00:00  loss: 1.3360 (1.2852)  acc1: 68.7500 (67.3333)  acc5: 93.7500 (89.6667)  time: 0.2337  data: 0.0168  max mem: 13092
+[09:37:05.116532] Test: Total time: 0:00:04 (0.2367 s / it)
+[09:37:05.116610] * Acc@1 67.333 Acc@5 89.667 loss 1.285
+[09:37:05.116749] Accuracy of the network on the 300 test images: 67.3%
+[09:37:05.116768] Max accuracy: 67.33%
+[09:37:05.121668] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:37:05.993053] Epoch: [16]  [ 0/43]  eta: 0:00:37  lr: 0.000042  loss: 2.0067 (2.0067)  time: 0.8700  data: 0.2992  max mem: 13092
+[09:37:18.820802] Epoch: [16]  [20/43]  eta: 0:00:15  lr: 0.000034  loss: 1.7528 (1.7995)  time: 0.6413  data: 0.0003  max mem: 13092
+[09:37:31.807243] Epoch: [16]  [40/43]  eta: 0:00:01  lr: 0.000026  loss: 1.9400 (1.8418)  time: 0.6493  data: 0.0002  max mem: 13092
+[09:37:33.052587] Epoch: [16]  [42/43]  eta: 0:00:00  lr: 0.000026  loss: 1.9898 (1.8505)  time: 0.6497  data: 0.0002  max mem: 13092
+[09:37:33.108457] Epoch: [16] Total time: 0:00:27 (0.6509 s / it)
+[09:37:33.108558] Averaged stats: lr: 0.000026  loss: 1.9898 (1.8505)
+[09:37:39.576218] Test:  [ 0/19]  eta: 0:00:10  loss: 1.2769 (1.2769)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5661  data: 0.3109  max mem: 13092
+[09:37:41.748360] Test:  [10/19]  eta: 0:00:02  loss: 1.2769 (1.2081)  acc1: 68.7500 (67.6136)  acc5: 93.7500 (90.9091)  time: 0.2488  data: 0.0284  max mem: 13092
+[09:37:43.437482] Test:  [18/19]  eta: 0:00:00  loss: 1.3360 (1.2789)  acc1: 68.7500 (67.0000)  acc5: 93.7500 (89.6667)  time: 0.2329  data: 0.0165  max mem: 13092
+[09:37:43.484845] Test: Total time: 0:00:04 (0.2356 s / it)
+[09:37:43.484956] * Acc@1 67.000 Acc@5 89.667 loss 1.279
+[09:37:43.485126] Accuracy of the network on the 300 test images: 67.0%
+[09:37:43.485148] Max accuracy: 67.33%
+[09:37:43.490076] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:37:44.348457] Epoch: [17]  [ 0/43]  eta: 0:00:36  lr: 0.000025  loss: 2.4270 (2.4270)  time: 0.8573  data: 0.2922  max mem: 13092
+[09:37:57.256011] Epoch: [17]  [20/43]  eta: 0:00:15  lr: 0.000018  loss: 1.9273 (1.9297)  time: 0.6453  data: 0.0002  max mem: 13092
+[09:38:10.397430] Epoch: [17]  [40/43]  eta: 0:00:01  lr: 0.000013  loss: 1.7975 (1.9071)  time: 0.6570  data: 0.0002  max mem: 13092
+[09:38:11.645404] Epoch: [17]  [42/43]  eta: 0:00:00  lr: 0.000013  loss: 2.0328 (1.9160)  time: 0.6573  data: 0.0002  max mem: 13092
+[09:38:11.690106] Epoch: [17] Total time: 0:00:28 (0.6558 s / it)
+[09:38:11.690201] Averaged stats: lr: 0.000013  loss: 2.0328 (1.9160)
+[09:38:17.988260] Test:  [ 0/19]  eta: 0:00:10  loss: 1.2636 (1.2636)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5479  data: 0.3082  max mem: 13092
+[09:38:20.176907] Test:  [10/19]  eta: 0:00:02  loss: 1.2636 (1.2135)  acc1: 68.7500 (67.0455)  acc5: 93.7500 (90.9091)  time: 0.2487  data: 0.0281  max mem: 13092
+[09:38:21.878715] Test:  [18/19]  eta: 0:00:00  loss: 1.3265 (1.2820)  acc1: 68.7500 (66.6667)  acc5: 93.7500 (89.6667)  time: 0.2335  data: 0.0163  max mem: 13092
+[09:38:21.928307] Test: Total time: 0:00:04 (0.2363 s / it)
+[09:38:21.928380] * Acc@1 66.667 Acc@5 89.667 loss 1.282
+[09:38:21.928515] Accuracy of the network on the 300 test images: 66.7%
+[09:38:21.928534] Max accuracy: 67.33%
+[09:38:21.933235] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:38:22.787796] Epoch: [18]  [ 0/43]  eta: 0:00:36  lr: 0.000012  loss: 1.9828 (1.9828)  time: 0.8537  data: 0.2844  max mem: 13092
+[09:38:35.636821] Epoch: [18]  [20/43]  eta: 0:00:15  lr: 0.000007  loss: 1.7847 (1.8129)  time: 0.6424  data: 0.0002  max mem: 13092
+[09:38:48.622059] Epoch: [18]  [40/43]  eta: 0:00:01  lr: 0.000004  loss: 1.8225 (1.8279)  time: 0.6492  data: 0.0002  max mem: 13092
+[09:38:49.863704] Epoch: [18]  [42/43]  eta: 0:00:00  lr: 0.000004  loss: 1.8498 (1.8404)  time: 0.6497  data: 0.0002  max mem: 13092
+[09:38:49.916538] Epoch: [18] Total time: 0:00:27 (0.6508 s / it)
+[09:38:49.916651] Averaged stats: lr: 0.000004  loss: 1.8498 (1.8404)
+[09:38:56.274430] Test:  [ 0/19]  eta: 0:00:10  loss: 1.2618 (1.2618)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5464  data: 0.2909  max mem: 13092
+[09:38:58.452471] Test:  [10/19]  eta: 0:00:02  loss: 1.2618 (1.2163)  acc1: 68.7500 (67.0455)  acc5: 93.7500 (90.9091)  time: 0.2476  data: 0.0266  max mem: 13092
+[09:39:00.139632] Test:  [18/19]  eta: 0:00:00  loss: 1.3216 (1.2833)  acc1: 68.7500 (66.6667)  acc5: 93.7500 (89.6667)  time: 0.2321  data: 0.0154  max mem: 13092
+[09:39:00.188993] Test: Total time: 0:00:04 (0.2349 s / it)
+[09:39:00.189071] * Acc@1 66.667 Acc@5 89.667 loss 1.283
+[09:39:00.189223] Accuracy of the network on the 300 test images: 66.7%
+[09:39:00.189244] Max accuracy: 67.33%
+[09:39:00.194027] log_dir: /home/ada/satmae/other_data/naip/evaluation
+[09:39:01.050114] Epoch: [19]  [ 0/43]  eta: 0:00:36  lr: 0.000004  loss: 2.3506 (2.3506)  time: 0.8551  data: 0.2852  max mem: 13092
+[09:39:13.944926] Epoch: [19]  [20/43]  eta: 0:00:15  lr: 0.000002  loss: 1.6984 (1.8020)  time: 0.6447  data: 0.0002  max mem: 13092
+[09:39:26.988399] Epoch: [19]  [40/43]  eta: 0:00:01  lr: 0.000001  loss: 1.8510 (1.8516)  time: 0.6521  data: 0.0002  max mem: 13092
+[09:39:28.232178] Epoch: [19]  [42/43]  eta: 0:00:00  lr: 0.000001  loss: 1.8510 (1.8530)  time: 0.6521  data: 0.0002  max mem: 13092
+[09:39:28.279791] Epoch: [19] Total time: 0:00:28 (0.6532 s / it)
+[09:39:28.279892] Averaged stats: lr: 0.000001  loss: 1.8510 (1.8530)
+[09:39:34.387886] Test:  [ 0/19]  eta: 0:00:11  loss: 1.2624 (1.2624)  acc1: 68.7500 (68.7500)  acc5: 87.5000 (87.5000)  time: 0.5857  data: 0.3286  max mem: 13092
+[09:39:36.589611] Test:  [10/19]  eta: 0:00:02  loss: 1.2624 (1.2163)  acc1: 68.7500 (67.0455)  acc5: 93.7500 (90.9091)  time: 0.2533  data: 0.0300  max mem: 13092
+[09:39:38.291502] Test:  [18/19]  eta: 0:00:00  loss: 1.3209 (1.2831)  acc1: 68.7500 (66.6667)  acc5: 93.7500 (89.6667)  time: 0.2362  data: 0.0174  max mem: 13092
+[09:39:38.342352] Test: Total time: 0:00:04 (0.2390 s / it)
+[09:39:38.342441] * Acc@1 66.667 Acc@5 89.667 loss 1.283
+[09:39:38.342601] Accuracy of the network on the 300 test images: 66.7%
+[09:39:38.342624] Max accuracy: 67.33%
+[09:39:38.343709] Training time 0:12:53
+/home/ada/anaconda3/envs/sat_env/lib/python3.7/site-packages/torch/distributed/launch.py:186: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use_env is set by default in torchrun.
+If your script expects `--local_rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  FutureWarning,

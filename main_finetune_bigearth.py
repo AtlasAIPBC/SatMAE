@@ -376,14 +376,14 @@ def main(args):
     # uncomment commented criterion lines for singlelable
     if mixup_fn is not None:
         # smoothing is handled with mixup label transform
-        criterion = SoftTargetCrossEntropy()
-        # criterion = torch.nn.MultiLabelSoftMarginLoss()
+        # criterion = SoftTargetCrossEntropy()
+        criterion = torch.nn.MultiLabelSoftMarginLoss()
     elif args.smoothing > 0.:
-        criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
-        # criterion = torch.nn.MultiLabelSoftMarginLoss()
+        # criterion = LabelSmoothingCrossEntropy(smoothing=args.smoothing)
+        criterion = torch.nn.MultiLabelSoftMarginLoss()
     else:
-        criterion = torch.nn.CrossEntropyLoss()
-        # criterion = torch.nn.MultiLabelSoftMarginLoss()
+        # criterion = torch.nn.CrossEntropyLoss()
+        criterion = torch.nn.MultiLabelSoftMarginLoss()
     print("criterion = %s" % str(criterion))
 
     misc.load_model(args=args, model_without_ddp=model_without_ddp, optimizer=optimizer, loss_scaler=loss_scaler)
@@ -399,8 +399,9 @@ def main(args):
             test_stats = evaluate_temporal(data_loader_val, model, device)
         else:
             test_stats = evaluate(data_loader_val, model, device)
-        print(f"Evaluation on {len(dataset_val)} test images- acc1: {test_stats['acc1']:.2f}%, "
-              f"acc5: {test_stats['acc5']:.2f}%")
+        # print(f"Evaluation on {len(dataset_val)} test images- acc1: {test_stats['acc1']:.2f}%, "
+        #       f"acc5: {test_stats['acc5']:.2f}%")
+        print(f"Evaluation on {len(dataset_val)} test images- mAP: {test_stats['mAP']:.2f}%")
         exit(0)
 
     print(f"Start training for {args.epochs} epochs")
@@ -437,14 +438,22 @@ def main(args):
         else:
             test_stats = evaluate(data_loader_val, model, device)
 
-        print(f"Accuracy of the network on the {len(dataset_val)} test images: {test_stats['acc1']:.1f}%")
-        max_accuracy = max(max_accuracy, test_stats["acc1"])
-        print(f'Max accuracy: {max_accuracy:.2f}%')
+        # section below need to be optimised for single and multilabel
+        # print(f"Accuracy of the network on the {len(dataset_val)} test images: {test_stats['acc1']:.1f}%")
+        print(f"mAP of the network on the {len(dataset_val)} test images: {test_stats['mAP']:.1f}%")
+
+        # max_accuracy = max(max_accuracy, test_stats["acc1"])
+        # print(f'Max accuracy: {max_accuracy:.2f}%')
+        max_accuracy = max(max_accuracy, test_stats["mAP"])
+        print(f'Max mAP: {max_accuracy:.2f}%')
 
         if log_writer is not None:
-            log_writer.add_scalar('perf/test_acc1', test_stats['acc1'], epoch)
-            log_writer.add_scalar('perf/test_acc5', test_stats['acc5'], epoch)
+            # log_writer.add_scalar('perf/test_acc1', test_stats['acc1'], epoch)
+            # log_writer.add_scalar('perf/test_acc5', test_stats['acc5'], epoch)
+            # log_writer.add_scalar('perf/test_loss', test_stats['loss'], epoch)
+            log_writer.add_scalar('perf/test_mAP', test_stats['mAP'], epoch)
             log_writer.add_scalar('perf/test_loss', test_stats['loss'], epoch)
+
 
         log_stats = {**{f'train_{k}': v for k, v in train_stats.items()},
                      **{f'test_{k}': v for k, v in test_stats.items()},

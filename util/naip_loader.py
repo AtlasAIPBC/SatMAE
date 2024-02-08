@@ -8,9 +8,12 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
 print('==> Prepping data...')
-tile_dir = '/home/supervised_50_100/'  # change it with your path to the tiles
-y_fn = '/home/y_50_100.npy'  # change it with your path to the labels
-splits_fn = '/home/splits.npy'  # change it with your path to the splits
+# tile_dir = '/home/supervised_50_100/'  # change it with your path to the tiles
+# y_fn = '/home/y_50_100.npy'  # change it with your path to the labels
+# splits_fn = '/home/splits.npy'  # change it with your path to the splits
+tile_dir = "/home/ada/satmae/other_data/naip/tiles"
+y_fn = "/home/ada/satmae/other_data/naip/tiles/y.npy"
+splits_fn = "/home/ada/satmae/other_data/naip/splits.npy"
 
 def clip_and_scale_image(img, img_type='naip', clip_min=0, clip_max=10000):
     """
@@ -67,21 +70,24 @@ transform_tr = transforms.Compose([
     
     ToFloatTensorSinglePatch(),
     transforms.Normalize(mean, std),
-    transforms.Scale(224),
+    #transforms.Scale(224),
+    transforms.Resize(224),
 ])
 transform_val = transforms.Compose([
     ClipAndScaleSinglePatch('naip'),
     
     ToFloatTensorSinglePatch(),
     transforms.Normalize(mean, std),
-    transforms.Scale(224),
+    #transforms.Scale(224),
+    transforms.Resize(224),
 ])
 transform_te = transforms.Compose([
     ClipAndScaleSinglePatch('naip'),
     
     ToFloatTensorSinglePatch(),
     transforms.Normalize(mean, std),
-    transforms.Scale(224),
+    #transforms.Scale(224),
+    transforms.Resize(224),
 ])
 
 
@@ -116,7 +122,8 @@ class NAIP(Dataset):
 
     def __getitem__(self, idx):
         p_idx = self.tile_idxs[idx]
-        p = np.load(os.path.join(self.tile_dir, '{}tile.npy'.format(p_idx)))
+        #p = np.load(os.path.join(self.tile_dir, '{}tile.npy'.format(p_idx)))
+        p = np.load(os.path.join(self.tile_dir, '{}tile.npy'.format(p_idx + 1)))
         p = p[:, :, :3]
         p = np.moveaxis(p, -1, 0)
         y = self.labels[p_idx]

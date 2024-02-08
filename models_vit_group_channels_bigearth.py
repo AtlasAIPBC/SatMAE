@@ -92,17 +92,17 @@ class GroupChannelsVisionTransformer(timm.models.vision_transformer.VisionTransf
             x = x[:, 1:, :].mean(dim=1)  # global pool without cls token
             outcome = self.fc_norm(x)
         else:
-            x = self.norm(x)
-            outcome = x[:, 0]
+            # x = self.norm(x)
+            # outcome = x[:, 0]
             
-            # n_labels = 19
+            n_labels = 19
 
-            # # Change final layer output dimension to match number of labels (assuming n_labels is your actual number of labels)
-            # x = torch.nn.Linear(x.shape[-1], n_labels)(x)
-            # # Replace normalization with sigmoid activation
-            # x = torch.nn.Sigmoid()(x)
-            # # Use all elements for multi-label prediction
-            # outcome = x
+            # Change final layer output dimension to match number of labels (assuming n_labels is your actual number of labels)
+            x = torch.nn.Linear(x.shape[-1], n_labels)(x)
+            # Replace normalization with sigmoid activation
+            x = torch.nn.Sigmoid()(x)
+            # Use all elements for multi-label prediction
+            outcome = x
 
         return outcome
 
